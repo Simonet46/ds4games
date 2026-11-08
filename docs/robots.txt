@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://simonet46.github.io/ds4games/sitemap.xml

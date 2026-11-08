@@ -1,0 +1,310 @@
+{
+ "logo-ds4": {
+  "widths": [
+   240,
+   480
+  ],
+  "ratio": 0.7523,
+  "alpha": true
+ },
+ "team-trio": {
+  "widths": [
+   640,
+   960
+  ],
+  "ratio": 0.6406,
+  "alpha": false
+ },
+ "team-duo": {
+  "widths": [
+   640,
+   960
+  ],
+  "ratio": 0.6406,
+  "alpha": false
+ },
+ "oly-box": {
+  "widths": [
+   360,
+   720,
+   1080
+  ],
+  "ratio": 1.1949,
+  "alpha": true
+ },
+ "oly-logo": {
+  "widths": [
+   320,
+   640
+  ],
+  "ratio": 0.2736,
+  "alpha": true
+ },
+ "oly-content": {
+  "widths": [
+   640,
+   1280
+  ],
+  "ratio": 0.6122,
+  "alpha": true
+ },
+ "oly-marathon": {
+  "widths": [
+   640,
+   1280,
+   1920
+  ],
+  "ratio": 0.5833,
+  "alpha": false
+ },
+ "oly-sprint": {
+  "widths": [
+   640,
+   1280,
+   1920
+  ],
+  "ratio": 0.5833,
+  "alpha": false
+ },
+ "oly-basketball": {
+  "widths": [
+   640,
+   1280,
+   1920
+  ],
+  "ratio": 0.5833,
+  "alpha": false
+ },
+ "oly-handball": {
+  "widths": [
+   640,
+   1267
+  ],
+  "ratio": 0.6243,
+  "alpha": false
+ },
+ "oly-gymnastics": {
+  "widths": [
+   640,
+   1280
+  ],
+  "ratio": 0.5833,
+  "alpha": false
+ },
+ "oly-hurdles": {
+  "widths": [
+   640,
+   1280
+  ],
+  "ratio": 0.5833,
+  "alpha": false
+ },
+ "oly-pole-vault": {
+  "widths": [
+   640,
+   1280
+  ],
+  "ratio": 0.5833,
+  "alpha": false
+ },
+ "oly-judo": {
+  "widths": [
+   640,
+   1280
+  ],
+  "ratio": 0.5833,
+  "alpha": false
+ },
+ "oly-biathlon": {
+  "widths": [
+   640,
+   1280
+  ],
+  "ratio": 0.5833,
+  "alpha": false
+ },
+ "oly-goalball": {
+  "widths": [
+   640,
+   1280
+  ],
+  "ratio": 0.5833,
+  "alpha": false
+ },
+ "oly-bmx": {
+  "widths": [
+   640,
+   1280
+  ],
+  "ratio": 0.5833,
+  "alpha": false
+ },
+ "oly-sitting-volley": {
+  "widths": [
+   640,
+   1280
+  ],
+  "ratio": 0.5833,
+  "alpha": false
+ },
+ "oly-breakdance": {
+  "widths": [
+   640,
+   1280
+  ],
+  "ratio": 0.6457,
+  "alpha": false
+ },
+ "oly-table-tennis": {
+  "widths": [
+   640,
+   1280
+  ],
+  "ratio": 0.6457,
+  "alpha": false
+ },
+ "oly-climbing": {
+  "widths": [
+   640,
+   1280
+  ],
+  "ratio": 0.6457,
+  "alpha": false
+ },
+ "oly-boxing": {
+  "widths": [
+   640,
+   1280
+  ],
+  "ratio": 0.6457,
+  "alpha": false
+ },
+ "oly-ski-jump": {
+  "widths": [
+   640,
+   1280
+  ],
+  "ratio": 0.6457,
+  "alpha": false
+ },
+ "oly-wheelchair-race": {
+  "widths": [
+   640,
+   1280
+  ],
+  "ratio": 0.6457,
+  "alpha": false
+ },
+ "eif-box": {
+  "widths": [
+   364
+  ],
+  "ratio": 0.9093,
+  "alpha": true
+ },
+ "eif-box-photo": {
+  "widths": [
+   640,
+   960
+  ],
+  "ratio": 0.6406,
+  "alpha": false
+ },
+ "eif-box-dark": {
+  "widths": [
+   640,
+   960
+  ],
+  "ratio": 0.6406,
+  "alpha": false
+ },
+ "eif-components": {
+  "widths": [
+   640,
+   960
+  ],
+  "ratio": 0.6406,
+  "alpha": false
+ },
+ "eif-components-wood": {
+  "widths": [
+   640,
+   960
+  ],
+  "ratio": 0.6406,
+  "alpha": false
+ },
+ "eif-parchment": {
+  "widths": [
+   1376
+  ],
+  "ratio": 0.5233,
+  "alpha": false
+ },
+ "arg-box": {
+  "widths": [
+   360,
+   720,
+   1020
+  ],
+  "ratio": 1.1735,
+  "alpha": true
+ },
+ "arg-open": {
+  "widths": [
+   360,
+   720,
+   1080
+  ],
+  "ratio": 1.2694,
+  "alpha": true
+ },
+ "arg-box-photo": {
+  "widths": [
+   640,
+   960
+  ],
+  "ratio": 0.6406,
+  "alpha": false
+ },
+ "arg-open-photo": {
+  "widths": [
+   640,
+   960
+  ],
+  "ratio": 0.6406,
+  "alpha": false
+ },
+ "arg-art": {
+  "widths": [
+   640,
+   960
+  ],
+  "ratio": 0.6417,
+  "alpha": false
+ },
+ "arg-gameplay": {
+  "widths": [
+   640,
+   960
+  ],
+  "ratio": 0.6406,
+  "alpha": false
+ },
+ "arg-cards": {
+  "widths": [
+   640,
+   960
+  ],
+  "ratio": 0.6406,
+  "alpha": false
+ },
+ "arg-grid": {
+  "widths": [
+   640,
+   960
+  ],
+  "ratio": 0.6406,
+  "alpha": false
+ }
+}
