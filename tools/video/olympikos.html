@@ -1,0 +1,242 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Olympikos · video</title>
+<link rel="stylesheet" href="lib/video.css">
+<style>
+  #stage { background: #070b1a; }
+  .hook { font-size: 104px; font-weight: 900; letter-spacing: -.035em; line-height: 1; }
+  .gold { background: linear-gradient(100deg, #fff1b8, #f2c14e 40%, #e08a2c); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .goldw .w { background: linear-gradient(100deg, #fff1b8, #f2c14e 40%, #e08a2c); -webkit-background-clip: text; background-clip: text; color: transparent; padding: 0 .02em; }
+  .bgimg { position: absolute; inset: -12%; width: 124%; height: 124%; object-fit: cover; filter: blur(46px) brightness(.55) saturate(1.3); }
+  .card { width: 940px; height: 600px; border-radius: 44px; overflow: hidden; padding: 0; }
+  .card img { width: 100%; height: 100%; object-fit: cover; display: block; transform-origin: 50% 50%; }
+  .card .rim { position: absolute; inset: 0; border-radius: 44px; box-shadow: inset 0 0 0 2px rgba(255,255,255,.4); }
+  .label { font-size: 48px; font-weight: 800; letter-spacing: .04em; text-transform: uppercase; padding: 18px 40px; border-radius: 999px; }
+  .count { font-size: 150px; font-weight: 900; letter-spacing: -.04em; line-height: 1; }
+  .countsub { font-size: 54px; font-weight: 650; letter-spacing: -.01em; opacity: .92; }
+  .title2 { font-size: 92px; font-weight: 900; letter-spacing: -.03em; line-height: 1; }
+  .tag { font-size: 64px; font-weight: 750; letter-spacing: -.02em; }
+  .block { width: 280px; border-radius: 34px 34px 10px 10px; display: flex; align-items: center; justify-content: center;
+    font-size: 150px; font-weight: 900; color: rgba(255,255,255,.28); }
+  .block::before { content: ""; position: absolute; left: 0; right: 0; top: 0; height: 10px; border-radius: 34px 34px 0 0; background: var(--m); opacity: .9; }
+  .medal { width: 184px; height: 184px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
+    font-size: 34px; font-weight: 850; letter-spacing: .06em; color: rgba(40,25,5,.85);
+    box-shadow: 0 24px 50px rgba(0,0,0,.45), inset 0 0 0 7px rgba(255,255,255,.45), inset 0 -10px 24px rgba(0,0,0,.25); }
+  .pts { font-size: 44px; font-weight: 850; padding: 12px 26px; border-radius: 999px; color: #1b1203; }
+  .boxwrap { width: 680px; height: 812px; transform-style: preserve-3d; }
+  .boxwrap img { width: 100%; height: 100%; display: block; filter: drop-shadow(0 50px 60px rgba(0,0,0,.55)); }
+  .shine { position: absolute; inset: 0; -webkit-mask-image: url(../../docs/assets/img/oly-box-1080.webp); mask-image: url(../../docs/assets/img/oly-box-1080.webp);
+    -webkit-mask-size: 100% 100%; mask-size: 100% 100%; mix-blend-mode: screen; }
+  .shine i { position: absolute; top: -20%; bottom: -20%; width: 34%; background: linear-gradient(90deg, transparent, rgba(255,255,255,.55), transparent); transform: skewX(-18deg); }
+  .olylogo { width: 640px; }
+  .url { font-size: 98px; font-weight: 850; letter-spacing: -.035em; }
+  .sub { font-size: 46px; font-weight: 550; opacity: .88; }
+  .glow { width: 900px; height: 900px; border-radius: 50%; background: radial-gradient(circle, rgba(242,193,78,.55), rgba(242,193,78,0) 65%); }
+  .flash { position: absolute; inset: 0; background: #fff; opacity: 0; }
+</style>
+</head>
+<body>
+<div id="stage">
+  <div class="layer" id="bg">
+    <div class="c blob" id="b1" style="width:900px;height:900px;background:#f2c14e"></div>
+    <div class="c blob" id="b2" style="width:800px;height:800px;background:#2f5cff"></div>
+    <div class="c blob" id="b3" style="width:760px;height:760px;background:#ff5a3c"></div>
+  </div>
+  <div class="layer" id="bgimgs"></div>
+
+  <!-- 1. Gancho -->
+  <div class="c hook center-text" id="h1"></div>
+  <div class="c hook center-text" id="h2"></div>
+  <div class="c hook center-text goldw" id="h3"></div>
+
+  <!-- 2. Deportes -->
+  <div class="c count center-text gold" id="count"></div>
+  <div class="c countsub center-text" id="countsub"></div>
+  <div id="cards"></div>
+
+  <!-- 3. Podio -->
+  <div class="c title2 center-text" id="t1"></div>
+  <div class="c title2 center-text" id="t2"></div>
+  <div class="c tag center-text gold" id="tag"></div>
+  <div id="podium"></div>
+
+  <!-- 4. Caja -->
+  <div class="c glow" id="glow"></div>
+  <img class="c olylogo" id="olylogo" src="../../docs/assets/img/oly-logo-640.webp" alt="">
+  <div class="c boxwrap" id="box"><img src="../../docs/assets/img/oly-box-1080.webp" alt=""><div class="shine"><i id="streak"></i></div></div>
+  <div id="chips"></div>
+
+  <!-- 5. Cierre -->
+  <img class="c" id="logo" src="../../docs/assets/img/logo-ds4-480.webp" alt="" style="width:430px">
+  <div class="c url center-text" id="url">ds4games.com</div>
+  <div class="c sub center-text" id="sub"></div>
+
+  <div class="flash" id="flash"></div>
+  <div class="vignette"></div>
+  <div class="grain"></div>
+</div>
+<script src="lib/engine.js"></script>
+<script>
+const { p, lerp, env, put, words, reveal, lang, $ } = V;
+const T = {
+  es: {
+    hook: ["¿Quién no soñó", "con unos Juegos", "Olímpicos?"],
+    count: "28 deportes", countsub: "olímpicos y paralímpicos",
+    sports: ["Atletismo", "Handball", "Carrera en silla de ruedas", "Básquet", "Judo", "Goalball", "Breakdance", "Vóley sentado", "BMX"],
+    title: ["Adiviná el deporte", "antes que nadie"], tag: "…y subite al podio.",
+    medals: ["PLATA", "ORO", "BRONCE"],
+    chips: ["2–6 jugadores", "+8 años", "20 min"],
+    sub: "En Argentina: toyco.com.ar",
+  },
+  fr: {
+    hook: ["Qui n’a jamais", "rêvé des Jeux", "Olympiques ?"],
+    count: "28 sports", countsub: "olympiques et paralympiques",
+    sports: ["Athlétisme", "Handball", "Course en fauteuil", "Basket", "Judo", "Goalball", "Breakdance", "Volley assis", "BMX"],
+    title: ["Devinez le sport", "avant les autres"], tag: "…et montez sur le podium.",
+    medals: ["ARGENT", "OR", "BRONZE"],
+    chips: ["2–6 joueurs", "8 ans et +", "20 min"],
+    sub: "19 € · Expédié depuis Montpellier",
+  },
+  en: {
+    hook: ["Who hasn’t dreamed", "of the Olympic", "Games?"],
+    count: "28 sports", countsub: "Olympic and Paralympic",
+    sports: ["Athletics", "Handball", "Wheelchair racing", "Basketball", "Judo", "Goalball", "Breakdance", "Sitting volleyball", "BMX"],
+    title: ["Guess the sport", "before anyone else"], tag: "…and step onto the podium.",
+    medals: ["SILVER", "GOLD", "BRONZE"],
+    chips: ["2–6 players", "Ages 8+", "20 min"],
+    sub: "€19 · Ships from Montpellier, France",
+  },
+}[lang];
+document.documentElement.lang = lang;
+
+const IMGS = ["sprint", "handball", "wheelchair-race", "basketball", "judo", "goalball", "breakdance", "sitting-volley", "bmx"];
+const S2 = 2.8, STEP = 0.62;
+const S3 = S2 + IMGS.length * STEP + 0.05;   // ≈ 8.43
+const S4 = 12.9, S5 = 17.3;
+window.DURATION = 21;
+
+const H = [$("#h1"), $("#h2"), $("#h3")].map((el, i) => { el.textContent = T.hook[i]; return words(el); });
+$("#count").textContent = T.count; $("#countsub").textContent = T.countsub;
+const T1 = ($("#t1").textContent = T.title[0], words($("#t1")));
+const T2 = ($("#t2").textContent = T.title[1], words($("#t2")));
+$("#tag").textContent = T.tag;
+$("#sub").textContent = T.sub;
+
+const bgimgs = IMGS.map((n) => { const i = document.createElement("img"); i.className = "bgimg"; i.src = `../../docs/assets/img/oly-${n}-640.webp`; $("#bgimgs").appendChild(i); return i; });
+const cards = IMGS.map((n, k) => {
+  const c = document.createElement("div"); c.className = "c card glass";
+  c.innerHTML = `<img src="../../docs/assets/img/oly-${n}-1280.webp" alt=""><div class="rim"></div>`;
+  $("#cards").appendChild(c);
+  const l = document.createElement("div"); l.className = "c label glass"; l.textContent = T.sports[k];
+  $("#cards").appendChild(l);
+  return { c, img: c.querySelector("img"), l };
+});
+
+// Podio: plata, oro, bronce (de izquierda a derecha)
+const POD = [
+  { x: -300, h: 250, n: "2", g: "radial-gradient(circle at 35% 30%, #ffffff, #d5dce6 45%, #8a96a8)", m: "#cfd6e0", pts: "+3", d: 0.2 },
+  { x: 0, h: 330, n: "1", g: "radial-gradient(circle at 35% 30%, #fff6c8, #f2c14e 45%, #b07a1f)", m: "#f2c14e", pts: "+4", d: 0.4 },
+  { x: 300, h: 190, n: "3", g: "radial-gradient(circle at 35% 30%, #ffe1c4, #d08a4e 45%, #7e4620)", m: "#d08a4e", pts: "+2", d: 0 },
+].map((o, i) => {
+  const b = document.createElement("div"); b.className = "c block glass"; b.style.height = o.h + "px"; b.style.setProperty("--m", o.m); b.textContent = o.n;
+  const m = document.createElement("div"); m.className = "c medal"; m.style.background = o.g; m.textContent = T.medals[i];
+  const s = document.createElement("div"); s.className = "c pts"; s.style.background = o.m; s.textContent = o.pts + " pts";
+  $("#podium").append(b, m, s);
+  return { ...o, b, m, s };
+});
+
+const chips = T.chips.map((txt) => { const d = document.createElement("div"); d.className = "c chip glass"; d.textContent = txt; $("#chips").appendChild(d); return d; });
+// Reparte los chips en una fila centrada
+function chipRow(els, gap = 22) {
+  const ws = els.map((e) => e.offsetWidth); const total = ws.reduce((a, b) => a + b, 0) + gap * (els.length - 1);
+  let x = -total / 2; return ws.map((w) => { const cx = x + w / 2; x += w + gap; return cx; });
+}
+const CX = chipRow(chips);
+
+window.render = function (t) {
+  // Fondo vivo
+  put($("#b1"), { x: -300 + 120 * Math.sin(t * 0.5), y: -650 + 80 * Math.cos(t * 0.4) });
+  put($("#b2"), { x: 360 + 90 * Math.cos(t * 0.45), y: 120 + 140 * Math.sin(t * 0.35) });
+  put($("#b3"), { x: -200 + 140 * Math.sin(t * 0.3 + 1), y: 760 + 60 * Math.cos(t * 0.5) });
+
+  // 1. Gancho
+  const hOut = p(t, 2.4, 2.85, "in");
+  H.forEach((sp, i) => {
+    reveal(sp, t, 0.2 + i * 0.32, { gap: 0.09, dur: 0.55, dy: 80, blur: 18 });
+    put($(["#h1", "#h2", "#h3"][i]), { y: -130 + i * 122, s: 1 + hOut * 0.25, op: 1 - hOut, blur: hOut * 24 });
+  });
+
+  // 2. Montaje de deportes
+  const cIn = p(t, S2 + 0.05, S2 + 0.5, "expo"), cOut = p(t, S3 - 0.35, S3, "in");
+  put($("#count"), { y: -560 + (1 - cIn) * 60, op: cIn * (1 - cOut), s: 0.9 + cIn * 0.1, blur: (1 - cIn) * 12 });
+  put($("#countsub"), { y: -445 + (1 - p(t, S2 + 0.15, S2 + 0.6, "expo")) * 60, op: p(t, S2 + 0.15, S2 + 0.6) * (1 - cOut) });
+  let flash = 0;
+  cards.forEach((o, k) => {
+    const a = S2 + k * STEP, b = a + STEP;
+    const kin = p(t, a, a + 0.24, "expo");
+    const last = k === cards.length - 1;
+    const kout = last ? p(t, S3 - 0.3, S3, "in") : p(t, b, b + 0.2, "out");
+    const side = k % 2 ? 1 : -1;
+    const vis = t >= a - 0.01 && t < (last ? S3 : b + 0.2);
+    put(o.c, { y: 70 + (1 - kin) * 40, x: side * (1 - kin) * 160, s: (1.18 - kin * 0.18) * (1 - kout * 0.08), r: side * (1 - kin) * 4, op: vis ? kin * (1 - kout) : 0 });
+    o.c.style.zIndex = 10 + k;
+    o.img.style.transform = `scale(${1.04 + 0.1 * p(t, a, b + 0.2, "lin")})`;
+    const lin = p(t, a + 0.08, a + 0.34, "expo");
+    put(o.l, { y: -300 + (1 - lin) * 50, op: vis ? lin * (1 - kout) : 0, s: 0.9 + lin * 0.1 });
+    o.l.style.zIndex = 30 + k;
+    bgimgs[k].style.opacity = vis ? 0.9 * kin * (1 - (last ? kout : 0)) : 0;
+    if (t >= a && t < a + 0.14) flash = Math.max(flash, 0.22 * (1 - (t - a) / 0.14));
+  });
+  $("#flash").style.opacity = flash;
+
+  // 3. Podio
+  const s3out = p(t, S4 - 0.45, S4, "in");
+  reveal(T1, t, S3 + 0.1, { gap: 0.08, dur: 0.5, dy: 70 });
+  reveal(T2, t, S3 + 0.35, { gap: 0.08, dur: 0.5, dy: 70 });
+  put($("#t1"), { y: -520, op: 1 - s3out, blur: s3out * 16 });
+  put($("#t2"), { y: -405, op: 1 - s3out, blur: s3out * 16 });
+  const tg = p(t, S3 + 2.5, S3 + 3.0, "expo");
+  put($("#tag"), { y: -250 + (1 - tg) * 40, op: tg * (1 - s3out), s: 0.92 + tg * 0.08 });
+  POD.forEach((o) => {
+    const rise = p(t, S3 + 0.5 + o.d, S3 + 1.2 + o.d, "back");
+    const by = 1560 - o.h / 2 - 960;
+    put(o.b, { x: o.x, y: by + (1 - rise) * (o.h + 420) + s3out * 500, op: t > S3 ? 1 - s3out : 0 });
+    const drop = p(t, S3 + 1.35 + o.d, S3 + 2.15 + o.d, "bounce");
+    const my = 1560 - o.h - 92 - 960 - 12;
+    const dropOp = t > S3 + 1.35 + o.d ? 1 : 0;
+    put(o.m, { x: o.x, y: lerp(my - 900, my, drop) + s3out * 500, op: dropOp * (1 - s3out), r: (1 - drop) * -30 });
+    const pin = p(t, S3 + 2.2 + o.d, S3 + 2.5 + o.d, "back");
+    put(o.s, { x: o.x, y: my - 150 + (1 - pin) * 30 + s3out * 500, s: 0.6 + pin * 0.4, op: Math.min(1, pin * 2) * (1 - s3out) });
+  });
+
+  // 4. Caja
+  const s4in = p(t, S4, S4 + 1.1, "expo"), s4out = p(t, S5 - 0.4, S5, "in");
+  const on4 = t >= S4 - 0.05 && t < S5;
+  put($("#glow"), { y: 40, s: 0.7 + s4in * 0.4 + 0.04 * Math.sin(t * 2), op: on4 ? s4in * 0.9 * (1 - s4out) : 0 });
+  const li = p(t, S4 + 0.15, S4 + 0.8, "back");
+  put($("#olylogo"), { y: -640 + (1 - li) * -40, s: 0.8 + li * 0.2, op: on4 ? Math.min(1, li * 1.5) * (1 - s4out) : 0 });
+  put($("#box"), {
+    y: 30 + (1 - s4in) * 320 + 14 * Math.sin((t - S4) * 1.6), ry: lerp(34, -7, s4in) + 3 * Math.sin((t - S4) * 1.1),
+    rx: 4 * (1 - s4in), s: (0.86 + s4in * 0.14) * (1 + s4out * 0.08), op: on4 ? Math.min(1, s4in * 1.6) * (1 - s4out) : 0, blur: s4out * 18,
+  });
+  const st = p(t, S4 + 1.2, S4 + 2.2, "inOut");
+  $("#streak").style.left = `${lerp(-50, 130, st)}%`;
+  chips.forEach((c, i) => {
+    const k = p(t, S4 + 1.0 + i * 0.16, S4 + 1.5 + i * 0.16, "back");
+    put(c, { x: CX[i], y: 600 + (1 - k) * 60, s: 0.7 + k * 0.3, op: on4 ? Math.min(1, k * 1.5) * (1 - s4out) : 0 });
+  });
+
+  // 5. Cierre
+  const lg = p(t, S5, S5 + 0.9, "back");
+  put($("#logo"), { y: -230, s: 0.6 + lg * 0.4, op: t >= S5 ? Math.min(1, lg * 1.4) : 0, r: (1 - lg) * -8 });
+  const u = p(t, S5 + 0.45, S5 + 1.1, "expo");
+  put($("#url"), { y: 60 + (1 - u) * 50, op: u, blur: (1 - u) * 14 });
+  const sb = p(t, S5 + 0.8, S5 + 1.4, "expo");
+  put($("#sub"), { y: 165 + (1 - sb) * 40, op: sb * 0.9 });
+};
+window.render(0);
+</script>
+</body>
+</html>

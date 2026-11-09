@@ -9,6 +9,13 @@ import en from "./src/i18n/en.mjs";
 
 const ROOT = dirname(fileURLToPath(import.meta.url));
 const OUT = join(ROOT, "docs");
+
+/* Dominio: el de src/data.mjs o, si se configuró desde GitHub, el de docs/CNAME */
+const CNAME = join(OUT, "CNAME");
+const DOMAIN = SITE.domain || (existsSync(CNAME) ? readFileSync(CNAME, "utf8").trim() : "");
+if (DOMAIN) SITE.baseUrl = `https://${DOMAIN}/`;
+// La tienda vieja de Wix vive en el mismo dominio: cuando el dominio pasa a esta web, deja de existir.
+for (const g of Object.values(GAMES)) if (DOMAIN && g.store && new URL(g.store).host === DOMAIN) g.store = "";
 const L = { es, fr, en };
 const MANIFEST = JSON.parse(readFileSync(join(OUT, "assets/img/manifest.json"), "utf8"));
 const CONTENT_IMG = { olympikos: "oly-content", "tour-eiffel": "eif-components", "1812": "arg-gameplay" };
@@ -83,6 +90,19 @@ function regionSelect(ctx, id) {
   return `<label class="region" for="${id}">${esc(t.regionLabel)} <select id="${id}" data-region>${opts}</select></label>`;
 }
 
+/* Link de compra para Francia (el que se ve sin JavaScript). Sin link ni tienda: pedido por email. */
+function mailOrder(ctx, slug) {
+  const name = ctx.L.games[slug].name;
+  return `mailto:${SITE.email}?subject=${encodeURIComponent(ctx.L.t.mailSubject.replace("{game}", name))}`;
+}
+function buyLink(ctx, slug, cls) {
+  const g = GAMES[slug], t = ctx.L.t;
+  const href = g.links.FR || g.store;
+  return href
+    ? `<a class="${cls} buy-link" href="${href}" target="_blank" rel="noopener">${esc(t.buy)}</a>`
+    : `<a class="${cls} buy-link" href="${mailOrder(ctx, slug)}">${esc(t.buyMail)}</a>`;
+}
+
 function buyBlock(ctx, slug) {
   const { t } = ctx.L;
   const g = GAMES[slug];
@@ -90,7 +110,7 @@ function buyBlock(ctx, slug) {
   return `<div class="buy" data-buy="${slug}">
   <div class="buy-row">
     <p class="buy-price">${g.price} €</p>
-    <a class="btn btn-primary buy-link" href="${g.links.FR || g.store}" target="_blank" rel="noopener">${esc(t.buy)}</a>
+    ${buyLink(ctx, slug, "btn btn-primary")}
     ${regionSelect(ctx, `region-${slug}`)}
   </div>
   <p class="buy-note">${esc(t.shipFR.replace("{eur}", SITE.ship.FR))}</p>${toyco}
@@ -121,8 +141,8 @@ function footer(ctx) {
 
 function config(ctx) {
   const { t } = ctx.L;
-  const games = Object.fromEntries(Object.entries(GAMES).map(([k, g]) => [k, { price: g.price, store: g.store, links: g.links, toycoAR: !!g.toycoAR }]));
-  const data = { email: SITE.email, rate: SITE.rate, ship: SITE.ship, games, t: { buy: t.buy, buyToyco: t.buyToyco, approx: t.approx, shipFR: t.shipFR, shipINT: t.shipINT, shipAR: t.shipAR, toycoNote: t.toycoNote } };
+  const games = Object.fromEntries(Object.entries(GAMES).map(([k, g]) => [k, { price: g.price, store: g.store, links: g.links, toycoAR: !!g.toycoAR, mail: mailOrder(ctx, k) }]));
+  const data = { email: SITE.email, rate: SITE.rate, ship: SITE.ship, games, t: { buy: t.buy, buyToyco: t.buyToyco, buyMail: t.buyMail, approx: t.approx, shipFR: t.shipFR, shipINT: t.shipINT, shipAR: t.shipAR, toycoNote: t.toycoNote } };
   return `<script type="application/json" id="ds4-config">${JSON.stringify(data).replace(/</g, "\\u003c")}</script>`;
 }
 
@@ -220,7 +240,7 @@ function home(ctx) {
     <ul class="chips">${chips}</ul>
     <div class="btns" data-buy="${slug}">
       <a class="btn btn-primary" href="${gp(slug)}">${esc(t.learnMore)}</a>
-      <a class="btn btn-glass buy-link" href="${g.links.FR || g.store}" target="_blank" rel="noopener">${esc(t.buy)}</a>
+      ${buyLink(ctx, slug, "btn btn-glass")}
       <p class="price buy-price">${g.price} €</p>
     </div>
   </div>
@@ -435,7 +455,7 @@ function write(path, html) {
   writeFileSync(file, html);
 }
 
-for (const dir of ["fr", "en", ...GAME_ORDER, "nosotros", "contacto"]) {
+for (const dir of ["fr", "en", ...GAME_ORDER, "nosotros", "contacto", "product-page", "category"]) {
   const p = join(OUT, dir);
   if (existsSync(p)) rmSync(p, { recursive: true });
 }
@@ -455,7 +475,27 @@ for (const lang of SITE.langs) {
 }
 write("404.html", notFound({ lang: "es", L: es, path: "404.html" }));
 
+/* Direcciones de la web anterior (Wix) para que los links viejos, los QR y Google sigan llegando */
+const OLD = [
+  ["olympicos", "game:olympikos"], ["mediakit-olympikos", "game:olympikos"],
+  ["los-secretos-de-la-torre-eiffel", "game:tour-eiffel"],
+  ["rules", "home", "#juegos"], ["politicas-de-privacidad", "contact"], ["category/all-products", "home", "#juegos"],
+  ["product-page/olympikos", "game:olympikos"], ["product-page/copia-de-olympikos", "game:tour-eiffel"], ["product-page/1812", "game:1812"],
+];
+let redirects = 0;
+for (const lang of SITE.langs) {
+  const olds = lang === "es" ? OLD : [...OLD, ["contacto", "contact"]];
+  for (const [from, page, hash = ""] of olds) {
+    const file = `${langBase(lang)}${from}.html`;
+    const to = "../".repeat(file.split("/").length - 1) + pathOf(lang, page) + hash;
+    const abs = SITE.baseUrl + pathOf(lang, page) + hash;
+    write(file, `<!doctype html><html lang="${lang}"><head><meta charset="utf-8"><title>DS4Games</title><meta name="robots" content="noindex"><link rel="canonical" href="${abs}"><meta http-equiv="refresh" content="0; url=${to}"><script>location.replace(${JSON.stringify(to)})</script></head><body><a href="${to}">DS4Games</a></body></html>\n`);
+    redirects++;
+  }
+}
+
 writeFileSync(join(OUT, "sitemap.xml"), `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls.map((u) => `  <url><loc>${SITE.baseUrl}${u}</loc></url>`).join("\n")}\n</urlset>\n`);
 writeFileSync(join(OUT, "robots.txt"), `User-agent: *\nAllow: /\nSitemap: ${SITE.baseUrl}sitemap.xml\n`);
 writeFileSync(join(OUT, ".nojekyll"), "");
-console.log(`${urls.length + 1} páginas generadas en docs/`);
+if (DOMAIN) writeFileSync(CNAME, DOMAIN + "\n");
+console.log(`${urls.length + 1} páginas y ${redirects} redirecciones generadas en docs/ · ${SITE.baseUrl}`);

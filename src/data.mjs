@@ -1,7 +1,11 @@
 // Datos que comparten todos los idiomas. Cambiá precios, links de compra o el tipo de cambio acá.
 
 export const SITE = {
-  // Cuando tengas el dominio, cambiá esta URL (se usa para el sitemap, el canonical y las imágenes al compartir).
+  // Dominio propio. Vacío: la web se ve en simonet46.github.io/ds4games.
+  // Para pasar a www.ds4games.com: poné "www.ds4games.com", corré `node build.mjs` y subí los cambios
+  // (crea docs/CNAME y cambia todas las direcciones absolutas). Los pasos del DNS están en el README.
+  domain: "",
+  // Dirección mientras no haya dominio propio.
   baseUrl: "https://simonet46.github.io/ds4games/",
   email: "juegosds4games@gmail.com",
   city: "Montpellier, France",

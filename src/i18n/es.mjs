@@ -11,6 +11,8 @@ export default {
     contact: "Contacto",
     buy: "Comprar",
     buyToyco: "Comprar en Toyco",
+    buyMail: "Pedir por email",
+    mailSubject: "Quiero comprar {game}",
     approx: "aprox.",
     shipFR: "Envío dentro de Francia: {eur} €.",
     shipINT: "Envío desde Francia al resto del mundo: {eur} €.",

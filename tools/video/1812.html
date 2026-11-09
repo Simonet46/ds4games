@@ -1,0 +1,244 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>1812 · video</title>
+<link rel="stylesheet" href="lib/video.css">
+<style>
+  #stage { background: #0b1a2c; }
+  #flag { position: absolute; left: 0; top: 0; width: 1080px; height: 1920px; }
+  #night { position: absolute; inset: 0; background: linear-gradient(180deg, #07111f, #0d2440 55%, #07111f); opacity: 0; }
+  .num { font-family: "Playfair", serif; font-weight: 900; font-size: 330px; line-height: 1; color: #0d2a4a; letter-spacing: -.01em; }
+  .num span { display: inline-block; }
+  .arg { font-size: 54px; font-weight: 700; letter-spacing: .42em; color: #3f7fbf; padding-left: .42em; }
+  .q { font-family: "Playfair", serif; font-style: italic; font-weight: 700; font-size: 86px; line-height: 1.04; }
+  .cel { color: #9fd0ff; }
+  .photo { width: 900px; height: 577px; border-radius: 40px; overflow: hidden; }
+  .photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .photo .rim { position: absolute; inset: 0; border-radius: 40px; box-shadow: inset 0 0 0 2px rgba(255,255,255,.45); }
+  .mini { font-size: 46px; font-weight: 700; padding: 18px 34px; border-radius: 999px; white-space: nowrap; }
+  .big { font-family: "Playfair", serif; font-weight: 900; font-size: 96px; line-height: 1; letter-spacing: -.01em; }
+  .say { font-size: 70px; font-weight: 800; letter-spacing: -.025em; }
+  .lead2 { font-size: 52px; font-weight: 600; opacity: .9; }
+  .bar { width: 120px; border-radius: 26px; overflow: hidden; }
+  .bar i { position: absolute; left: 0; right: 0; bottom: 0; background: linear-gradient(180deg, #d9efff, #75aadb); border-radius: 26px; }
+  .lvl { font-size: 52px; font-weight: 750; }
+  .boxwrap { width: 640px; height: 751px; transform-style: preserve-3d; }
+  .boxwrap img { width: 100%; height: 100%; display: block; filter: drop-shadow(0 50px 60px rgba(0,0,0,.6)); }
+  .shine { position: absolute; inset: 0; -webkit-mask-image: url(../../docs/assets/img/arg-box-1020.webp); mask-image: url(../../docs/assets/img/arg-box-1020.webp);
+    -webkit-mask-size: 100% 100%; mask-size: 100% 100%; mix-blend-mode: screen; }
+  .shine i { position: absolute; top: -20%; bottom: -20%; width: 30%; background: linear-gradient(90deg, transparent, rgba(255,255,255,.55), transparent); transform: skewX(-18deg); }
+  .glow { width: 1000px; height: 1000px; border-radius: 50%; background: radial-gradient(circle, rgba(125,184,234,.55), rgba(125,184,234,0) 62%); }
+  .url { font-size: 98px; font-weight: 850; letter-spacing: -.035em; }
+  .sub { font-size: 46px; font-weight: 550; opacity: .88; }
+</style>
+</head>
+<body>
+<div id="stage">
+  <svg id="flag" viewBox="0 0 1080 1920">
+    <defs>
+      <linearGradient id="shade" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="760" y2="0" spreadMethod="repeat">
+        <stop offset="0" stop-color="#000" stop-opacity=".16"/>
+        <stop offset=".5" stop-color="#fff" stop-opacity=".14"/>
+        <stop offset="1" stop-color="#000" stop-opacity=".16"/>
+      </linearGradient>
+    </defs>
+    <path id="f1" fill="#75aadb"/><path id="f2" fill="#ffffff"/><path id="f3" fill="#75aadb"/><path id="fs" fill="url(#shade)"/>
+  </svg>
+  <div id="night"></div>
+
+  <div class="c num center-text" id="num"></div>
+  <div class="c arg center-text" id="arg">ARGENTINA</div>
+
+  <div class="c q center-text" id="q1"></div>
+  <div class="c q center-text cel" id="q2"></div>
+  <div class="c photo glass" id="art"><img src="../../docs/assets/img/arg-art-960.webp" alt=""><div class="rim"></div></div>
+  <div id="minis"></div>
+
+  <div class="c say center-text" id="say1"></div>
+  <div class="c say center-text cel" id="say2"></div>
+  <div id="photos"></div>
+
+  <div class="c big center-text" id="b1"></div>
+  <div class="c lead2 center-text" id="b2"></div>
+  <div id="bars"></div>
+  <div class="c lvl center-text cel" id="lvl"></div>
+
+  <div class="c glow" id="glow"></div>
+  <div class="c boxwrap" id="box"><img src="../../docs/assets/img/arg-box-1020.webp" alt=""><div class="shine"><i id="streak"></i></div></div>
+  <div id="chips"></div>
+
+  <img class="c" id="logo" src="../../docs/assets/img/logo-ds4-480.webp" alt="" style="width:430px">
+  <div class="c url center-text" id="url">ds4games.com</div>
+  <div class="c sub center-text" id="sub"></div>
+
+  <div class="vignette"></div>
+  <div class="grain"></div>
+</div>
+<script src="lib/engine.js"></script>
+<script>
+const { p, lerp, put, words, reveal, lang, $ } = V;
+const T = {
+  es: {
+    q: ["¿Junto a quién creó", "Belgrano la bandera?"],
+    minis: ["¿Cómo?", "¿Dónde?", "¿Qué comieron?"],
+    say: ["El Autor no puede hablar.", "Solo guía con imágenes."],
+    big: "Descubrilo en equipo", lead: "antes de que se acaben los turnos",
+    lvl: "5 niveles de dificultad",
+    chips: ["2–7 jugadores", "+8 años", "20 min", "Cooperativo"],
+    sub: "Para jugar en casa y en la escuela",
+  },
+  fr: {
+    q: ["Avec qui Belgrano", "a-t-il créé le drapeau ?"],
+    minis: ["Comment ?", "Où ?", "En mangeant quoi ?"],
+    say: ["L’Auteur ne peut pas parler.", "Il guide avec des images."],
+    big: "Découvrez-le en équipe", lead: "avant la fin des tours",
+    lvl: "5 niveaux de difficulté",
+    chips: ["2–7 joueurs", "8 ans et +", "20 min", "Coopératif"],
+    sub: "19 € · Expédié depuis Montpellier",
+  },
+  en: {
+    q: ["Who helped Belgrano", "create the flag?"],
+    minis: ["How?", "Where?", "Eating what?"],
+    say: ["The Author can’t speak.", "Only images guide you."],
+    big: "Solve it as a team", lead: "before the turns run out",
+    lvl: "5 difficulty levels",
+    chips: ["2–7 players", "Ages 8+", "20 min", "Co-op"],
+    sub: "€19 · Ships from Montpellier, France",
+  },
+}[lang];
+document.documentElement.lang = lang;
+window.DURATION = 21.5;
+const S2 = 3.2, S3 = 7.4, S4 = 11.5, S5 = 15.0, S6 = 18.4;
+
+const FITS = [];
+function fit(el, max = 960) { FITS.push([el, max]); }
+function doFit(el, max) { el.style.fontSize = ""; let fs = parseFloat(getComputedStyle(el).fontSize); while (el.scrollWidth > max && fs > 20) { fs -= 2; el.style.fontSize = fs + "px"; } }
+
+const NUM = Array.from("1812").map((d) => { const s = document.createElement("span"); s.textContent = d; $("#num").appendChild(s); return s; });
+const Q = ["#q1", "#q2"].map((id, i) => { $(id).textContent = T.q[i]; fit($(id)); return words($(id)); });
+const MINI = T.minis.map((m) => { const d = document.createElement("div"); d.className = "c mini glass"; d.textContent = m; $("#minis").appendChild(d); return d; });
+const SAY = ["#say1", "#say2"].map((id, i) => { $(id).textContent = T.say[i]; fit($(id), 980); return words($(id)); });
+const PH = [["gameplay", -4], ["cards", 3], ["grid", -2]].map(([n, r], i) => {
+  const c = document.createElement("div"); c.className = "c photo glass"; c.innerHTML = `<img src="../../docs/assets/img/arg-${n}-960.webp" alt=""><div class="rim"></div>`;
+  c.style.zIndex = 10 - i; $("#photos").appendChild(c); return { c, r, i };
+});
+$("#b1").textContent = T.big; fit($("#b1"));
+$("#b2").textContent = T.lead; fit($("#b2"));
+$("#lvl").textContent = T.lvl; fit($("#lvl"));
+const BARS = [80, 130, 180, 230, 280].map((h, i) => {
+  const b = document.createElement("div"); b.className = "c bar glass"; b.style.height = h + "px"; b.innerHTML = "<i></i>";
+  $("#bars").appendChild(b); return { b, f: b.querySelector("i"), h, x: (i - 2) * 146 };
+});
+$("#sub").textContent = T.sub; fit($("#sub"), 980);
+const chips = T.chips.map((txt) => { const d = document.createElement("div"); d.className = "c chip glass"; d.textContent = txt; $("#chips").appendChild(d); return d; });
+function chipRow(els, gap = 20) {
+  const ws = els.map((e) => e.offsetWidth); const total = ws.reduce((a, b) => a + b, 0) + gap * (els.length - 1);
+  let x = -total / 2; return ws.map((w) => { const cx = x + w / 2; x += w + gap; return cx; });
+}
+let CX = [], MX = [];
+window.setup = async () => {
+  await document.fonts.ready;
+  FITS.forEach(([el, max]) => doFit(el, max));
+  // Dos filas de dos chips
+  const r1 = chipRow(chips.slice(0, 2)), r2 = chipRow(chips.slice(2));
+  CX = [...r1.map((x) => [x, 0]), ...r2.map((x) => [x, 104])];
+  MX = chipRow(MINI, 18);
+};
+
+// Bandera que ondea: tres franjas
+const F = [$("#f1"), $("#f2"), $("#f3")];
+function waveY(x, t, base, amp) {
+  return base + amp * Math.sin((x / 760) * 6.283 - t * 2.2) + amp * 0.35 * Math.sin((x / 330) * 6.283 - t * 3.1 + 1.3);
+}
+function band(t, y0, y1, amp) {
+  let d = "";
+  for (let i = 0; i <= 36; i++) { const x = -40 + i * 32; d += (i ? "L" : "M") + x + " " + waveY(x, t, y0, amp).toFixed(1); }
+  for (let i = 36; i >= 0; i--) { const x = -40 + i * 32; d += "L" + x + " " + waveY(x, t, y1, amp).toFixed(1); }
+  return d + "Z";
+}
+
+window.render = function (t) {
+  // Bandera
+  const amp = 46;
+  const edges = [-80, 640, 1280, 2000];
+  F.forEach((f, i) => f.setAttribute("d", band(t, edges[i], edges[i + 1], amp)));
+  $("#fs").setAttribute("d", band(t, edges[0], edges[3], amp));
+  $("#shade").setAttribute("gradientTransform", `translate(${((t * 2.2) / 6.283) * 760} 0)`);
+  const night = p(t, S2 - 0.5, S2 + 0.4, "inOut");
+  $("#night").style.opacity = 0.86 * night;
+
+  // 1. 1812
+  const s1out = p(t, S2 - 0.5, S2, "in");
+  NUM.forEach((s, i) => {
+    const k = p(t, 0.25 + i * 0.16, 0.85 + i * 0.16, "back");
+    s.style.transform = `translateY(${(1 - k) * -160}px) scale(${0.7 + 0.3 * Math.min(1, k)})`;
+    s.style.opacity = Math.min(1, k * 1.6);
+  });
+  put($("#num"), { y: -40, s: 1 + s1out * 0.3, op: 1 - s1out, blur: s1out * 20 });
+  const ag = p(t, 1.1, 1.7, "expo");
+  put($("#arg"), { y: 190 + (1 - ag) * 30, op: ag * (1 - s1out), blur: (1 - ag) * 10 });
+
+  // 2. La pregunta
+  const s2out = p(t, S3 - 0.45, S3, "in"), on2 = t > S2 - 0.05 && t < S3;
+  Q.forEach((sp, i) => { reveal(sp, t, S2 + 0.15 + i * 0.4, { gap: 0.08, dur: 0.55, dy: 50 }); put($(["#q1", "#q2"][i]), { y: -600 + i * 98, op: on2 ? 1 - s2out : 0, blur: s2out * 14 }); });
+  const ar = p(t, S2 + 0.5, S2 + 1.4, "expo");
+  put($("#art"), { y: 20 + (1 - ar) * 260 + 8 * Math.sin(t * 1.4), s: 0.9 + ar * 0.1, r: (1 - ar) * 5, op: on2 ? Math.min(1, ar * 1.5) * (1 - s2out) : 0 });
+  $("#art img").style.transform = `scale(${1.05 + 0.12 * p(t, S2, S3, "lin")})`;
+  MINI.forEach((m, i) => {
+    const k = p(t, S2 + 2.0 + i * 0.35, S2 + 2.5 + i * 0.35, "back");
+    put(m, { x: MX[i] || 0, y: 420 + (1 - k) * 50, s: 0.6 + 0.4 * k, op: on2 ? Math.min(1, k * 1.5) * (1 - s2out) : 0 });
+  });
+
+  // 3. Fotos de partida
+  const s3out = p(t, S4 - 0.45, S4, "in"), on3 = t > S3 - 0.05 && t < S4;
+  reveal(SAY[0], t, S3 + 0.15, { gap: 0.08, dur: 0.5, dy: 50 });
+  reveal(SAY[1], t, S3 + 1.5, { gap: 0.08, dur: 0.5, dy: 50 });
+  put($("#say1"), { y: -600, op: on3 ? 1 - s3out : 0, blur: s3out * 14 });
+  put($("#say2"), { y: -505, op: on3 ? 1 - s3out : 0, blur: s3out * 14 });
+  PH.forEach((o) => {
+    const k = p(t, S3 + 0.2 + o.i * 0.12, S3 + 1.0 + o.i * 0.12, "expo");
+    const flyAt = S3 + 1.7 + o.i * 1.15, fly = o.i < 2 ? p(t, flyAt, flyAt + 0.55, "in") : 0;
+    const dir = o.i === 0 ? -1 : 1;
+    put(o.c, { x: dir * fly * 1300, y: 80 + o.i * 26 + (1 - k) * 700, r: o.r + dir * fly * 18, s: 1 - o.i * 0.03, op: on3 ? Math.min(1, k * 1.5) * (1 - s3out) * (1 - fly * 0.3) : 0 });
+  });
+
+  // 4. En equipo y niveles
+  const s4out = p(t, S5 - 0.45, S5, "in"), on4 = t > S4 - 0.05 && t < S5;
+  const bi = p(t, S4, S4 + 0.6, "expo"), li = p(t, S4 + 0.35, S4 + 0.95, "expo");
+  put($("#b1"), { y: -420 + (1 - bi) * 50, op: on4 ? bi * (1 - s4out) : 0, blur: (1 - bi) * 14 + s4out * 14, s: 0.94 + bi * 0.06 });
+  put($("#b2"), { y: -300 + (1 - li) * 40, op: on4 ? li * 0.9 * (1 - s4out) : 0, blur: s4out * 14 });
+  BARS.forEach((o, i) => {
+    const k = p(t, S4 + 0.7 + i * 0.08, S4 + 1.2 + i * 0.08, "back");
+    put(o.b, { x: o.x, y: 300 - o.h / 2 + (1 - k) * 120 + s4out * 200, op: on4 ? Math.min(1, k * 1.5) * (1 - s4out) : 0 });
+    o.f.style.height = 100 * p(t, S4 + 1.4 + i * 0.25, S4 + 1.7 + i * 0.25, "out") + "%";
+  });
+  const lv = p(t, S4 + 1.3, S4 + 1.8, "expo");
+  put($("#lvl"), { y: 400 + (1 - lv) * 30 + s4out * 200, op: on4 ? lv * (1 - s4out) : 0 });
+
+  // 5. Caja
+  const s5in = p(t, S5, S5 + 1.1, "expo"), s5out = p(t, S6 - 0.4, S6, "in"), on5 = t > S5 - 0.05 && t < S6;
+  put($("#glow"), { y: -80, s: 0.75 + s5in * 0.35 + 0.04 * Math.sin(t * 2), op: on5 ? s5in * (1 - s5out) : 0 });
+  put($("#box"), {
+    y: -90 + (1 - s5in) * 360 + 12 * Math.sin((t - S5) * 1.5), ry: lerp(32, -8, s5in) + 3 * Math.sin((t - S5) * 1.1),
+    s: (0.84 + s5in * 0.16) * (1 + s5out * 0.08), op: on5 ? Math.min(1, s5in * 1.6) * (1 - s5out) : 0, blur: s5out * 18,
+  });
+  $("#streak").style.left = `${lerp(-50, 130, p(t, S5 + 1.1, S5 + 2.2, "inOut"))}%`;
+  chips.forEach((c, i) => {
+    const k = p(t, S5 + 0.9 + i * 0.14, S5 + 1.4 + i * 0.14, "back");
+    const [cx, cy] = CX[i] || [0, 0];
+    put(c, { x: cx, y: 450 + cy + (1 - k) * 60, s: 0.7 + k * 0.3, op: on5 ? Math.min(1, k * 1.5) * (1 - s5out) : 0 });
+  });
+
+  // 6. Cierre
+  const lg = p(t, S6, S6 + 0.9, "back");
+  put($("#logo"), { y: -230, s: 0.6 + lg * 0.4, op: t >= S6 ? Math.min(1, lg * 1.4) : 0, r: (1 - lg) * -8 });
+  const u = p(t, S6 + 0.45, S6 + 1.1, "expo");
+  put($("#url"), { y: 60 + (1 - u) * 50, op: u, blur: (1 - u) * 14 });
+  const sb = p(t, S6 + 0.8, S6 + 1.4, "expo");
+  put($("#sub"), { y: 165 + (1 - sb) * 40, op: sb * 0.9 });
+};
+window.render(0);
+</script>
+</body>
+</html>

@@ -49,8 +49,12 @@
       var toyco = region === "AR" && g.toycoAR;
       var a = el.querySelector("a.buy-link");
       if (a) {
-        a.href = links[region] || g.store;
-        a.textContent = toyco ? CFG.t.buyToyco : CFG.t.buy;
+        // Si la tienda de respaldo está en este mismo dominio, ya no existe (era la de Wix).
+        var store = g.store && g.store.indexOf("//" + location.host + "/") < 0 ? g.store : "";
+        var href = links[region] || store;
+        a.href = href || g.mail;
+        a.textContent = toyco ? CFG.t.buyToyco : href ? CFG.t.buy : CFG.t.buyMail;
+        if (href) { a.target = "_blank"; a.rel = "noopener"; } else a.removeAttribute("target");
       }
       var price = el.querySelector(".buy-price");
       if (price) {

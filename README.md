@@ -21,13 +21,47 @@ Una vez activado GitHub Pages (ver abajo), el sitio queda en:
 3. Branch: **main**, carpeta: **/docs**. Guardá.
 4. En uno o dos minutos el sitio aparece en la dirección de arriba.
 
-## Usar tu dominio (cuando lo tengas)
+## Pasar www.ds4games.com de Wix a esta web
 
-1. En **Settings → Pages → Custom domain**, escribí el dominio (por ejemplo `www.ds4games.com`).
-2. En el proveedor del dominio, creá un registro `CNAME` de `www` apuntando a `simonet46.github.io`.
-3. En `src/data.mjs`, cambiá `baseUrl` por la nueva dirección y volvé a generar el sitio (ver abajo).
+Hacelo en este orden: primero GitHub, después el DNS. Así nadie puede tomar el dominio mientras cambia.
 
-Ojo: los botones **Comprar** hoy apuntan a la tienda de Wix. Si el dominio deja de apuntar a Wix, esa tienda deja de funcionar: antes hay que reemplazar los links por la tienda nueva (Stripe, Shopify u otra) en `src/data.mjs`.
+**1. GitHub (2 minutos)**
+
+1. Repositorio → **Settings** → **Pages** → **Custom domain**: escribí `www.ds4games.com` y tocá **Save**. GitHub crea el archivo `docs/CNAME`.
+2. Recomendado: en tu perfil → **Settings** → **Pages** → **Add a domain**, agregá `ds4games.com`. GitHub te da un registro `TXT` para probar que el dominio es tuyo. Lo cargás en el paso 2 y después tocás **Verify**.
+
+Otra forma de hacer el punto 1: en `src/data.mjs` poné `domain: "www.ds4games.com"`, corré `node build.mjs` y subí los cambios.
+
+**2. Wix: registros DNS (10 minutos)**
+
+En Wix → **Dominios** → menú **⋯** al lado de `ds4games.com` → **Administrar registros DNS**:
+
+| Tipo | Host | Valor |
+|---|---|---|
+| A | `@` (ds4games.com) | `185.199.108.153` |
+| A | `@` | `185.199.109.153` |
+| A | `@` | `185.199.110.153` |
+| A | `@` | `185.199.111.153` |
+| AAAA | `@` | `2606:50c0:8000::153` |
+| AAAA | `@` | `2606:50c0:8001::153` |
+| AAAA | `@` | `2606:50c0:8002::153` |
+| AAAA | `@` | `2606:50c0:8003::153` |
+| CNAME | `www` | `simonet46.github.io` |
+| TXT | el que te dio GitHub en el paso 1.2 | el valor que te dio GitHub |
+
+- Borrá los registros A y CNAME viejos que apuntan a Wix. Si quedan, chocan con los nuevos y GitHub no puede crear el certificado HTTPS.
+- **No borres** los registros `MX` ni otros `TXT`: son los del correo.
+- Si Wix no te deja editar los registros porque el dominio está conectado al sitio, primero desconectalo del sitio (en la misma pantalla de Dominios).
+
+**3. Esperar y activar HTTPS**
+
+Los cambios de DNS tardan de unos minutos a 24 horas. Cuando en **Settings → Pages** aparezca "DNS check successful", marcá **Enforce HTTPS**.
+
+**Qué hace la web sola cuando el dominio cambia**
+
+- Las direcciones viejas de Wix (`/olympicos`, `/los-secretos-de-la-torre-eiffel`, `/product-page/...`, `/rules`, `/contacto`, también en `/fr/` y `/en/`) redirigen a las páginas nuevas, así los links viejos, los QR y Google siguen llegando.
+- La tienda de Wix deja de existir. Mientras no haya link de pago de Stripe, el botón pasa a **Pedir por email** (abre un correo a juegosds4games@gmail.com con el nombre del juego). Olympikos en Argentina sigue yendo a Toyco.
+- Después del cambio, corré `node build.mjs` y subí los cambios: toma el dominio de `docs/CNAME` y actualiza el canonical, el sitemap y las imágenes al compartir.
 
 ## Cambiar textos, precios o links
 
@@ -88,3 +122,23 @@ docs/                  el sitio publicado (lo que sirve GitHub Pages)
   assets/img           imágenes optimizadas
   assets/pdf           reglamentos y libretos
 ```
+
+## Videos promocionales
+
+En `videos/` están los videos verticales (1080×1920, 30 fps, unos 21 segundos) para Reels, TikTok y Shorts, en español y francés:
+
+| Juego | Español | Francés |
+|---|---|---|
+| Olympikos | `videos/olympikos-es.mp4` | `videos/olympikos-fr.mp4` |
+| Les Secrets de la Tour Eiffel | `videos/tour-eiffel-es.mp4` | `videos/tour-eiffel-fr.mp4` |
+| 1812 | `videos/1812-es.mp4` | `videos/1812-fr.mp4` |
+
+No tienen sonido: la música se agrega al publicar, desde la biblioteca de Instagram o TikTok.
+
+Se arman con HTML y se graban cuadro por cuadro. Para cambiar un texto, editá `tools/video/<juego>.html` (los textos de cada idioma están arriba del script) y volvé a grabar:
+
+```bash
+node tools/video/render.cjs olympikos es
+```
+
+Juegos: `olympikos`, `tour-eiffel`, `1812`. Idiomas: `es`, `fr`, `en`. Hace falta Node, Playwright con Chromium y ffmpeg. Para ver cuadros sueltos antes de grabar todo: `node tools/video/render.cjs olympikos es --still 2,9,15`.
