@@ -1,44 +1,310 @@
 {
-  "_comment": "Nombre final -> archivo original y anchos a generar. Las fuentes originales no se suben al repo.",
-  "logo-ds4":            {"src": "97ef38_16e1df216d044f348a73061e0a75d68f~mv2.png", "widths": [240, 480]},
-  "team-trio":           {"src": "97ef38_c1a92209778a47368fe7be60b557f16e~mv2.jpg", "widths": [640, 960]},
-  "team-duo":            {"src": "97ef38_ffe27dab5cdc4092a9d1d40cd6ad07d9~mv2.jpg", "widths": [640, 960]},
-
-  "oly-box":             {"src": "97ef38_5cfa674500c147e985a1195de91306a7~mv2.png", "widths": [360, 720, 1080]},
-  "oly-logo":            {"src": "97ef38_4c3fe2a48a7b4764a7c722e761b9a4e9~mv2.png", "widths": [320, 640]},
-  "oly-content":         {"src": "97ef38_58fab489acbb46f69d2c1dbff672a3ce~mv2.png", "widths": [640, 1280]},
-  "oly-marathon":        {"src": "97ef38_68bc241f80434a2f82a7c199af3881b9~mv2.png", "widths": [640, 1280, 1920]},
-  "oly-sprint":          {"src": "97ef38_646d557cded44368ba3275a4a1692a98~mv2.png", "widths": [640, 1280, 1920]},
-  "oly-basketball":      {"src": "97ef38_b15b2aa2808248bc805bdc41528468d8~mv2.png", "widths": [640, 1280, 1920]},
-  "oly-handball":        {"src": "97ef38_4baf11cf3df34dd29a5b081728bc059a~mv2.jpg", "widths": [640, 1267]},
-  "oly-gymnastics":      {"src": "97ef38_0acc38d2aab24e1f80efd36ccd23a23c~mv2.jpg", "widths": [640, 1280]},
-  "oly-hurdles":         {"src": "97ef38_23cf8327cad64546aad380110f52f6fb~mv2.jpg", "widths": [640, 1280]},
-  "oly-pole-vault":      {"src": "97ef38_26ac158afb9f405687669a7af8a8363c~mv2.jpg", "widths": [640, 1280]},
-  "oly-judo":            {"src": "97ef38_582da20940d34f758b5b32500af2bcf3~mv2.png", "widths": [640, 1280]},
-  "oly-biathlon":        {"src": "97ef38_87c406cf86864effbcefae8ac6ecca1c~mv2.png", "widths": [640, 1280]},
-  "oly-goalball":        {"src": "97ef38_a81cfc4808a14af996cb19d33fbb69d4~mv2.png", "widths": [640, 1280]},
-  "oly-bmx":             {"src": "97ef38_bbc03f19816c4db0833df3c97fceda77~mv2.jpg", "widths": [640, 1280]},
-  "oly-sitting-volley":  {"src": "97ef38_e7218e4ae8fc4f3c86a6322e375128e8~mv2.png", "widths": [640, 1280]},
-  "oly-breakdance":      {"src": "97ef38_35f63f49e3584d94a3f54a0ee111eca5~mv2.png", "widths": [640, 1280]},
-  "oly-table-tennis":    {"src": "97ef38_6f001d476f3a4be98506caa5a2692dc9~mv2.jpeg", "widths": [640, 1280]},
-  "oly-climbing":        {"src": "97ef38_b3d357a4717e43c6989e960605b79896~mv2.png", "widths": [640, 1280]},
-  "oly-boxing":          {"src": "97ef38_ddd012f60c444c7bb6c71eeda936a1e6~mv2.jpg", "widths": [640, 1280]},
-  "oly-ski-jump":        {"src": "97ef38_dfd6aacc4d0f47dca406b2420333ea5d~mv2.jpg", "widths": [640, 1280]},
-  "oly-wheelchair-race": {"src": "97ef38_fc694159a9be4a98b540ecd113f2949a~mv2.jpg", "widths": [640, 1280]},
-
-  "eif-box":             {"src": "97ef38_a5cced86b51744f7864af428581e52c4~mv2.png", "widths": [510]},
-  "eif-box-photo":       {"src": "97ef38_bea4e40e45cd4e7d8f31ea8ac0b65a65~mv2.jpg", "widths": [640, 960]},
-  "eif-box-dark":        {"src": "97ef38_1e782add1c6b47c2be5cac329d223b83~mv2.jpg", "widths": [640, 960]},
-  "eif-components":      {"src": "97ef38_24c2fe65f9a24849a2fee61348fb792d~mv2.jpg", "widths": [640, 960]},
-  "eif-components-wood": {"src": "97ef38_fa7a5547f5954623bfc7d9e4d4f707e2~mv2.jpg", "widths": [640, 960]},
-  "eif-parchment":       {"src": "97ef38_bdfb866794bb4759b3df1b1ecc941e0d~mv2.jpg", "widths": [1376]},
-
-  "arg-box":             {"src": "97ef38_aa3324f22b494204a02c4d3d7446fb82~mv2.png", "widths": [360, 720, 1080]},
-  "arg-open":            {"src": "97ef38_da94f9434c214868aaa4b8118554732b~mv2.png", "widths": [360, 720, 1080]},
-  "arg-box-photo":       {"src": "97ef38_20a515bdb5d64285abecf7233fdfb22a~mv2.jpg", "widths": [640, 960]},
-  "arg-open-photo":      {"src": "97ef38_1ffebb0f14eb477f8b5ca8c9fa20053a~mv2.jpg", "widths": [640, 960]},
-  "arg-art":             {"src": "97ef38_207960c2b7a44303828f872f4bc51eeb~mv2.jpg", "widths": [640, 960]},
-  "arg-gameplay":        {"src": "97ef38_965fb038ca5f4e64b2795f4119985c36~mv2.jpg", "widths": [640, 960]},
-  "arg-cards":           {"src": "97ef38_c356313eccf44540afaf2f74e4a178e9~mv2.jpg", "widths": [640, 960]},
-  "arg-grid":            {"src": "97ef38_f0c4f6c9f5a844c285259d6fa134b080~mv2.jpg", "widths": [640, 960]}
+ "_comment": "Nombre final -> archivo original y anchos a generar. Las fuentes originales no se suben al repo.",
+ "logo-ds4": {
+  "src": "97ef38_16e1df216d044f348a73061e0a75d68f~mv2.png",
+  "widths": [
+   240,
+   480
+  ]
+ },
+ "team-trio": {
+  "src": "97ef38_c1a92209778a47368fe7be60b557f16e~mv2.jpg",
+  "widths": [
+   640,
+   960
+  ]
+ },
+ "team-duo": {
+  "src": "97ef38_ffe27dab5cdc4092a9d1d40cd6ad07d9~mv2.jpg",
+  "widths": [
+   640,
+   960
+  ]
+ },
+ "oly-box": {
+  "src": "97ef38_5cfa674500c147e985a1195de91306a7~mv2.png",
+  "widths": [
+   360,
+   720,
+   1080
+  ]
+ },
+ "oly-logo": {
+  "src": "97ef38_4c3fe2a48a7b4764a7c722e761b9a4e9~mv2.png",
+  "widths": [
+   320,
+   640
+  ]
+ },
+ "oly-content": {
+  "src": "97ef38_58fab489acbb46f69d2c1dbff672a3ce~mv2.png",
+  "widths": [
+   640,
+   1280
+  ]
+ },
+ "oly-marathon": {
+  "src": "97ef38_68bc241f80434a2f82a7c199af3881b9~mv2.png",
+  "widths": [
+   640,
+   1280,
+   1920
+  ]
+ },
+ "oly-sprint": {
+  "src": "97ef38_646d557cded44368ba3275a4a1692a98~mv2.png",
+  "widths": [
+   640,
+   1280,
+   1920
+  ]
+ },
+ "oly-basketball": {
+  "src": "97ef38_b15b2aa2808248bc805bdc41528468d8~mv2.png",
+  "widths": [
+   640,
+   1280,
+   1920
+  ]
+ },
+ "oly-handball": {
+  "src": "97ef38_4baf11cf3df34dd29a5b081728bc059a~mv2.jpg",
+  "widths": [
+   640,
+   1267
+  ]
+ },
+ "oly-gymnastics": {
+  "src": "97ef38_0acc38d2aab24e1f80efd36ccd23a23c~mv2.jpg",
+  "widths": [
+   640,
+   1280
+  ]
+ },
+ "oly-hurdles": {
+  "src": "97ef38_23cf8327cad64546aad380110f52f6fb~mv2.jpg",
+  "widths": [
+   640,
+   1280
+  ]
+ },
+ "oly-pole-vault": {
+  "src": "97ef38_26ac158afb9f405687669a7af8a8363c~mv2.jpg",
+  "widths": [
+   640,
+   1280
+  ]
+ },
+ "oly-judo": {
+  "src": "97ef38_582da20940d34f758b5b32500af2bcf3~mv2.png",
+  "widths": [
+   640,
+   1280
+  ]
+ },
+ "oly-biathlon": {
+  "src": "97ef38_87c406cf86864effbcefae8ac6ecca1c~mv2.png",
+  "widths": [
+   640,
+   1280
+  ]
+ },
+ "oly-goalball": {
+  "src": "97ef38_a81cfc4808a14af996cb19d33fbb69d4~mv2.png",
+  "widths": [
+   640,
+   1280
+  ]
+ },
+ "oly-bmx": {
+  "src": "97ef38_bbc03f19816c4db0833df3c97fceda77~mv2.jpg",
+  "widths": [
+   640,
+   1280
+  ]
+ },
+ "oly-sitting-volley": {
+  "src": "97ef38_e7218e4ae8fc4f3c86a6322e375128e8~mv2.png",
+  "widths": [
+   640,
+   1280
+  ]
+ },
+ "oly-breakdance": {
+  "src": "97ef38_35f63f49e3584d94a3f54a0ee111eca5~mv2.png",
+  "widths": [
+   640,
+   1280
+  ]
+ },
+ "oly-table-tennis": {
+  "src": "97ef38_6f001d476f3a4be98506caa5a2692dc9~mv2.jpeg",
+  "widths": [
+   640,
+   1280
+  ]
+ },
+ "oly-climbing": {
+  "src": "97ef38_b3d357a4717e43c6989e960605b79896~mv2.png",
+  "widths": [
+   640,
+   1280
+  ]
+ },
+ "oly-boxing": {
+  "src": "97ef38_ddd012f60c444c7bb6c71eeda936a1e6~mv2.jpg",
+  "widths": [
+   640,
+   1280
+  ]
+ },
+ "oly-ski-jump": {
+  "src": "97ef38_dfd6aacc4d0f47dca406b2420333ea5d~mv2.jpg",
+  "widths": [
+   640,
+   1280
+  ]
+ },
+ "oly-wheelchair-race": {
+  "src": "97ef38_fc694159a9be4a98b540ecd113f2949a~mv2.jpg",
+  "widths": [
+   640,
+   1280
+  ]
+ },
+ "eif-box": {
+  "src": "drive-eif-box.png",
+  "widths": [
+   360,
+   720,
+   1080
+  ]
+ },
+ "eif-box-photo": {
+  "src": "97ef38_bea4e40e45cd4e7d8f31ea8ac0b65a65~mv2.jpg",
+  "widths": [
+   640,
+   960
+  ]
+ },
+ "eif-box-dark": {
+  "src": "97ef38_1e782add1c6b47c2be5cac329d223b83~mv2.jpg",
+  "widths": [
+   640,
+   960
+  ]
+ },
+ "eif-components": {
+  "src": "97ef38_24c2fe65f9a24849a2fee61348fb792d~mv2.jpg",
+  "widths": [
+   640,
+   960
+  ]
+ },
+ "eif-components-wood": {
+  "src": "97ef38_fa7a5547f5954623bfc7d9e4d4f707e2~mv2.jpg",
+  "widths": [
+   640,
+   960
+  ]
+ },
+ "eif-parchment": {
+  "src": "97ef38_bdfb866794bb4759b3df1b1ecc941e0d~mv2.jpg",
+  "widths": [
+   1376
+  ]
+ },
+ "arg-box": {
+  "src": "97ef38_aa3324f22b494204a02c4d3d7446fb82~mv2.png",
+  "widths": [
+   360,
+   720,
+   1080
+  ]
+ },
+ "arg-open": {
+  "src": "97ef38_da94f9434c214868aaa4b8118554732b~mv2.png",
+  "widths": [
+   360,
+   720,
+   1080
+  ]
+ },
+ "arg-box-photo": {
+  "src": "97ef38_20a515bdb5d64285abecf7233fdfb22a~mv2.jpg",
+  "widths": [
+   640,
+   960
+  ]
+ },
+ "arg-open-photo": {
+  "src": "97ef38_1ffebb0f14eb477f8b5ca8c9fa20053a~mv2.jpg",
+  "widths": [
+   640,
+   960
+  ]
+ },
+ "arg-art": {
+  "src": "97ef38_207960c2b7a44303828f872f4bc51eeb~mv2.jpg",
+  "widths": [
+   640,
+   960
+  ]
+ },
+ "arg-gameplay": {
+  "src": "97ef38_965fb038ca5f4e64b2795f4119985c36~mv2.jpg",
+  "widths": [
+   640,
+   960
+  ]
+ },
+ "arg-cards": {
+  "src": "97ef38_c356313eccf44540afaf2f74e4a178e9~mv2.jpg",
+  "widths": [
+   640,
+   960
+  ]
+ },
+ "arg-grid": {
+  "src": "97ef38_f0c4f6c9f5a844c285259d6fa134b080~mv2.jpg",
+  "widths": [
+   640,
+   960
+  ]
+ },
+ "eif-dancer": {
+  "src": "drive-eif-dancer.png",
+  "widths": [
+   480,
+   960
+  ]
+ },
+ "eif-police": {
+  "src": "drive-eif-police.png",
+  "widths": [
+   480,
+   960
+  ]
+ },
+ "eif-nun": {
+  "src": "drive-eif-nun.png",
+  "widths": [
+   480,
+   960
+  ]
+ },
+ "arg-book-dark": {
+  "src": "drive-arg-book.jpg",
+  "widths": [
+   640,
+   1280
+  ]
+ },
+ "arg-flag": {
+  "src": "drive-arg-flag.jpg",
+  "widths": [
+   480,
+   960
+  ]
+ }
 }

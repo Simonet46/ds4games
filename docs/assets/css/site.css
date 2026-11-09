@@ -145,7 +145,7 @@ p { margin: 0; text-wrap: pretty; }
 .stage a:hover { transform: translateY(-10px) scale(1.02); }
 .stage .s-oly { left: 50%; width: 34%; translate: -50% 0; z-index: 2; }
 .stage .s-arg { left: 8%; width: 28%; bottom: 14%; }
-.stage .s-eif { right: 8%; width: 26%; bottom: 14%; }
+.stage .s-eif { right: 9%; width: 22%; bottom: 13%; }
 .float { animation: float 7s ease-in-out infinite; }
 .stage .s-arg .float { animation-delay: -2.3s; }
 .stage .s-eif .float { animation-delay: -4.6s; }
@@ -153,7 +153,7 @@ p { margin: 0; text-wrap: pretty; }
 @media (prefers-reduced-motion: reduce) { .float { animation: none; } }
 @media (max-width: 640px) {
   .hero { padding-top: calc(env(safe-area-inset-top, 0px) + 120px); }
-  .stage .s-oly { width: 44%; } .stage .s-arg { left: 2%; width: 34%; } .stage .s-eif { right: 2%; width: 32%; }
+  .stage .s-oly { width: 44%; } .stage .s-arg { left: 2%; width: 34%; } .stage .s-eif { right: 3%; width: 27%; }
 }
 
 /* Bloque de juego en la portada */
@@ -165,7 +165,7 @@ p { margin: 0; text-wrap: pretty; }
 .tile .copy { padding: clamp(28px, 5vw, 64px); display: grid; gap: 18px; align-content: center; }
 .tile .copy .lead { font-size: 1.12rem; }
 .tile .box { justify-self: center; width: min(78%, 380px); filter: drop-shadow(0 40px 50px rgba(0, 0, 0, .6)); }
-.tile.t-tour-eiffel .box { width: min(70%, 320px); }
+.tile.t-tour-eiffel .box { width: min(62%, 280px); }
 .tile .price { font-size: 15px; color: var(--ink-2); }
 @media (max-width: 860px) {
   .tile { grid-template-columns: 1fr; min-height: 0; }
@@ -218,7 +218,7 @@ p { margin: 0; text-wrap: pretty; }
 .ghero .panel { padding: clamp(24px, 4vw, 44px); display: grid; gap: 18px; }
 .ghero .sub { font-size: clamp(1.1rem, 2vw, 1.4rem); color: var(--ink-2); font-weight: 500; letter-spacing: -.02em; margin-top: -6px; }
 .ghero .boxart { justify-self: center; width: min(88%, 420px); filter: drop-shadow(0 40px 50px rgba(0, 0, 0, .65)); }
-.g-tour-eiffel .ghero .boxart { width: min(80%, 340px); }
+.g-tour-eiffel .ghero .boxart { width: min(78%, 330px); }
 @media (max-width: 900px) { .ghero-grid { grid-template-columns: 1fr; } .ghero .boxart { grid-row: 1; width: min(60%, 300px); } }
 
 /* Compra */
@@ -231,6 +231,34 @@ p { margin: 0; text-wrap: pretty; }
 .region select { appearance: none; -webkit-appearance: none; padding: 7px 30px 7px 12px; border-radius: 999px; border: 1px solid var(--stroke-2); background: rgba(255, 255, 255, .06) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M1 1l4 4 4-4' fill='none' stroke='%23fff' stroke-width='1.5'/%3E%3C/svg%3E") no-repeat right 12px center; color: var(--ink); font-size: 14px; cursor: pointer; }
 .region select option { color: #000; }
 .ar-only[hidden], .noar-only[hidden] { display: none !important; }
+
+/* Perfil del juego */
+.profile-grid { display: grid; gap: 22px; grid-template-columns: 1.35fr 1fr; align-items: stretch; }
+@media (max-width: 900px) { .profile-grid { grid-template-columns: 1fr; } }
+.bars { list-style: none; margin: 8px 0 0; padding: 0; display: grid; gap: 16px; }
+.bar { display: grid; grid-template-columns: minmax(120px, 160px) 1fr 44px; gap: 16px; align-items: center; }
+.bar-label { font-weight: 600; font-size: 15px; }
+.bar-track { display: grid; grid-template-columns: repeat(5, 1fr); gap: 6px; }
+.bar-track i { height: 10px; border-radius: 999px; background: rgba(255, 255, 255, .1); }
+.bar-track i.on { background: var(--accent); box-shadow: 0 0 14px color-mix(in srgb, var(--accent) 45%, transparent); }
+.js .reveal .bar-track i.on { transform: scaleX(0); transform-origin: left; transition: transform .5s var(--ease); transition-delay: calc(var(--i) * 35ms); }
+.js .reveal.in .bar-track i.on { transform: none; }
+@media (prefers-reduced-motion: reduce) { .js .reveal .bar-track i.on { transform: none; transition: none; } }
+.bar-val { font-weight: 700; font-variant-numeric: tabular-nums; text-align: right; }
+.bar-val small { color: var(--ink-3); font-weight: 500; }
+@media (max-width: 520px) { .bar { grid-template-columns: 1fr auto; gap: 8px 12px; } .bar-track { grid-column: 1 / -1; grid-row: 2; } }
+.facts-panel { display: grid; gap: 22px; align-content: start; }
+.facts-panel .subhead { margin: 0 0 10px; font-size: 12px; }
+.cx { display: flex; align-items: center; gap: 14px; }
+.dots5 { display: inline-flex; gap: 6px; }
+.dots5 i { width: 12px; height: 12px; border-radius: 50%; background: rgba(255, 255, 255, .14); }
+.dots5 i.on { background: var(--accent); box-shadow: 0 0 12px var(--accent); }
+.big { font-size: 1.6rem; font-weight: 700; letter-spacing: -.02em; }
+.big .muted { font-size: 1rem; font-weight: 500; }
+.compare { display: grid; gap: 18px; grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr)); }
+.compare .card { transition: transform .3s var(--ease); }
+.compare .card:hover { transform: translateY(-3px); }
+.compare .bar { grid-template-columns: minmax(110px, 140px) 1fr 40px; gap: 12px; }
 
 /* Reglas destacadas */
 .rules2 { display: grid; gap: 18px; grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr)); }
@@ -248,6 +276,7 @@ p { margin: 0; text-wrap: pretty; }
 .gallery { --edge: max(var(--gutter), calc((100vw - 1200px) / 2 + 20px)); display: flex; gap: 16px; overflow-x: auto; scroll-snap-type: x mandatory; scroll-padding-inline: var(--edge); padding: 6px var(--edge) 22px; scrollbar-width: thin; scrollbar-color: rgba(255, 255, 255, .25) transparent; }
 .gallery figure { margin: 0; flex: 0 0 min(78vw, 520px); scroll-snap-align: start; position: relative; border-radius: var(--r-lg); overflow: hidden; border: 1px solid var(--stroke); aspect-ratio: 16 / 10; background: var(--bg-2); }
 .gallery img { width: 100%; height: 100%; object-fit: cover; }
+.gallery figure.tall { flex-basis: min(52vw, 300px); aspect-ratio: 2 / 3; }
 .gallery figcaption { position: absolute; left: 14px; bottom: 14px; padding: 7px 14px; border-radius: 999px; font-size: 14px; font-weight: 600; background: rgba(10, 12, 20, .55); border: 1px solid var(--stroke); -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px); }
 
 /* Contenido y descargas */

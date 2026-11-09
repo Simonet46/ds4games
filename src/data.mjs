@@ -3,7 +3,7 @@
 export const SITE = {
   // Cuando tengas el dominio, cambiá esta URL (se usa para el sitemap, el canonical y las imágenes al compartir).
   baseUrl: "https://simonet46.github.io/ds4games/",
-  email: "info@ds4games.com",
+  email: "juegosds4games@gmail.com",
   city: "Montpellier, France",
   social: {
     instagram: "https://www.instagram.com/ds4games/",
@@ -22,6 +22,10 @@ export const SITE = {
   },
 };
 
+// Perfil de cada juego, de 1 a 5. Ajustalo si querés otro valor.
+// luck: suerte · logic: lógica · team: trabajo en equipo · strategy: estrategia · speed: rapidez · talk: conversación
+export const PROFILE_KEYS = ["luck", "logic", "team", "strategy", "speed", "talk"];
+
 export const GAME_ORDER = ["olympikos", "tour-eiffel", "1812"];
 
 export const GAMES = {
@@ -38,6 +42,9 @@ export const GAMES = {
     tile: "oly-sprint",
     players: "2–6",
     minutes: 20,
+    profile: { luck: 3, logic: 2, team: 1, strategy: 2, speed: 5, talk: 2 },
+    complexity: 1,
+    best: "4–6",
     gallery: [
       ["oly-handball", "handball"], ["oly-sitting-volley", "sittingVolley"], ["oly-breakdance", "breakdance"],
       ["oly-table-tennis", "tableTennis"], ["oly-climbing", "climbing"], ["oly-judo", "judo"],
@@ -65,8 +72,12 @@ export const GAMES = {
     tile: "eif-parchment",
     players: "3–5",
     minutes: 25,
+    profile: { luck: 2, logic: 5, team: 2, strategy: 3, speed: 1, talk: 3 },
+    complexity: 2,
+    best: "4–5",
     gallery: [
-      ["eif-box-photo", "box"], ["eif-components", "components"], ["eif-components-wood", "all"], ["eif-box-dark", "frontBack"],
+      ["eif-box-photo", "box"], ["eif-dancer", "dancer", "tall"], ["eif-police", "police", "tall"], ["eif-nun", "nun", "tall"],
+      ["eif-components", "components"], ["eif-components-wood", "all"], ["eif-box-dark", "frontBack"],
     ],
     pdfs: [
       { file: "tour-eiffel-reglamento-es.pdf", lang: "ES", kind: "rules" },
@@ -87,8 +98,11 @@ export const GAMES = {
     tile: "arg-open-photo",
     players: "2–7",
     minutes: 20,
+    profile: { luck: 2, logic: 4, team: 5, strategy: 3, speed: 2, talk: 5 },
+    complexity: 2,
+    best: "3–5",
     gallery: [
-      ["arg-box-photo", "box"], ["arg-open-photo", "dice"], ["arg-gameplay", "play"],
+      ["arg-box-photo", "box"], ["arg-book-dark", "book"], ["arg-flag", "flag", "tall"], ["arg-open-photo", "dice"], ["arg-gameplay", "play"],
       ["arg-cards", "cards"], ["arg-grid", "grid"], ["arg-art", "art"],
     ],
     levels: [[1, 5, true, 5], [2, 6, true, 4], [3, 6, true, 4], [4, 6, false, 4], [5, 6, false, 3]],

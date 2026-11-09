@@ -197,9 +197,11 @@
  },
  "eif-box": {
   "widths": [
-   364
+   360,
+   720,
+   1080
   ],
-  "ratio": 0.9093,
+  "ratio": 1.4223,
   "alpha": true
  },
  "eif-box-photo": {
@@ -305,6 +307,46 @@
    960
   ],
   "ratio": 0.6406,
+  "alpha": false
+ },
+ "eif-dancer": {
+  "widths": [
+   480,
+   960
+  ],
+  "ratio": 1.5004,
+  "alpha": true
+ },
+ "eif-police": {
+  "widths": [
+   480,
+   960
+  ],
+  "ratio": 1.5004,
+  "alpha": true
+ },
+ "eif-nun": {
+  "widths": [
+   480,
+   960
+  ],
+  "ratio": 1.5004,
+  "alpha": true
+ },
+ "arg-book-dark": {
+  "widths": [
+   640,
+   1280
+  ],
+  "ratio": 0.6667,
+  "alpha": false
+ },
+ "arg-flag": {
+  "widths": [
+   480,
+   960
+  ],
+  "ratio": 1.5,
   "alpha": false
  }
 }

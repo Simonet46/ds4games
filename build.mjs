@@ -2,7 +2,7 @@
 import { readFileSync, writeFileSync, mkdirSync, rmSync, statSync, existsSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
-import { SITE, GAMES, GAME_ORDER } from "./src/data.mjs";
+import { SITE, GAMES, GAME_ORDER, PROFILE_KEYS } from "./src/data.mjs";
 import es from "./src/i18n/es.mjs";
 import fr from "./src/i18n/fr.mjs";
 import en from "./src/i18n/en.mjs";
@@ -169,6 +169,35 @@ ${config(ctx)}
 `;
 }
 
+/* Perfil del juego: barras de 1 a 5 */
+function bar(label, v, i = 0) {
+  const segs = [1, 2, 3, 4, 5].map((n) => `<i${n <= v ? ' class="on"' : ""} style="--i:${i * 5 + n}"></i>`).join("");
+  return `<li class="bar"><span class="bar-label">${esc(label)}</span><span class="bar-track" aria-hidden="true">${segs}</span><span class="bar-val">${v}<small>/5</small></span></li>`;
+}
+function bars(ctx, slug, keys = PROFILE_KEYS) {
+  const p = ctx.L.t.profile, g = GAMES[slug];
+  return `<ul class="bars">${keys.map((k, i) => bar(p.labels[k], g.profile[k], i)).join("")}</ul>`;
+}
+function profileSection(ctx, slug) {
+  const p = ctx.L.t.profile, g = GAMES[slug], c = ctx.L.games[slug];
+  const dots = [1, 2, 3, 4, 5].map((n) => `<i${n <= g.complexity ? ' class="on"' : ""}></i>`).join("");
+  const chips = (list) => `<ul class="chips">${list.map((x) => `<li>${esc(x)}</li>`).join("")}</ul>`;
+  return `<section class="section tight" id="perfil"><div class="wrap profile-grid">
+  <div class="glass panel-pad stack reveal">
+    <p class="eyebrow">${esc(p.eyebrow)}</p>
+    <h2 class="h2 grad" style="font-size:clamp(1.8rem,3.4vw,2.6rem)">${esc(p.title)}</h2>
+    <p class="muted">${esc(p.lead)}</p>
+    ${bars(ctx, slug)}
+  </div>
+  <div class="glass panel-pad facts-panel reveal">
+    <div><h3 class="subhead">${esc(p.complexity)}</h3><div class="cx"><span class="dots5" aria-hidden="true">${dots}</span><strong>${esc(p.levels[g.complexity - 1])}</strong><span class="sr-only">${g.complexity}/5</span></div></div>
+    <div><h3 class="subhead">${esc(p.best)}</h3><p class="big">${esc(g.best)} <span class="muted">${esc(ctx.L.t.players)}</span></p></div>
+    <div><h3 class="subhead">${esc(p.ideal)}</h3>${chips(c.ideal)}</div>
+    <div><h3 class="subhead">${esc(p.mechanics)}</h3>${chips(c.mechanics)}</div>
+  </div>
+</div></section>`;
+}
+
 /* Portada */
 function home(ctx) {
   const { t, home: h, games } = ctx.L;
@@ -219,6 +248,11 @@ function home(ctx) {
 </div></section>
 
 <section class="section tight"><div class="wrap">
+  <div class="head reveal"><p class="eyebrow">${esc(ctx.L.t.profile.compareEyebrow)}</p><h2 class="h2 grad">${esc(ctx.L.t.profile.compareTitle)}</h2><p class="lead">${esc(ctx.L.t.profile.compareLead)}</p></div>
+  <div class="compare">${GAME_ORDER.map((slug) => `<a class="glass card reveal" href="${gp(slug)}#perfil" style="--accent:${ACCENT[slug]}"><h3 class="h3">${esc(games[slug].name)}</h3>${bars(ctx, slug, ["luck", "logic", "team", "strategy"])}<span class="link arrow">${esc(t.learnMore)}</span></a>`).join("")}</div>
+</div></section>
+
+<section class="section tight"><div class="wrap">
   <div class="head reveal"><p class="eyebrow">${esc(h.familiesEyebrow)}</p><h2 class="h2 grad">${esc(h.familiesH2)}</h2></div>
   <div class="duo">${families}</div>
 </div></section>
@@ -249,7 +283,7 @@ function gamePage(ctx, slug) {
   const special = c.special.map((s) => `<div class="card glass reveal"><h3 class="h3">${esc(s.title)}</h3><p>${esc(s.text)}</p></div>`).join("");
   const levels = g.levels ? `<div class="glass levels reveal" style="margin-top:22px"><table><caption class="sr-only">${esc(c.levelsH3)}</caption><thead><tr>${c.levelsHead.map((x) => `<th scope="col">${esc(x)}</th>`).join("")}</tr></thead><tbody>${g.levels.map(([n, cols, flag, turns]) => `<tr><td>${n}</td><td>${cols}</td><td>${flag ? esc(c.yes) : esc(c.no)}</td><td>${turns}</td></tr>`).join("")}</tbody></table></div>` : "";
   const levelsHead = g.levels ? `<h3 class="h3" style="margin-top:48px">${esc(c.levelsH3)}</h3>` : "";
-  const gallery = g.gallery.map(([name, key]) => `<figure>${img(ctx, name, { alt: c.captions[key], sizes: "(max-width: 640px) 78vw, 520px" })}<figcaption>${esc(c.captions[key])}</figcaption></figure>`).join("");
+  const gallery = g.gallery.map(([name, key, shape]) => `<figure${shape === "tall" ? ' class="tall"' : ""}>${img(ctx, name, { alt: c.captions[key], sizes: shape === "tall" ? "(max-width: 640px) 52vw, 300px" : "(max-width: 640px) 78vw, 520px" })}<figcaption>${esc(c.captions[key])}</figcaption></figure>`).join("");
   const content = c.content.map((x) => `<li>${esc(x)}</li>`).join("");
   const pdfs = g.pdfs.map((p) => {
     const size = fmtSize(statSync(join(OUT, "assets/pdf", p.file)).size, ctx.lang);
@@ -275,6 +309,8 @@ function gamePage(ctx, slug) {
     ${img(ctx, g.box, { alt: c.boxAlt, cls: "boxart", sizes: "(max-width: 900px) 60vw, 420px", eager: true, attrs: "data-tilt" })}
   </div>
 </section>
+
+${profileSection(ctx, slug)}
 
 <section class="section tight"><div class="wrap"><div class="cards">${summary}</div></div></section>
 
