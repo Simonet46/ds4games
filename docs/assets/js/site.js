@@ -45,10 +45,11 @@
     doc.querySelectorAll("[data-buy]").forEach(function (el) {
       var g = (CFG.games || {})[el.getAttribute("data-buy")];
       if (!g) return;
-      var toyco = region === "AR" && g.storeAR;
+      var links = g.links || {};
+      var toyco = region === "AR" && g.toycoAR;
       var a = el.querySelector("a.buy-link");
       if (a) {
-        a.href = toyco ? g.storeAR : g.store;
+        a.href = links[region] || g.store;
         a.textContent = toyco ? CFG.t.buyToyco : CFG.t.buy;
       }
       var price = el.querySelector(".buy-price");
@@ -58,9 +59,11 @@
       }
       var note = el.querySelector(".buy-note");
       if (note) {
+        var ship = CFG.ship || {};
         note.textContent = toyco ? CFG.t.toycoNote
-          : region === "AR" ? CFG.t.shipAR.replace("{eur}", CFG.shipAR).replace("{ars}", ars(CFG.shipAR))
-          : CFG.t.shipFR;
+          : region === "AR" ? CFG.t.shipAR.replace("{eur}", ship.AR).replace("{ars}", ars(ship.AR))
+          : region === "FR" ? CFG.t.shipFR.replace("{eur}", ship.FR)
+          : CFG.t.shipINT.replace("{eur}", ship.INT);
       }
     });
   }

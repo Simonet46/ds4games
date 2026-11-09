@@ -12,8 +12,8 @@ export const SITE = {
   },
   // Pesos por euro para mostrar precios aproximados a Argentina (referencia: cotización minorista, julio de 2026).
   rate: 1750,
-  // Envío desde Francia a Argentina, en euros.
-  shipAR: 20,
+  // Envíos desde Francia, en euros.
+  ship: { FR: 10, INT: 12, AR: 20 },
   langs: ["es", "fr", "en"],
   slugs: {
     es: { about: "nosotros", contact: "contacto" },
@@ -26,11 +26,13 @@ export const GAME_ORDER = ["olympikos", "tour-eiffel", "1812"];
 
 export const GAMES = {
   olympikos: {
-    price: 18,
+    price: 19,
     // Tienda actual (Wix). Reemplazar cuando haya tienda nueva.
+    // Tienda de respaldo (Wix), por si falta un link de pago.
     store: "https://www.ds4games.com/product-page/olympikos",
-    // En Argentina se compra en Toyco.
-    storeAR: "https://toyco.com.ar/productos/olympikos/",
+    // Links de pago por país. En Argentina, Olympikos se compra en Toyco.
+    links: { FR: "", INT: "", AR: "https://toyco.com.ar/productos/olympikos/" },
+    toycoAR: true,
     box: "oly-box",
     hero: "oly-marathon",
     tile: "oly-sprint",
@@ -55,9 +57,9 @@ export const GAMES = {
     videos: [],
   },
   "tour-eiffel": {
-    price: 20,
+    price: 19,
     store: "https://www.ds4games.com/product-page/copia-de-olympikos",
-    storeAR: null,
+    links: { FR: "", INT: "", AR: "" },
     box: "eif-box",
     hero: "eif-components-wood",
     tile: "eif-parchment",
@@ -79,7 +81,7 @@ export const GAMES = {
   "1812": {
     price: 19,
     store: "https://www.ds4games.com/product-page/1812",
-    storeAR: null,
+    links: { FR: "", INT: "", AR: "" },
     box: "arg-box",
     hero: "arg-art",
     tile: "arg-open-photo",

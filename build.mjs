@@ -86,14 +86,14 @@ function regionSelect(ctx, id) {
 function buyBlock(ctx, slug) {
   const { t } = ctx.L;
   const g = GAMES[slug];
-  const toyco = g.storeAR ? `<noscript><p class="buy-note"><a class="link" href="${g.storeAR}" target="_blank" rel="noopener">${esc(t.noJsToyco)}</a></p></noscript>` : "";
+  const toyco = g.toycoAR ? `<noscript><p class="buy-note"><a class="link" href="${g.links.AR}" target="_blank" rel="noopener">${esc(t.noJsToyco)}</a></p></noscript>` : "";
   return `<div class="buy" data-buy="${slug}">
   <div class="buy-row">
     <p class="buy-price">${g.price} €</p>
-    <a class="btn btn-primary buy-link" href="${g.store}" target="_blank" rel="noopener">${esc(t.buy)}</a>
+    <a class="btn btn-primary buy-link" href="${g.links.FR || g.store}" target="_blank" rel="noopener">${esc(t.buy)}</a>
     ${regionSelect(ctx, `region-${slug}`)}
   </div>
-  <p class="buy-note">${esc(t.shipFR)}</p>${toyco}
+  <p class="buy-note">${esc(t.shipFR.replace("{eur}", SITE.ship.FR))}</p>${toyco}
 </div>`;
 }
 
@@ -121,8 +121,8 @@ function footer(ctx) {
 
 function config(ctx) {
   const { t } = ctx.L;
-  const games = Object.fromEntries(Object.entries(GAMES).map(([k, g]) => [k, { price: g.price, store: g.store, storeAR: g.storeAR }]));
-  const data = { email: SITE.email, rate: SITE.rate, shipAR: SITE.shipAR, games, t: { buy: t.buy, buyToyco: t.buyToyco, approx: t.approx, shipFR: t.shipFR, shipAR: t.shipAR, toycoNote: t.toycoNote } };
+  const games = Object.fromEntries(Object.entries(GAMES).map(([k, g]) => [k, { price: g.price, store: g.store, links: g.links, toycoAR: !!g.toycoAR }]));
+  const data = { email: SITE.email, rate: SITE.rate, ship: SITE.ship, games, t: { buy: t.buy, buyToyco: t.buyToyco, approx: t.approx, shipFR: t.shipFR, shipINT: t.shipINT, shipAR: t.shipAR, toycoNote: t.toycoNote } };
   return `<script type="application/json" id="ds4-config">${JSON.stringify(data).replace(/</g, "\\u003c")}</script>`;
 }
 
@@ -191,7 +191,7 @@ function home(ctx) {
     <ul class="chips">${chips}</ul>
     <div class="btns" data-buy="${slug}">
       <a class="btn btn-primary" href="${gp(slug)}">${esc(t.learnMore)}</a>
-      <a class="btn btn-glass buy-link" href="${g.store}" target="_blank" rel="noopener">${esc(t.buy)}</a>
+      <a class="btn btn-glass buy-link" href="${g.links.FR || g.store}" target="_blank" rel="noopener">${esc(t.buy)}</a>
       <p class="price buy-price">${g.price} €</p>
     </div>
   </div>
@@ -322,7 +322,7 @@ function gamePage(ctx, slug) {
   const jsonld = {
     "@context": "https://schema.org", "@type": "Product", name: c.name, description: c.description,
     image: SITE.baseUrl + `assets/img/og-${slug}.jpg`, brand: { "@type": "Brand", name: "DS4Games" },
-    offers: { "@type": "Offer", price: String(g.price), priceCurrency: "EUR", availability: "https://schema.org/InStock", url: g.store },
+    offers: { "@type": "Offer", price: String(g.price), priceCurrency: "EUR", availability: "https://schema.org/InStock", url: SITE.baseUrl + pathOf(ctx.lang, `game:${slug}`) },
   };
   const preload = `<link rel="preload" as="image" href="${rel(ctx.path, `assets/img/${g.hero}-${MANIFEST[g.hero].widths[0]}.webp`)}" imagesrcset="${MANIFEST[g.hero].widths.map((x) => `${rel(ctx.path, `assets/img/${g.hero}-${x}.webp`)} ${x}w`).join(", ")}" imagesizes="100vw">`;
   return layout(ctx, { page: `game:${slug}`, title: c.title, description: c.description, body, bodyClass: `g-${slug}`, ogImage: slug, jsonld, preload });
