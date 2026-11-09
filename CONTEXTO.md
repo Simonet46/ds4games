@@ -74,10 +74,27 @@ Resumen de todo lo hablado y hecho hasta el 9 de noviembre de 2026, para seguir 
 - Nombres de cartas para revisar con Diego: "El cacique" (archivo "indio"), "El señor feudal", "El vendedor de velas" (archivo "velero").
 - En esta Mac no hay Node instalado: se usó el que trae ChatGPT (`/Applications/ChatGPT.app/Contents/Resources/cua_node/bin/node build.mjs`).
 
+## Rondas de prueba de Eiffel y Olympikos (9 de noviembre de 2026)
+
+- Originales en la Mac "Cykeros", en `~/Documents/DS4 games cyqueros/`:
+  - `secrets de la tour eiffel/`: las cartas de Lector (las subió Diego) y `cartas autor (Drive)/` con las 8 cartas de Autor que hay en el Drive ("1884 Paris_CO 03…18").
+  - `olympikos (Drive)/`: los PDF de impresión bajados del Drive (deportes, indicios, aros, delegaciones, medallas, banderas) y `render/` con sus páginas en PNG (`swift tools/pdf_to_png.swift`).
+- Las imágenes ahora se generan desde esa carpeta para los tres juegos: `python3 -E tools/optimize_images.py "~/Documents/DS4 games cyqueros"` (en esta Mac, `-I` no encuentra Pillow). Las rutas de 1812 en `tools/images.json` pasaron a empezar con `1812 juego/`.
+- **Les Secrets de la Tour Eiffel** suma las mismas tres secciones que 1812 (`rows`, `dreams` y `demo` en `src/data.mjs`):
+  - Las 48 cartas de Lector por pestañas. Había dos repetidas en la carpeta: "TAXISTA" es la misma que "cochere", y "COÑACYHABANO" la misma que "cognac retocado". Se usaron "cochere" y "cognac retocado".
+  - 4 cartas de Autor en la tira (las otras 4 están en la ronda).
+  - Ronda de prueba con la mesa del ejemplo del reglamento. El reglamento no dice qué cartas de Autor se usaron, así que las pistas las eligió Claude: CO 07 → el lustrabotas, CO 16 (gato negro) → el cabaret, CO 12 (gárgolas) → Notre-Dame, CO 18 → el coñac. Código 5 1 6 3. Son 4 rondas y una última oportunidad: si el Lector acierta ahí, gana solo y el Autor pierde. El Autor "dice" los aciertos con cuatro marcas, porque Eiffel no tiene sobres.
+- **Olympikos** suma una tira con 16 de los indicios y una ronda contra el reloj (`clues` y `race` en `src/data.mjs`):
+  - La web es el Entrenador. El visitante elige su delegación y, como en la variante para dos, cada 10 segundos una delegación rival juega una carta al azar en cada medalla. El primero que acierta se lleva 2, 3 o 4 puntos; si otro acertó antes, 1.
+  - Tres rondas. La primera es el ejemplo del reglamento (el bate, horizontal, para la esgrima en silla de ruedas); las otras pistas las eligió Claude.
+- Para revisar con Diego:
+  - Las pistas de las dos rondas, que se cambian en `src/data.mjs`.
+  - Los nombres en español de "El despertador" (archivo "reveilleur"), "La taxista" ("cochere"), "El cargador de Les Halles" y "La florista" ("florera").
+
 ## Pendientes
 
-1. **Imágenes de Olympikos y Les Secrets de la Tour Eiffel** (cartas, cajas): en esta Mac solo están las de 1812. Sumarlas igual que las de 1812, con `tools/images.json` y `tools/optimize_images.py`.
-2. **Reglamento de Eiffel en francés**: armar el PDF con las 8 páginas. Hoy `docs/assets/pdf/tour-eiffel-regles-fr.pdf` tiene solo la tapa. No traducir.
+1. **Revisar las pistas y los nombres de cartas** de las rondas de prueba (ver arriba).
+2. **Reglamento de Eiffel en francés**: armar el PDF con las 8 páginas. Hoy `docs/assets/pdf/tour-eiffel-regles-fr.pdf` tiene solo la tapa. No traducir. En el Drive están las páginas impresas: "reglamento "Les secrets" en frances impreso1…7.png" y los PDF "LOW QUALITY REGLES EN FRANCAIS SECRETS".
 3. La tapa de ese reglamento dice "3 à 5 en coopération / 2 à 10 en compétition", al revés de lo que decidió Diego.
 4. 1812: en la web, los niveles 2 y 3 quedaron iguales (6 columnas, bandera, 4 turnos). Confirmar con Diego.
 5. Página de privacidad y mentions légales (obligatorias en Francia). Hoy `/politicas-de-privacidad` redirige a Contacto.

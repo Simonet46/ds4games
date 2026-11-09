@@ -93,7 +93,8 @@ El botón **Comprar** se adapta a quien visita la página (se detecta por la zon
 
 Las imágenes se convierten a WebP en varios tamaños para que la web cargue rápido:
 
-1. Poné los archivos originales en una carpeta (por ejemplo `~/ds4-originales`). Pueden estar en subcarpetas: en `src` va la ruta desde esa carpeta (por ejemplo `cartas filas 1812/…png`).
+1. Poné los archivos originales en una carpeta (por ejemplo `~/ds4-originales`). Pueden estar en subcarpetas: en `src` va la ruta desde esa carpeta (por ejemplo `1812 juego/cartas filas 1812/…png`). En la Mac "Cykeros" esa carpeta es `~/Documents/DS4 games cyqueros`, con `1812 juego/`, `secrets de la tour eiffel/` y `olympikos (Drive)/`.
+   Si las cartas están en un PDF de impresión, primero pasalas a PNG (solo en Mac): `swift tools/pdf_to_png.swift <archivo.pdf> <carpeta> 1440`.
 2. En `tools/images.json`, agregá o cambiá la entrada: nombre final, archivo original y anchos.
 3. Generá las versiones livianas y las imágenes para compartir. Las imágenes cuyo original no está en la carpeta no se tocan, así que no hace falta tener todos los originales a mano:
 

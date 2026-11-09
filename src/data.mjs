@@ -57,6 +57,25 @@ export const GAMES = {
       ["oly-pole-vault", "poleVault"], ["oly-gymnastics", "gymnastics"], ["oly-hurdles", "hurdles"],
       ["oly-basketball", "basketball"],
     ],
+    // Prefijo de las imágenes: oly-clue-…, oly-sport-…, oly-medal-…, oly-flag-…
+    art: "oly",
+    // Cartas de indicio que se muestran en la página. Imagen: oly-clue-<página del PDF de impresión de indicios>.
+    clues: [3, 13, 15, 16, 17, 20, 23, 31, 32, 37, 38, 45, 54, 65, 70, 73],
+    // Ronda de prueba con la variante para dos: cada `every` segundos juega una delegación rival en cada medalla.
+    // Por ronda: los deportes de los aros 1 a 5 (número de la carta) y, por medalla (bronce, plata, oro),
+    // [indicio, aro correcto, vertical]. Vertical: pista muy buena; horizontal: pista regular.
+    // La primera ronda es el ejemplo del reglamento (el bate para la esgrima en silla de ruedas, horizontal).
+    race: {
+      every: 10,
+      nations: ["ar", "fr", "us", "ke", "au", "cn"],
+      home: { es: "ar", fr: "fr", en: "us" },
+      rings: ["#1a1919", "#3d78ad", "#e4a758", "#43925b", "#cc4f5c"],
+      rounds: [
+        { sports: [24, 22, 2, 1, 25], medals: [[51, 2, false], [26, 3, true], [52, 4, false]] },
+        { sports: [12, 29, 13, 20, 7], medals: [[18, 3, true], [28, 5, false], [64, 2, false]] },
+        { sports: [21, 14, 28, 16, 11], medals: [[63, 5, true], [59, 1, false], [44, 3, false]] },
+      ],
+    },
     pdfs: [
       { file: "olympikos-reglas-es.pdf", lang: "ES", kind: "rules" },
       { file: "olympikos-regles-fr.pdf", lang: "FR", kind: "rules" },
@@ -83,6 +102,29 @@ export const GAMES = {
       ["eif-box-photo", "box"], ["eif-dancer", "dancer", "tall"], ["eif-police", "police", "tall"], ["eif-nun", "nun", "tall"],
       ["eif-components", "components"], ["eif-components-wood", "all"], ["eif-box-dark", "frontBack"],
     ],
+    // Las mismas secciones que 1812: cartas de Lector, cartas de Autor y ronda de prueba.
+    art: "eif",
+    // Las 48 cartas de Lector. Las seis primeras de cada fila son las de la mesa del ejemplo del reglamento.
+    rows: [
+      { key: "p", color: "#3b82f6", tall: true, cards: ["florera", "telefonista", "lumiere", "bailarina", "cireur", "policia", "cochera", "fort", "monet", "deshollinador", "reveilleur", "hermana"] },
+      { key: "s", color: "#ef4444", cards: ["cabaret", "cafe", "petanca", "flores", "bouquinistes", "circo", "bici", "equitacion", "magia", "omnibus", "opera", "zoo"] },
+      { key: "l", color: "#facc15", cards: ["luxemburgo", "orsay", "sacre-coeur", "invalides", "arco", "notre-dame", "bastilla", "catacumbas", "cementerio", "pont-neuf", "trocadero", "versalles"] },
+      { key: "c", color: "#22c55e", cards: ["caneles", "fondue", "cognac", "croissants", "baguette", "macarons", "caracoles", "champagne", "ostras", "ranas", "quesos", "tartare"] },
+    ],
+    // Cartas de Autor de la tira (las otras cuatro están en la ronda de prueba). Imagen: eif-dream-<número>.
+    dreams: [3, 4, 10, 13],
+    // Ronda de prueba: la mesa del ejemplo del reglamento. Las pistas las eligió la web (código 5 1 6 3).
+    // Cuatro rondas y una última oportunidad: si el Lector acierta ahí, gana solo.
+    demo: {
+      turns: 4,
+      lastChance: true,
+      rows: [
+        { dream: 7, cards: ["florera", "telefonista", "lumiere", "bailarina", "cireur", "policia"], answer: 5 },
+        { dream: 16, cards: ["cabaret", "cafe", "petanca", "flores", "bouquinistes", "circo"], answer: 1 },
+        { dream: 12, cards: ["luxemburgo", "orsay", "sacre-coeur", "invalides", "arco", "notre-dame"], answer: 6 },
+        { dream: 18, cards: ["caneles", "fondue", "cognac", "croissants", "baguette", "macarons"], answer: 3 },
+      ],
+    },
     pdfs: [
       { file: "tour-eiffel-reglamento-es.pdf", lang: "ES", kind: "rules" },
       { file: "tour-eiffel-regles-fr.pdf", lang: "FR", kind: "rules" },

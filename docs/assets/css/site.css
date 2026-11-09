@@ -413,3 +413,81 @@ p { margin: 0; text-wrap: pretty; }
   .ddream figcaption { text-align: left; }
   .dopts { grid-template-columns: repeat(3, 1fr); }
 }
+@media (min-width: 901px) { .deck-grid.six { grid-template-columns: repeat(6, 1fr); } }
+
+/* Aciertos dichos por el Autor (sin sobres) */
+.dhits { display: inline-flex; gap: 5px; }
+.dhits i { width: 14px; height: 14px; border-radius: 50%; border: 2px solid var(--stroke-2); }
+.dhits i.on { background: var(--c-green); border-color: var(--c-green); box-shadow: 0 0 10px rgba(49, 214, 139, .5); }
+
+/* Olympikos: ronda contra el reloj */
+.race { padding: clamp(16px, 3vw, 30px); display: grid; gap: 24px; }
+.race [hidden] { display: none !important; }
+.onations { min-width: 0; margin: 0; padding: 0; border: 0; display: flex; flex-wrap: wrap; gap: 8px; }
+.onations legend { float: left; width: 100%; padding: 0; margin-bottom: 10px; font-weight: 600; }
+.onations label { position: relative; cursor: pointer; }
+.onations input { position: absolute; opacity: 0; pointer-events: none; }
+.onat { display: inline-flex; align-items: center; gap: 8px; min-height: 40px; padding: 0 14px 0 8px; border-radius: 999px; border: 1px solid var(--stroke-2); background: rgba(255, 255, 255, .05); font-size: 14px; font-weight: 600; transition: background .2s, border-color .2s, opacity .2s; }
+.onat img { width: 18px; height: auto; border-radius: 3px; }
+.onations label:hover .onat { background: rgba(255, 255, 255, .1); }
+.onations input:checked + .onat { background: #fff; color: #05060b; border-color: #fff; }
+.onations input:focus-visible + .onat { outline: 2px solid var(--accent); outline-offset: 3px; }
+.onations input:disabled + .onat { cursor: default; }
+.onations input:disabled:not(:checked) + .onat { opacity: .4; }
+.oround { display: grid; gap: 22px; }
+.osports, .omedals { list-style: none; margin: 0; padding: 0; display: grid; }
+.osports { grid-template-columns: repeat(5, 1fr); gap: 14px 12px; }
+.osports li { display: grid; gap: 8px; justify-items: center; text-align: center; align-content: start; }
+.oring, .obtn { border-radius: 50%; border: 5px solid var(--ring); background: #f6f6f4; color: #1a1919; font-weight: 800; font-variant-numeric: tabular-nums; display: grid; place-items: center; }
+.oring { width: 36px; height: 36px; font-size: 13px; }
+.osports img { width: 100%; height: auto; border-radius: 10px; border: 1px solid var(--stroke); transition: box-shadow .3s, opacity .3s; }
+.oname { font-size: 13px; line-height: 1.25; color: var(--ink-2); }
+.done .osports li:not(.ok) img { opacity: .45; }
+.osports li.ok img { box-shadow: 0 0 0 3px var(--ring), 0 14px 30px -14px var(--ring); }
+.omedals { grid-template-columns: repeat(3, 1fr); gap: 14px; }
+.omedal { display: grid; gap: 12px; align-content: start; padding: 16px; border-radius: var(--r-md); border: 1px solid var(--stroke); background: rgba(255, 255, 255, .03); }
+.ohead { display: flex; align-items: center; gap: 10px; }
+.ohead img { width: 52px; height: auto; flex: none; }
+.ohead p { margin: 0; display: grid; line-height: 1.25; }
+.ohead .muted { font-size: 13px; }
+.oclue { margin: 0; display: grid; gap: 6px; }
+.oclue figcaption { font-size: 12px; text-align: center; color: var(--ink-3); }
+.ocard { position: relative; width: 100%; max-width: 168px; margin-inline: auto; aspect-ratio: 1; }
+.ocard img { position: absolute; left: 50%; top: 50%; width: 71.6%; height: auto; border-radius: 9px; box-shadow: 0 16px 28px -14px rgba(0, 0, 0, .9); transform: translate(-50%, -50%); transition: opacity .35s var(--ease), transform .45s var(--ease); }
+.oclue.side .ocard img { transform: translate(-50%, -50%) rotate(90deg); }
+.ocard .ofront { opacity: 0; transform: translate(-50%, -50%) scale(.92); }
+.oclue.side .ocard .ofront { transform: translate(-50%, -50%) rotate(90deg) scale(.92); }
+.live .ocard .ofront, .done .ocard .ofront { opacity: 1; transform: translate(-50%, -50%); }
+.live .oclue.side .ocard .ofront, .done .oclue.side .ocard .ofront { transform: translate(-50%, -50%) rotate(90deg); }
+.live .ocard .oback, .done .ocard .oback { opacity: 0; }
+.obtns { display: flex; justify-content: center; gap: 6px; }
+.obtn { width: 40px; height: 40px; padding: 0; font-size: 14px; cursor: pointer; transition: transform .15s var(--ease), opacity .2s, box-shadow .2s; }
+.obtn:hover:not(:disabled) { transform: scale(1.08); }
+.obtn:disabled { cursor: default; opacity: .4; }
+.obtn.on { opacity: 1; background: var(--ring); color: #fff; }
+.obtn.ok { opacity: 1; box-shadow: 0 0 0 3px var(--c-green); }
+.obtn.no { box-shadow: 0 0 0 3px #ff6a6a; }
+.ostack { list-style: none; margin: 0; padding: 0; min-height: 44px; display: flex; flex-wrap: wrap; justify-content: center; align-items: flex-start; gap: 6px; }
+.ostack li { display: grid; justify-items: center; gap: 3px; animation: odrop .3s var(--ease); }
+.ostack img { width: 22px; height: auto; border-radius: 3px; border: 1px solid var(--stroke-2); }
+.ostack li.me img { border-color: #fff; box-shadow: 0 0 0 2px var(--accent); }
+.ostack i { display: none; width: 16px; height: 16px; border-radius: 50%; border: 3px solid var(--ring); background: #f6f6f4; color: #1a1919; font-size: 9px; font-style: normal; font-weight: 800; place-items: center; }
+.ostack li.me i, .done .ostack i { display: grid; }
+.done .ostack li.no { opacity: .45; }
+.done .ostack li.first img { box-shadow: 0 0 0 2px var(--c-green); }
+.ores { margin: 0; min-height: 1.4em; font-size: 14px; font-weight: 700; text-align: center; }
+.ores.win { color: var(--c-green); }
+.ores.ok { color: var(--c-yellow); }
+.ores.no { color: var(--ink-2); font-weight: 600; }
+@keyframes odrop { from { opacity: 0; transform: translateY(-6px); } }
+@media (prefers-reduced-motion: reduce) { .ocard img, .ostack li { transition: none; animation: none; } }
+@media (max-width: 760px) {
+  .osports { grid-template-columns: repeat(3, 1fr); }
+  .omedals { grid-template-columns: 1fr; }
+  .omedal { grid-template-columns: 96px minmax(0, 1fr); grid-template-areas: "clue head" "clue stack" "btns btns" "res res"; gap: 10px 12px; padding: 12px; }
+  .ohead { grid-area: head; } .oclue { grid-area: clue; align-self: start; }
+  .obtns { grid-area: btns; justify-content: space-between; gap: 4px; }
+  .ostack { grid-area: stack; justify-content: flex-start; align-content: flex-start; min-height: 0; } .ores { grid-area: res; text-align: left; }
+  .ohead img { width: 40px; }
+  .obtn { width: 44px; height: 44px; }
+}

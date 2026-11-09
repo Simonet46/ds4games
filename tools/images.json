@@ -308,472 +308,1268 @@
   ]
  },
  "arg-card-ama-llaves": {
-  "src": "cartas filas 1812/Independencia- personajes - ama de llaves.png",
+  "src": "1812 juego/cartas filas 1812/Independencia- personajes - ama de llaves.png",
   "widths": [
    240,
    480
   ]
  },
  "arg-card-vendedora": {
-  "src": "cartas filas 1812/Independencia- personajes - vendedora empanadas.png",
+  "src": "1812 juego/cartas filas 1812/Independencia- personajes - vendedora empanadas.png",
   "widths": [
    240,
    480
   ]
  },
  "arg-card-cacique": {
-  "src": "cartas filas 1812/Independencia- personajes - indio.png",
+  "src": "1812 juego/cartas filas 1812/Independencia- personajes - indio.png",
   "widths": [
    240,
    480
   ]
  },
  "arg-card-granadero": {
-  "src": "cartas filas 1812/Independencia- personajes - granadero.png",
+  "src": "1812 juego/cartas filas 1812/Independencia- personajes - granadero.png",
   "widths": [
    240,
    480
   ]
  },
  "arg-card-gaucho": {
-  "src": "cartas filas 1812/Independencia- personajes - gaucho.png",
+  "src": "1812 juego/cartas filas 1812/Independencia- personajes - gaucho.png",
   "widths": [
    240,
    480
   ]
  },
  "arg-card-velero": {
-  "src": "cartas filas 1812/Independencia- personajes - velero.png",
+  "src": "1812 juego/cartas filas 1812/Independencia- personajes - velero.png",
   "widths": [
    240,
    480
   ]
  },
  "arg-card-senor": {
-  "src": "cartas filas 1812/Independencia- personajes - señor feudal.png",
+  "src": "1812 juego/cartas filas 1812/Independencia- personajes - señor feudal.png",
   "widths": [
    240,
    480
   ]
  },
  "arg-card-lavandera": {
-  "src": "cartas filas 1812/Independencia- personajes - lavandera.png",
+  "src": "1812 juego/cartas filas 1812/Independencia- personajes - lavandera.png",
   "widths": [
    240,
    480
   ]
  },
  "arg-card-dama": {
-  "src": "cartas filas 1812/Independencia- personajes - dama antigua.png",
+  "src": "1812 juego/cartas filas 1812/Independencia- personajes - dama antigua.png",
   "widths": [
    240,
    480
   ]
  },
  "arg-card-fraile": {
-  "src": "cartas filas 1812/Independencia- personajes - fraile.png",
+  "src": "1812 juego/cartas filas 1812/Independencia- personajes - fraile.png",
   "widths": [
    240,
    480
   ]
  },
  "arg-card-cena": {
-  "src": "cartas filas 1812/Independencia - Acciones - cena.png",
+  "src": "1812 juego/cartas filas 1812/Independencia - Acciones - cena.png",
   "widths": [
    360,
    720
   ]
  },
  "arg-card-baile": {
-  "src": "cartas filas 1812/Independencia - Acciones - Salon de Baile.png",
+  "src": "1812 juego/cartas filas 1812/Independencia - Acciones - Salon de Baile.png",
   "widths": [
    360,
    720
   ]
  },
  "arg-card-llegada": {
-  "src": "cartas filas 1812/Independencia - Acciones - llegada Buenos Aires.png",
+  "src": "1812 juego/cartas filas 1812/Independencia - Acciones - llegada Buenos Aires.png",
   "widths": [
    360,
    720
   ]
  },
  "arg-card-imprenta": {
-  "src": "cartas filas 1812/Independencia - Acciones - Imprenta.png",
+  "src": "1812 juego/cartas filas 1812/Independencia - Acciones - Imprenta.png",
   "widths": [
    360,
    720
   ]
  },
  "arg-card-batalla": {
-  "src": "cartas filas 1812/Independencia - Acciones - guerra B.png",
+  "src": "1812 juego/cartas filas 1812/Independencia - Acciones - guerra B.png",
   "widths": [
    360,
    720
   ]
  },
  "arg-card-misa": {
-  "src": "cartas filas 1812/Independencia - Acciones - misa.png",
+  "src": "1812 juego/cartas filas 1812/Independencia - Acciones - misa.png",
   "widths": [
    360,
    720
   ]
  },
  "arg-card-manzana": {
-  "src": "cartas filas 1812/Independencia - Acciones - Manzana de las luces.png",
+  "src": "1812 juego/cartas filas 1812/Independencia - Acciones - Manzana de las luces.png",
   "widths": [
    360,
    720
   ]
  },
  "arg-card-naipes": {
-  "src": "cartas filas 1812/Independencia - Acciones - jugar cartas.png",
+  "src": "1812 juego/cartas filas 1812/Independencia - Acciones - jugar cartas.png",
   "widths": [
    360,
    720
   ]
  },
  "arg-card-barco": {
-  "src": "cartas filas 1812/Independencia - lugares - Buenos Aires Barco.png",
+  "src": "1812 juego/cartas filas 1812/Independencia - lugares - Buenos Aires Barco.png",
   "widths": [
    360,
    720
   ]
  },
  "arg-card-pato": {
-  "src": "cartas filas 1812/Independencia - Acciones - Pato.png",
+  "src": "1812 juego/cartas filas 1812/Independencia - Acciones - Pato.png",
   "widths": [
    360,
    720
   ]
  },
  "arg-card-rosario": {
-  "src": "cartas filas 1812/Independencia - lugares - rosario B.png",
+  "src": "1812 juego/cartas filas 1812/Independencia - lugares - rosario B.png",
   "widths": [
    360,
    720
   ]
  },
  "arg-card-ruinas": {
-  "src": "cartas filas 1812/Independencia - lugares - ruinas jesuiticas.png",
+  "src": "1812 juego/cartas filas 1812/Independencia - lugares - ruinas jesuiticas.png",
   "widths": [
    360,
    720
   ]
  },
  "arg-card-fuerte": {
-  "src": "cartas filas 1812/Independencia - lugares - fuerte bs as.png",
+  "src": "1812 juego/cartas filas 1812/Independencia - lugares - fuerte bs as.png",
   "widths": [
    360,
    720
   ]
  },
  "arg-card-centro": {
-  "src": "cartas filas 1812/Independencia - lugares - centro buenos aires.png",
+  "src": "1812 juego/cartas filas 1812/Independencia - lugares - centro buenos aires.png",
   "widths": [
    360,
    720
   ]
  },
  "arg-card-cataratas": {
-  "src": "cartas filas 1812/Independencia - lugares - cataratas.png",
+  "src": "1812 juego/cartas filas 1812/Independencia - lugares - cataratas.png",
   "widths": [
    360,
    720
   ]
  },
  "arg-card-mendoza": {
-  "src": "cartas filas 1812/Independencia - lugares - viñedos Mendoza.png",
+  "src": "1812 juego/cartas filas 1812/Independencia - lugares - viñedos Mendoza.png",
   "widths": [
    360,
    720
   ]
  },
  "arg-card-lujan": {
-  "src": "cartas filas 1812/Independencia - lugares - lujan.png",
+  "src": "1812 juego/cartas filas 1812/Independencia - lugares - lujan.png",
   "widths": [
    360,
    720
   ]
  },
  "arg-card-jujuy": {
-  "src": "cartas filas 1812/Independencia - lugares - jujuy.png",
+  "src": "1812 juego/cartas filas 1812/Independencia - lugares - jujuy.png",
   "widths": [
    360,
    720
   ]
  },
  "arg-card-tucuman": {
-  "src": "cartas filas 1812/Independencia - lugares - casa de tucuman.png",
+  "src": "1812 juego/cartas filas 1812/Independencia - lugares - casa de tucuman.png",
   "widths": [
    360,
    720
   ]
  },
  "arg-card-cabildo": {
-  "src": "cartas filas 1812/Independencia - lugares - cabildo.png",
+  "src": "1812 juego/cartas filas 1812/Independencia - lugares - cabildo.png",
   "widths": [
    360,
    720
   ]
  },
  "arg-card-bizcochos": {
-  "src": "cartas filas 1812/Independencia - comidas - Bizcochos.png",
+  "src": "1812 juego/cartas filas 1812/Independencia - comidas - Bizcochos.png",
   "widths": [
    360,
    720
   ]
  },
  "arg-card-vino": {
-  "src": "cartas filas 1812/Independencia - comidas - botellon de vino.png",
+  "src": "1812 juego/cartas filas 1812/Independencia - comidas - botellon de vino.png",
   "widths": [
    360,
    720
   ]
  },
  "arg-card-mate": {
-  "src": "cartas filas 1812/Independencia - comidas - mate y pava.png",
+  "src": "1812 juego/cartas filas 1812/Independencia - comidas - mate y pava.png",
   "widths": [
    360,
    720
   ]
  },
  "arg-card-empanadas": {
-  "src": "cartas filas 1812/Independencia - comidas - empanadas.png",
+  "src": "1812 juego/cartas filas 1812/Independencia - comidas - empanadas.png",
   "widths": [
    360,
    720
   ]
  },
  "arg-card-carbonada": {
-  "src": "cartas filas 1812/Independencia - comidas - carbonada criolla.png",
+  "src": "1812 juego/cartas filas 1812/Independencia - comidas - carbonada criolla.png",
   "widths": [
    360,
    720
   ]
  },
  "arg-card-pastelitos": {
-  "src": "cartas filas 1812/Independencia - comidas - pastelitos.png",
+  "src": "1812 juego/cartas filas 1812/Independencia - comidas - pastelitos.png",
   "widths": [
    360,
    720
   ]
  },
  "arg-card-pollo": {
-  "src": "cartas filas 1812/Independencia - comidas - Pollo.png",
+  "src": "1812 juego/cartas filas 1812/Independencia - comidas - Pollo.png",
   "widths": [
    360,
    720
   ]
  },
  "arg-card-asado": {
-  "src": "cartas filas 1812/Independencia - comidas - Asado.png",
+  "src": "1812 juego/cartas filas 1812/Independencia - comidas - Asado.png",
   "widths": [
    360,
    720
   ]
  },
  "arg-card-mazamorra": {
-  "src": "cartas filas 1812/Independencia - comidas - mazamorra.png",
+  "src": "1812 juego/cartas filas 1812/Independencia - comidas - mazamorra.png",
   "widths": [
    360,
    720
   ]
  },
  "arg-card-locro": {
-  "src": "cartas filas 1812/Independencia - comidas - locro.png",
+  "src": "1812 juego/cartas filas 1812/Independencia - comidas - locro.png",
   "widths": [
    360,
    720
   ]
  },
  "arg-dream-8": {
-  "src": "oniricas 1812/Independencia- oniricas 8.png",
+  "src": "1812 juego/oniricas 1812/Independencia- oniricas 8.png",
   "widths": [
    240,
    480
   ]
  },
  "arg-dream-11": {
-  "src": "oniricas 1812/Independencia- oniricas 11.png",
+  "src": "1812 juego/oniricas 1812/Independencia- oniricas 11.png",
   "widths": [
    240,
    480
   ]
  },
  "arg-dream-9": {
-  "src": "oniricas 1812/Independencia- oniricas 9.png",
+  "src": "1812 juego/oniricas 1812/Independencia- oniricas 9.png",
   "widths": [
    240,
    480
   ]
  },
  "arg-dream-29": {
-  "src": "oniricas 1812/Independencia- oniricas 29.png",
+  "src": "1812 juego/oniricas 1812/Independencia- oniricas 29.png",
   "widths": [
    240,
    480
   ]
  },
  "arg-dream-1": {
-  "src": "oniricas 1812/Independencia- oniricas 1.png",
+  "src": "1812 juego/oniricas 1812/Independencia- oniricas 1.png",
   "widths": [
    240,
    480
   ]
  },
  "arg-dream-3": {
-  "src": "oniricas 1812/Independencia- oniricas 3.png",
+  "src": "1812 juego/oniricas 1812/Independencia- oniricas 3.png",
   "widths": [
    240,
    480
   ]
  },
  "arg-dream-10": {
-  "src": "oniricas 1812/Independencia- oniricas 10.png",
+  "src": "1812 juego/oniricas 1812/Independencia- oniricas 10.png",
   "widths": [
    240,
    480
   ]
  },
  "arg-dream-13": {
-  "src": "oniricas 1812/Independencia- oniricas 13.png",
+  "src": "1812 juego/oniricas 1812/Independencia- oniricas 13.png",
   "widths": [
    240,
    480
   ]
  },
  "arg-dream-19": {
-  "src": "oniricas 1812/Independencia- oniricas 19.png",
+  "src": "1812 juego/oniricas 1812/Independencia- oniricas 19.png",
   "widths": [
    240,
    480
   ]
  },
  "arg-dream-22": {
-  "src": "oniricas 1812/Independencia- oniricas 22.png",
+  "src": "1812 juego/oniricas 1812/Independencia- oniricas 22.png",
   "widths": [
    240,
    480
   ]
  },
  "arg-dream-24": {
-  "src": "oniricas 1812/Independencia- oniricas 24.png",
+  "src": "1812 juego/oniricas 1812/Independencia- oniricas 24.png",
   "widths": [
    240,
    480
   ]
  },
  "arg-dream-25": {
-  "src": "oniricas 1812/Independencia- oniricas 25.png",
+  "src": "1812 juego/oniricas 1812/Independencia- oniricas 25.png",
   "widths": [
    240,
    480
   ]
  },
  "arg-dream-33": {
-  "src": "oniricas 1812/Independencia- oniricas 33.png",
+  "src": "1812 juego/oniricas 1812/Independencia- oniricas 33.png",
   "widths": [
    240,
    480
   ]
  },
  "arg-dream-37": {
-  "src": "oniricas 1812/Independencia- oniricas 37.png",
+  "src": "1812 juego/oniricas 1812/Independencia- oniricas 37.png",
   "widths": [
    240,
    480
   ]
  },
  "arg-dream-40": {
-  "src": "oniricas 1812/Independencia- oniricas 40.png",
+  "src": "1812 juego/oniricas 1812/Independencia- oniricas 40.png",
   "widths": [
    240,
    480
   ]
  },
  "arg-dream-44": {
-  "src": "oniricas 1812/Independencia- oniricas 44.png",
+  "src": "1812 juego/oniricas 1812/Independencia- oniricas 44.png",
   "widths": [
    240,
    480
   ]
  },
  "arg-dream-45": {
-  "src": "oniricas 1812/Independencia- oniricas 45.png",
+  "src": "1812 juego/oniricas 1812/Independencia- oniricas 45.png",
   "widths": [
    240,
    480
   ]
  },
  "arg-dream-46": {
-  "src": "oniricas 1812/Independencia- oniricas 46.png",
+  "src": "1812 juego/oniricas 1812/Independencia- oniricas 46.png",
   "widths": [
    240,
    480
   ]
  },
  "arg-dream-51": {
-  "src": "oniricas 1812/Independencia- oniricas 51.png",
+  "src": "1812 juego/oniricas 1812/Independencia- oniricas 51.png",
   "widths": [
    240,
    480
   ]
  },
  "arg-dream-57": {
-  "src": "oniricas 1812/Independencia- oniricas 57.png",
+  "src": "1812 juego/oniricas 1812/Independencia- oniricas 57.png",
   "widths": [
    240,
    480
   ]
  },
  "arg-sobre-0": {
-  "src": "sobres 1812/4 mal sobre.png",
+  "src": "1812 juego/sobres 1812/4 mal sobre.png",
   "widths": [
    160,
    320
   ]
  },
  "arg-sobre-1": {
-  "src": "sobres 1812/1 bien sobre.png",
+  "src": "1812 juego/sobres 1812/1 bien sobre.png",
   "widths": [
    160,
    320
   ]
  },
  "arg-sobre-2": {
-  "src": "sobres 1812/2 bien sobre.png",
+  "src": "1812 juego/sobres 1812/2 bien sobre.png",
   "widths": [
    160,
    320
   ]
  },
  "arg-sobre-3": {
-  "src": "sobres 1812/3 bien sobre.png",
+  "src": "1812 juego/sobres 1812/3 bien sobre.png",
   "widths": [
    160,
    320
   ]
  },
  "arg-sobre-4": {
-  "src": "sobres 1812/4 bien sobre.png",
+  "src": "1812 juego/sobres 1812/4 bien sobre.png",
   "widths": [
    160,
    320
   ]
  },
  "arg-shelf": {
-  "src": "caja 1812/Copia de Independencia - contratapa color final.png",
+  "src": "1812 juego/caja 1812/Copia de Independencia - contratapa color final.png",
   "widths": [
    480,
    960
   ]
  },
  "arg-author-art": {
-  "src": "cartas filas 1812/Independencia-dibujo interior DE TAPA CAJA.png",
+  "src": "1812 juego/cartas filas 1812/Independencia-dibujo interior DE TAPA CAJA.png",
   "widths": [
    480,
    960
+  ]
+ },
+ "eif-card-florera": {
+  "src": "secrets de la tour eiffel/Personajes LES SECRETS/florera.png",
+  "widths": [
+   240,
+   480
+  ]
+ },
+ "eif-card-telefonista": {
+  "src": "secrets de la tour eiffel/Personajes LES SECRETS/telefonista bien personajes.png",
+  "widths": [
+   240,
+   480
+  ]
+ },
+ "eif-card-lumiere": {
+  "src": "secrets de la tour eiffel/Personajes LES SECRETS/freres lumiere.png",
+  "widths": [
+   240,
+   480
+  ]
+ },
+ "eif-card-bailarina": {
+  "src": "secrets de la tour eiffel/Personajes LES SECRETS/bailarina cabaret bien personajes.png",
+  "widths": [
+   240,
+   480
+  ]
+ },
+ "eif-card-cireur": {
+  "src": "secrets de la tour eiffel/Personajes LES SECRETS/cireur bien personajes.png",
+  "widths": [
+   240,
+   480
+  ]
+ },
+ "eif-card-policia": {
+  "src": "secrets de la tour eiffel/Personajes LES SECRETS/policia bien personajes.png",
+  "widths": [
+   240,
+   480
+  ]
+ },
+ "eif-card-cochera": {
+  "src": "secrets de la tour eiffel/Personajes LES SECRETS/cochere.png",
+  "widths": [
+   240,
+   480
+  ]
+ },
+ "eif-card-fort": {
+  "src": "secrets de la tour eiffel/Personajes LES SECRETS/fort du halles bien personajes.png",
+  "widths": [
+   240,
+   480
+  ]
+ },
+ "eif-card-monet": {
+  "src": "secrets de la tour eiffel/Personajes LES SECRETS/monet pintor bien personajes.png",
+  "widths": [
+   240,
+   480
+  ]
+ },
+ "eif-card-deshollinador": {
+  "src": "secrets de la tour eiffel/Personajes LES SECRETS/niño chimenea.png",
+  "widths": [
+   240,
+   480
+  ]
+ },
+ "eif-card-reveilleur": {
+  "src": "secrets de la tour eiffel/Personajes LES SECRETS/reveilleur retocado.png",
+  "widths": [
+   240,
+   480
+  ]
+ },
+ "eif-card-hermana": {
+  "src": "secrets de la tour eiffel/Personajes LES SECRETS/soeur de charite bien personajes.png",
+  "widths": [
+   240,
+   480
+  ]
+ },
+ "eif-card-cabaret": {
+  "src": "secrets de la tour eiffel/situaciones LES SECRETS DE LA TOUR EIFFEL/cabaret retocada situaciones.png",
+  "widths": [
+   360,
+   720
+  ]
+ },
+ "eif-card-cafe": {
+  "src": "secrets de la tour eiffel/situaciones LES SECRETS DE LA TOUR EIFFEL/cafe situaciones bien.png",
+  "widths": [
+   360,
+   720
+  ]
+ },
+ "eif-card-petanca": {
+  "src": "secrets de la tour eiffel/situaciones LES SECRETS DE LA TOUR EIFFEL/petanque retocado.png",
+  "widths": [
+   360,
+   720
+  ]
+ },
+ "eif-card-flores": {
+  "src": "secrets de la tour eiffel/situaciones LES SECRETS DE LA TOUR EIFFEL/marche de fleurs bien.png",
+  "widths": [
+   360,
+   720
+  ]
+ },
+ "eif-card-bouquinistes": {
+  "src": "secrets de la tour eiffel/situaciones LES SECRETS DE LA TOUR EIFFEL/quai libreria sena retocado.png",
+  "widths": [
+   360,
+   720
+  ]
+ },
+ "eif-card-circo": {
+  "src": "secrets de la tour eiffel/situaciones LES SECRETS DE LA TOUR EIFFEL/circo situaciones bien.png",
+  "widths": [
+   360,
+   720
+  ]
+ },
+ "eif-card-bici": {
+  "src": "secrets de la tour eiffel/situaciones LES SECRETS DE LA TOUR EIFFEL/carrera de bici bien situaciones.png",
+  "widths": [
+   360,
+   720
+  ]
+ },
+ "eif-card-equitacion": {
+  "src": "secrets de la tour eiffel/situaciones LES SECRETS DE LA TOUR EIFFEL/equitacion situaciones bien.png",
+  "widths": [
+   360,
+   720
+  ]
+ },
+ "eif-card-magia": {
+  "src": "secrets de la tour eiffel/situaciones LES SECRETS DE LA TOUR EIFFEL/magia retocado situaciones.png",
+  "widths": [
+   360,
+   720
+  ]
+ },
+ "eif-card-omnibus": {
+  "src": "secrets de la tour eiffel/situaciones LES SECRETS DE LA TOUR EIFFEL/omnibus tram retocado.png",
+  "widths": [
+   360,
+   720
+  ]
+ },
+ "eif-card-opera": {
+  "src": "secrets de la tour eiffel/situaciones LES SECRETS DE LA TOUR EIFFEL/opera bien situaciones.png",
+  "widths": [
+   360,
+   720
+  ]
+ },
+ "eif-card-zoo": {
+  "src": "secrets de la tour eiffel/situaciones LES SECRETS DE LA TOUR EIFFEL/zoo situaciones bien.png",
+  "widths": [
+   360,
+   720
+  ]
+ },
+ "eif-card-luxemburgo": {
+  "src": "secrets de la tour eiffel/lugares LES SECRETS/luxemburg bien lugares.png",
+  "widths": [
+   360,
+   720
+  ]
+ },
+ "eif-card-orsay": {
+  "src": "secrets de la tour eiffel/lugares LES SECRETS/gare de orsay bien lugares.png",
+  "widths": [
+   360,
+   720
+  ]
+ },
+ "eif-card-sacre-coeur": {
+  "src": "secrets de la tour eiffel/lugares LES SECRETS/sacre coeur bien lugares bien.png",
+  "widths": [
+   360,
+   720
+  ]
+ },
+ "eif-card-invalides": {
+  "src": "secrets de la tour eiffel/lugares LES SECRETS/invalides bien lugares.png",
+  "widths": [
+   360,
+   720
+  ]
+ },
+ "eif-card-arco": {
+  "src": "secrets de la tour eiffel/lugares LES SECRETS/arco del triunfo retocado.png",
+  "widths": [
+   360,
+   720
+  ]
+ },
+ "eif-card-notre-dame": {
+  "src": "secrets de la tour eiffel/lugares LES SECRETS/catedral notre dam retocado.png",
+  "widths": [
+   360,
+   720
+  ]
+ },
+ "eif-card-bastilla": {
+  "src": "secrets de la tour eiffel/lugares LES SECRETS/bastille retocado.png",
+  "widths": [
+   360,
+   720
+  ]
+ },
+ "eif-card-catacumbas": {
+  "src": "secrets de la tour eiffel/lugares LES SECRETS/catacumbas bien lugares.png",
+  "widths": [
+   360,
+   720
+  ]
+ },
+ "eif-card-cementerio": {
+  "src": "secrets de la tour eiffel/lugares LES SECRETS/cementerio bien lugares.png",
+  "widths": [
+   360,
+   720
+  ]
+ },
+ "eif-card-pont-neuf": {
+  "src": "secrets de la tour eiffel/lugares LES SECRETS/pont neuf bien lugares.png",
+  "widths": [
+   360,
+   720
+  ]
+ },
+ "eif-card-trocadero": {
+  "src": "secrets de la tour eiffel/lugares LES SECRETS/trocadero retocado.png",
+  "widths": [
+   360,
+   720
+  ]
+ },
+ "eif-card-versalles": {
+  "src": "secrets de la tour eiffel/lugares LES SECRETS/versalles bien lugares.png",
+  "widths": [
+   360,
+   720
+  ]
+ },
+ "eif-card-caneles": {
+  "src": "secrets de la tour eiffel/comidas LES SECRETS/canneles comidas bien.png",
+  "widths": [
+   360,
+   720
+  ]
+ },
+ "eif-card-fondue": {
+  "src": "secrets de la tour eiffel/comidas LES SECRETS/fondue retocada.png",
+  "widths": [
+   360,
+   720
+  ]
+ },
+ "eif-card-cognac": {
+  "src": "secrets de la tour eiffel/comidas LES SECRETS/cognac retocado.png",
+  "widths": [
+   360,
+   720
+  ]
+ },
+ "eif-card-croissants": {
+  "src": "secrets de la tour eiffel/comidas LES SECRETS/croissants desayuno.png",
+  "widths": [
+   360,
+   720
+  ]
+ },
+ "eif-card-baguette": {
+  "src": "secrets de la tour eiffel/comidas LES SECRETS/baguette comidas bien.png",
+  "widths": [
+   360,
+   720
+  ]
+ },
+ "eif-card-macarons": {
+  "src": "secrets de la tour eiffel/comidas LES SECRETS/macarrones bien comidas.png",
+  "widths": [
+   360,
+   720
+  ]
+ },
+ "eif-card-caracoles": {
+  "src": "secrets de la tour eiffel/comidas LES SECRETS/caracoles comidas bien.png",
+  "widths": [
+   360,
+   720
+  ]
+ },
+ "eif-card-champagne": {
+  "src": "secrets de la tour eiffel/comidas LES SECRETS/champagne comidas bien.png",
+  "widths": [
+   360,
+   720
+  ]
+ },
+ "eif-card-ostras": {
+  "src": "secrets de la tour eiffel/comidas LES SECRETS/huitres ostras retocado.png",
+  "widths": [
+   360,
+   720
+  ]
+ },
+ "eif-card-ranas": {
+  "src": "secrets de la tour eiffel/comidas LES SECRETS/rana retocado.png",
+  "widths": [
+   360,
+   720
+  ]
+ },
+ "eif-card-quesos": {
+  "src": "secrets de la tour eiffel/comidas LES SECRETS/tabla de quesos.png",
+  "widths": [
+   360,
+   720
+  ]
+ },
+ "eif-card-tartare": {
+  "src": "secrets de la tour eiffel/comidas LES SECRETS/tarttare bien comidas.png",
+  "widths": [
+   360,
+   720
+  ]
+ },
+ "eif-dream-3": {
+  "src": "secrets de la tour eiffel/cartas autor (Drive)/1884 Paris_CO 03.png",
+  "widths": [
+   240,
+   480
+  ]
+ },
+ "eif-dream-4": {
+  "src": "secrets de la tour eiffel/cartas autor (Drive)/1884 Paris_CO 04.png",
+  "widths": [
+   240,
+   480
+  ]
+ },
+ "eif-dream-7": {
+  "src": "secrets de la tour eiffel/cartas autor (Drive)/1884 Paris_CO 07.png",
+  "widths": [
+   240,
+   480
+  ]
+ },
+ "eif-dream-10": {
+  "src": "secrets de la tour eiffel/cartas autor (Drive)/1884 Paris_CO 10.png",
+  "widths": [
+   240,
+   480
+  ]
+ },
+ "eif-dream-12": {
+  "src": "secrets de la tour eiffel/cartas autor (Drive)/1884 Paris_CO 12.png",
+  "widths": [
+   240,
+   480
+  ]
+ },
+ "eif-dream-13": {
+  "src": "secrets de la tour eiffel/cartas autor (Drive)/1884 Paris_CO 13.png",
+  "widths": [
+   240,
+   480
+  ]
+ },
+ "eif-dream-16": {
+  "src": "secrets de la tour eiffel/cartas autor (Drive)/1884 Paris_CO 16.png",
+  "widths": [
+   240,
+   480
+  ]
+ },
+ "eif-dream-18": {
+  "src": "secrets de la tour eiffel/cartas autor (Drive)/1884 Paris_CO 18.png",
+  "widths": [
+   240,
+   480
+  ]
+ },
+ "oly-sport-24": {
+  "src": "olympikos (Drive)/render/deportes/p24.png",
+  "widths": [
+   360,
+   720
+  ]
+ },
+ "oly-sport-22": {
+  "src": "olympikos (Drive)/render/deportes/p22.png",
+  "widths": [
+   360,
+   720
+  ]
+ },
+ "oly-sport-2": {
+  "src": "olympikos (Drive)/render/deportes/p02.png",
+  "widths": [
+   360,
+   720
+  ]
+ },
+ "oly-sport-1": {
+  "src": "olympikos (Drive)/render/deportes/p01.png",
+  "widths": [
+   360,
+   720
+  ]
+ },
+ "oly-sport-25": {
+  "src": "olympikos (Drive)/render/deportes/p25.png",
+  "widths": [
+   360,
+   720
+  ]
+ },
+ "oly-sport-13": {
+  "src": "olympikos (Drive)/render/deportes/p13.png",
+  "widths": [
+   360,
+   720
+  ]
+ },
+ "oly-sport-7": {
+  "src": "olympikos (Drive)/render/deportes/p07.png",
+  "widths": [
+   360,
+   720
+  ]
+ },
+ "oly-sport-12": {
+  "src": "olympikos (Drive)/render/deportes/p12.png",
+  "widths": [
+   360,
+   720
+  ]
+ },
+ "oly-sport-29": {
+  "src": "olympikos (Drive)/render/deportes/p29.png",
+  "widths": [
+   360,
+   720
+  ]
+ },
+ "oly-sport-20": {
+  "src": "olympikos (Drive)/render/deportes/p20.png",
+  "widths": [
+   360,
+   720
+  ]
+ },
+ "oly-sport-14": {
+  "src": "olympikos (Drive)/render/deportes/p14.png",
+  "widths": [
+   360,
+   720
+  ]
+ },
+ "oly-sport-11": {
+  "src": "olympikos (Drive)/render/deportes/p11.png",
+  "widths": [
+   360,
+   720
+  ]
+ },
+ "oly-sport-16": {
+  "src": "olympikos (Drive)/render/deportes/p16.png",
+  "widths": [
+   360,
+   720
+  ]
+ },
+ "oly-sport-21": {
+  "src": "olympikos (Drive)/render/deportes/p21.png",
+  "widths": [
+   360,
+   720
+  ]
+ },
+ "oly-sport-28": {
+  "src": "olympikos (Drive)/render/deportes/p28.png",
+  "widths": [
+   360,
+   720
+  ]
+ },
+ "oly-clue-51": {
+  "src": "olympikos (Drive)/render/indices/p51.png",
+  "widths": [
+   240,
+   480
+  ]
+ },
+ "oly-clue-26": {
+  "src": "olympikos (Drive)/render/indices/p26.png",
+  "widths": [
+   240,
+   480
+  ]
+ },
+ "oly-clue-52": {
+  "src": "olympikos (Drive)/render/indices/p52.png",
+  "widths": [
+   240,
+   480
+  ]
+ },
+ "oly-clue-18": {
+  "src": "olympikos (Drive)/render/indices/p18.png",
+  "widths": [
+   240,
+   480
+  ]
+ },
+ "oly-clue-28": {
+  "src": "olympikos (Drive)/render/indices/p28.png",
+  "widths": [
+   240,
+   480
+  ]
+ },
+ "oly-clue-64": {
+  "src": "olympikos (Drive)/render/indices/p64.png",
+  "widths": [
+   240,
+   480
+  ]
+ },
+ "oly-clue-63": {
+  "src": "olympikos (Drive)/render/indices/p63.png",
+  "widths": [
+   240,
+   480
+  ]
+ },
+ "oly-clue-59": {
+  "src": "olympikos (Drive)/render/indices/p59.png",
+  "widths": [
+   240,
+   480
+  ]
+ },
+ "oly-clue-44": {
+  "src": "olympikos (Drive)/render/indices/p44.png",
+  "widths": [
+   240,
+   480
+  ]
+ },
+ "oly-clue-3": {
+  "src": "olympikos (Drive)/render/indices/p03.png",
+  "widths": [
+   240,
+   480
+  ]
+ },
+ "oly-clue-13": {
+  "src": "olympikos (Drive)/render/indices/p13.png",
+  "widths": [
+   240,
+   480
+  ]
+ },
+ "oly-clue-15": {
+  "src": "olympikos (Drive)/render/indices/p15.png",
+  "widths": [
+   240,
+   480
+  ]
+ },
+ "oly-clue-16": {
+  "src": "olympikos (Drive)/render/indices/p16.png",
+  "widths": [
+   240,
+   480
+  ]
+ },
+ "oly-clue-17": {
+  "src": "olympikos (Drive)/render/indices/p17.png",
+  "widths": [
+   240,
+   480
+  ]
+ },
+ "oly-clue-20": {
+  "src": "olympikos (Drive)/render/indices/p20.png",
+  "widths": [
+   240,
+   480
+  ]
+ },
+ "oly-clue-23": {
+  "src": "olympikos (Drive)/render/indices/p23.png",
+  "widths": [
+   240,
+   480
+  ]
+ },
+ "oly-clue-31": {
+  "src": "olympikos (Drive)/render/indices/p31.png",
+  "widths": [
+   240,
+   480
+  ]
+ },
+ "oly-clue-32": {
+  "src": "olympikos (Drive)/render/indices/p32.png",
+  "widths": [
+   240,
+   480
+  ]
+ },
+ "oly-clue-37": {
+  "src": "olympikos (Drive)/render/indices/p37.png",
+  "widths": [
+   240,
+   480
+  ]
+ },
+ "oly-clue-38": {
+  "src": "olympikos (Drive)/render/indices/p38.png",
+  "widths": [
+   240,
+   480
+  ]
+ },
+ "oly-clue-45": {
+  "src": "olympikos (Drive)/render/indices/p45.png",
+  "widths": [
+   240,
+   480
+  ]
+ },
+ "oly-clue-54": {
+  "src": "olympikos (Drive)/render/indices/p54.png",
+  "widths": [
+   240,
+   480
+  ]
+ },
+ "oly-clue-65": {
+  "src": "olympikos (Drive)/render/indices/p65.png",
+  "widths": [
+   240,
+   480
+  ]
+ },
+ "oly-clue-70": {
+  "src": "olympikos (Drive)/render/indices/p70.png",
+  "widths": [
+   240,
+   480
+  ]
+ },
+ "oly-clue-73": {
+  "src": "olympikos (Drive)/render/indices/p73.png",
+  "widths": [
+   240,
+   480
+  ]
+ },
+ "oly-medal-2": {
+  "src": "olympikos (Drive)/render/indices/p75.png",
+  "widths": [
+   120,
+   240
+  ],
+  "crop": [
+   30,
+   289,
+   640,
+   716
+  ]
+ },
+ "oly-medal-3": {
+  "src": "olympikos (Drive)/render/indices/p76.png",
+  "widths": [
+   120,
+   240
+  ],
+  "crop": [
+   30,
+   289,
+   640,
+   716
+  ]
+ },
+ "oly-medal-4": {
+  "src": "olympikos (Drive)/render/indices/p77.png",
+  "widths": [
+   120,
+   240
+  ],
+  "crop": [
+   30,
+   289,
+   640,
+   716
+  ]
+ },
+ "oly-flag-us": {
+  "src": "olympikos (Drive)/render/indices/p113.png",
+  "widths": [
+   64,
+   128
+  ],
+  "crop": [
+   34,
+   33,
+   686,
+   971
+  ]
+ },
+ "oly-flag-ar": {
+  "src": "olympikos (Drive)/render/indices/p114.png",
+  "widths": [
+   64,
+   128
+  ],
+  "crop": [
+   34,
+   33,
+   686,
+   971
+  ]
+ },
+ "oly-flag-fr": {
+  "src": "olympikos (Drive)/render/indices/p115.png",
+  "widths": [
+   64,
+   128
+  ],
+  "crop": [
+   34,
+   33,
+   686,
+   971
+  ]
+ },
+ "oly-flag-ke": {
+  "src": "olympikos (Drive)/render/indices/p116.png",
+  "widths": [
+   64,
+   128
+  ],
+  "crop": [
+   34,
+   33,
+   686,
+   971
+  ]
+ },
+ "oly-flag-cn": {
+  "src": "olympikos (Drive)/render/indices/p117.png",
+  "widths": [
+   64,
+   128
+  ],
+  "crop": [
+   34,
+   33,
+   686,
+   971
+  ]
+ },
+ "oly-flag-au": {
+  "src": "olympikos (Drive)/render/indices/p118.png",
+  "widths": [
+   64,
+   128
+  ],
+  "crop": [
+   34,
+   33,
+   686,
+   971
+  ]
+ },
+ "oly-back": {
+  "src": "olympikos (Drive)/render/indices/p01.png",
+  "widths": [
+   240,
+   480
   ]
  }
 }

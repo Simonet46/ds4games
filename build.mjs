@@ -300,7 +300,7 @@ function deckSection(ctx, slug) {
   const sizes = (tall) => (tall ? "(max-width: 560px) 44vw, (max-width: 900px) 30vw, 220px" : "(max-width: 560px) 44vw, (max-width: 900px) 30vw, 230px");
   const panels = g.rows.map((r, i) => `<div class="deck" role="tabpanel" id="deck-${r.key}" aria-labelledby="tab-${r.key}" style="--row:${r.color}"${i ? " data-off" : ""}>
     <h3 class="deck-title"><i aria-hidden="true"></i>${esc(c.rowNames[r.key])}<span class="muted">${esc(c.rowQs[r.key])}</span></h3>
-    <ul class="deck-grid${r.tall ? " tall" : ""}">${r.cards.map((k) => `<li><figure>${img(ctx, `${g.art}-card-${k}`, { alt: c.cardNames[k], sizes: sizes(r.tall) })}<figcaption>${esc(c.cardNames[k])}</figcaption></figure></li>`).join("")}</ul>
+    <ul class="deck-grid${r.tall ? " tall" : ""}${r.cards.length % 6 === 0 ? " six" : ""}">${r.cards.map((k) => `<li><figure>${img(ctx, `${g.art}-card-${k}`, { alt: c.cardNames[k], sizes: sizes(r.tall) })}<figcaption>${esc(c.cardNames[k])}</figcaption></figure></li>`).join("")}</ul>
   </div>`).join("");
   return `<section class="section tight" id="cartas" style="scroll-margin-top:90px"><div class="wrap">
   <div class="head reveal"><p class="eyebrow">${esc(c.deckEyebrow)}</p><h2 class="h2 grad">${esc(c.deckH2)}</h2><p class="lead">${esc(c.deckLead)}</p></div>
@@ -308,13 +308,23 @@ function deckSection(ctx, slug) {
 </div></section>`;
 }
 
+/* Tira de cartas verticales: las cartas de Autor (Secret Stories) o los indicios (Olympikos) */
+function stripSection(ctx, names, eyebrow, h2, lead) {
+  const cards = names.map((n) => `<figure class="tall">${img(ctx, n, { alt: "", sizes: "(max-width: 640px) 42vw, 220px" })}</figure>`).join("");
+  return `<section class="section tight">
+  <div class="wrap"><div class="head reveal"><p class="eyebrow">${esc(eyebrow)}</p><h2 class="h2 grad">${esc(h2)}</h2><p class="lead">${esc(lead)}</p></div></div>
+  <div class="gallery dreams" tabindex="0" aria-label="${esc(h2)}">${cards}</div>
+</section>`;
+}
+
 function dreamsSection(ctx, slug) {
   const g = GAMES[slug], c = ctx.L.games[slug];
-  const cards = g.dreams.map((n) => `<figure class="tall">${img(ctx, `${g.art}-dream-${n}`, { alt: "", sizes: "(max-width: 640px) 42vw, 220px" })}</figure>`).join("");
-  return `<section class="section tight">
-  <div class="wrap"><div class="head reveal"><p class="eyebrow">${esc(c.dreamsEyebrow)}</p><h2 class="h2 grad">${esc(c.dreamsH2)}</h2><p class="lead">${esc(c.dreamsLead)}</p></div></div>
-  <div class="gallery dreams" tabindex="0" aria-label="${esc(c.dreamsH2)}">${cards}</div>
-</section>`;
+  return stripSection(ctx, g.dreams.map((n) => `${g.art}-dream-${n}`), c.dreamsEyebrow, c.dreamsH2, c.dreamsLead);
+}
+
+function cluesSection(ctx, slug) {
+  const g = GAMES[slug], c = ctx.L.games[slug];
+  return stripSection(ctx, g.clues.map((n) => `${g.art}-clue-${n}`), c.cluesEyebrow, c.cluesH2, c.cluesLead);
 }
 
 function demoSection(ctx, slug) {
@@ -331,13 +341,16 @@ function demoSection(ctx, slug) {
       <p class="dwhy" hidden>${esc(d.reveal[i])}</p>
     </fieldset>`;
   }).join("");
+  // 1812 contesta con sobres; en Les Secrets de la Tour Eiffel el Autor dice los aciertos en voz alta.
   const sobre = `${g.art}-sobre-0`;
   const cfg = {
-    answer: g.demo.rows.map((r) => r.answer), turns: g.demo.turns, colors: g.rows.map((r) => r.color),
-    sobres: [0, 1, 2, 3, 4].map((n) => rel(ctx.path, `assets/img/${g.art}-sobre-${n}-${MANIFEST[sobre].widths.at(-1)}.webp`)),
-    sobreH: Math.round(160 * MANIFEST[sobre].ratio),
-    t: { pick: d.pick, ready: d.ready, turn: d.turn, hits: d.hits, win: d.win, lose: d.lose },
+    answer: g.demo.rows.map((r) => r.answer), turns: g.demo.turns, last: !!g.demo.lastChance, colors: g.rows.map((r) => r.color),
+    t: { pick: d.pick, ready: d.ready, turn: d.turn, hits: d.hits, win: d.win, lose: d.lose, last: d.last, lastMsg: d.lastMsg, winLast: d.winLast },
   };
+  if (MANIFEST[sobre]) {
+    cfg.sobres = [0, 1, 2, 3, 4].map((n) => rel(ctx.path, `assets/img/${g.art}-sobre-${n}-${MANIFEST[sobre].widths.at(-1)}.webp`));
+    cfg.sobreH = Math.round(160 * MANIFEST[sobre].ratio);
+  }
   return `<section class="section tight" id="probar" style="scroll-margin-top:90px"><div class="wrap">
   <div class="head reveal"><p class="eyebrow">${esc(d.eyebrow)}</p><h2 class="h2 grad">${esc(d.h2)}</h2><p class="lead">${esc(d.lead)}</p></div>
   <form class="demo glass" data-demo="${esc(JSON.stringify(cfg))}">
@@ -349,6 +362,49 @@ function demoSection(ctx, slug) {
     </div>
     <p class="muted dnote">${esc(d.note)}</p>
   </form>
+</div></section>`;
+}
+
+/* Olympikos: una ronda contra el reloj. La web es el Entrenador y, como en la variante para dos,
+   cada pocos segundos una delegación rival juega una carta en cada medalla. */
+function raceSection(ctx, slug) {
+  const g = GAMES[slug], c = ctx.L.games[slug], d = c.race, R = g.race;
+  const flagImg = (n) => `${g.art}-flag-${n}`;
+  const nations = R.nations.map((n) => `<label><input type="radio" name="nation" value="${n}"${n === R.home[ctx.lang] ? " checked" : ""}><span class="onat">${img(ctx, flagImg(n), { alt: "", sizes: "22px" })}${esc(d.nations[n])}</span></label>`).join("");
+  const rounds = R.rounds.map((r, ri) => {
+    const sports = r.sports.map((s, i) => `<li style="--ring:${R.rings[i]}"><span class="oring" aria-hidden="true">${i + 1}</span>${img(ctx, `${g.art}-sport-${s}`, { alt: "", sizes: "(max-width: 760px) 30vw, 200px" })}<span class="oname"><span class="sr-only">${esc(d.ring.replace("{n}", i + 1))} · </span>${esc(c.sportNames[s])}</span></li>`).join("");
+    const medals = r.medals.map(([clue, , vert], mi) => {
+      const pts = mi + 2;
+      const btns = r.sports.map((s, i) => `<button type="button" class="obtn" data-ring="${i + 1}" style="--ring:${R.rings[i]}" disabled aria-label="${esc(d.ring.replace("{n}", i + 1))} · ${esc(c.sportNames[s])}">${i + 1}</button>`).join("");
+      return `<li class="omedal">
+        <div class="ohead">${img(ctx, `${g.art}-medal-${pts}`, { alt: "", sizes: "52px" })}<p><strong>${esc(d.medals[mi])}</strong><span class="muted">${esc(d.pts.replace("{p}", pts))}</span></p></div>
+        <figure class="oclue${vert ? "" : " side"}"><div class="ocard">${img(ctx, `${g.art}-back`, { alt: "", cls: "oback", sizes: "150px" })}${img(ctx, `${g.art}-clue-${clue}`, { alt: c.clueNames[clue], cls: "ofront", sizes: "150px" })}</div><figcaption>${esc(vert ? d.vert : d.horiz)}</figcaption></figure>
+        <div class="obtns" role="group" aria-label="${esc(d.medals[mi])}">${btns}</div>
+        <ol class="ostack" aria-hidden="true"></ol>
+        <p class="ores" aria-live="polite"></p>
+      </li>`;
+    }).join("");
+    return `<div class="oround"${ri ? " hidden" : ""}><ol class="osports">${sports}</ol><ol class="omedals">${medals}</ol></div>`;
+  }).join("");
+  const cfg = {
+    every: R.every, rings: R.rings,
+    rounds: R.rounds.map((r) => ({ answers: r.medals.map((m) => m[1]), sports: r.sports.map((s) => c.sportNames[s]) })),
+    flags: Object.fromEntries(R.nations.map((n) => [n, rel(ctx.path, `assets/img/${flagImg(n)}-${MANIFEST[flagImg(n)].widths[0]}.webp`)])),
+    flagH: Math.round(MANIFEST[flagImg(R.nations[0])].widths[0] * MANIFEST[flagImg(R.nations[0])].ratio),
+    names: d.nations,
+    t: { ready: d.ready, pick: d.pick, rivals: d.rivals, time: d.time, first: d.first, late: d.late, wrong: d.wrong, total: d.total, round: d.round },
+  };
+  return `<section class="section tight" id="probar" style="scroll-margin-top:90px"><div class="wrap">
+  <div class="head reveal"><p class="eyebrow">${esc(d.eyebrow)}</p><h2 class="h2 grad">${esc(d.h2)}</h2><p class="lead">${esc(d.lead)}</p></div>
+  <div class="race glass" data-race="${esc(JSON.stringify(cfg))}">
+    <fieldset class="onations"><legend>${esc(d.nation)}</legend>${nations}</fieldset>
+    ${rounds}
+    <div class="dbar">
+      <p class="dstatus" aria-live="polite"><strong><span class="olabel">${esc(d.round.replace("{n}", 1).replace("{total}", R.rounds.length))}</span> · <span class="otime">${esc(d.time.replace("{s}", 0))}</span></strong><span class="omsg muted">${esc(d.noJs)}</span></p>
+      <div class="btns"><button class="btn btn-primary ostart" type="button" disabled>${esc(d.start)}</button><button class="btn btn-glass onext" type="button" hidden>${esc(d.next)}</button></div>
+    </div>
+    <p class="muted dnote">${esc(d.note)}</p>
+  </div>
 </div></section>`;
 }
 
@@ -404,7 +460,7 @@ ${profileSection(ctx, slug)}
   <div class="rules2">${special}</div>
   ${levelsHead}${levels}
 </div></section>
-${g.rows ? deckSection(ctx, slug) : ""}${g.dreams ? dreamsSection(ctx, slug) : ""}${g.demo ? demoSection(ctx, slug) : ""}
+${g.rows ? deckSection(ctx, slug) : ""}${g.dreams ? dreamsSection(ctx, slug) : ""}${g.demo ? demoSection(ctx, slug) : ""}${g.clues ? cluesSection(ctx, slug) : ""}${g.race ? raceSection(ctx, slug) : ""}
 <section class="section tight">
   <div class="wrap"><div class="head reveal"><h2 class="h2 grad">${esc(c.galleryH2)}</h2><p class="lead">${esc(c.galleryLead)}</p></div></div>
   <div class="gallery" tabindex="0" aria-label="${esc(c.galleryH2)}">${gallery}</div>

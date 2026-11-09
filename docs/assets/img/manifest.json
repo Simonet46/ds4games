@@ -884,5 +884,853 @@
   ],
   "ratio": 1.5002,
   "alpha": false
+ },
+ "eif-card-florera": {
+  "widths": [
+   240,
+   480
+  ],
+  "ratio": 1.5014,
+  "alpha": true
+ },
+ "eif-card-telefonista": {
+  "widths": [
+   240,
+   480
+  ],
+  "ratio": 1.5004,
+  "alpha": false
+ },
+ "eif-card-lumiere": {
+  "widths": [
+   240,
+   480
+  ],
+  "ratio": 1.5004,
+  "alpha": true
+ },
+ "eif-card-bailarina": {
+  "widths": [
+   240,
+   480
+  ],
+  "ratio": 1.5004,
+  "alpha": false
+ },
+ "eif-card-cireur": {
+  "widths": [
+   240,
+   480
+  ],
+  "ratio": 1.5004,
+  "alpha": false
+ },
+ "eif-card-policia": {
+  "widths": [
+   240,
+   480
+  ],
+  "ratio": 1.5004,
+  "alpha": false
+ },
+ "eif-card-cochera": {
+  "widths": [
+   240,
+   480
+  ],
+  "ratio": 1.5004,
+  "alpha": true
+ },
+ "eif-card-fort": {
+  "widths": [
+   240,
+   480
+  ],
+  "ratio": 1.5004,
+  "alpha": false
+ },
+ "eif-card-monet": {
+  "widths": [
+   240,
+   480
+  ],
+  "ratio": 1.5004,
+  "alpha": false
+ },
+ "eif-card-deshollinador": {
+  "widths": [
+   240,
+   480
+  ],
+  "ratio": 1.5004,
+  "alpha": false
+ },
+ "eif-card-reveilleur": {
+  "widths": [
+   240,
+   480
+  ],
+  "ratio": 1.5004,
+  "alpha": true
+ },
+ "eif-card-hermana": {
+  "widths": [
+   240,
+   480
+  ],
+  "ratio": 1.5004,
+  "alpha": false
+ },
+ "eif-card-cabaret": {
+  "widths": [
+   360,
+   720
+  ],
+  "ratio": 0.6665,
+  "alpha": true
+ },
+ "eif-card-cafe": {
+  "widths": [
+   360,
+   720
+  ],
+  "ratio": 0.6665,
+  "alpha": false
+ },
+ "eif-card-petanca": {
+  "widths": [
+   360,
+   720
+  ],
+  "ratio": 0.6665,
+  "alpha": true
+ },
+ "eif-card-flores": {
+  "widths": [
+   360,
+   720
+  ],
+  "ratio": 0.6665,
+  "alpha": false
+ },
+ "eif-card-bouquinistes": {
+  "widths": [
+   360,
+   720
+  ],
+  "ratio": 0.6665,
+  "alpha": true
+ },
+ "eif-card-circo": {
+  "widths": [
+   360,
+   720
+  ],
+  "ratio": 0.6665,
+  "alpha": false
+ },
+ "eif-card-bici": {
+  "widths": [
+   360,
+   720
+  ],
+  "ratio": 0.6665,
+  "alpha": false
+ },
+ "eif-card-equitacion": {
+  "widths": [
+   360,
+   720
+  ],
+  "ratio": 0.6665,
+  "alpha": false
+ },
+ "eif-card-magia": {
+  "widths": [
+   360,
+   720
+  ],
+  "ratio": 0.6649,
+  "alpha": true
+ },
+ "eif-card-omnibus": {
+  "widths": [
+   360,
+   720
+  ],
+  "ratio": 0.6665,
+  "alpha": true
+ },
+ "eif-card-opera": {
+  "widths": [
+   360,
+   720
+  ],
+  "ratio": 0.6665,
+  "alpha": false
+ },
+ "eif-card-zoo": {
+  "widths": [
+   360,
+   720
+  ],
+  "ratio": 0.6665,
+  "alpha": false
+ },
+ "eif-card-luxemburgo": {
+  "widths": [
+   360,
+   720
+  ],
+  "ratio": 0.6665,
+  "alpha": false
+ },
+ "eif-card-orsay": {
+  "widths": [
+   360,
+   720
+  ],
+  "ratio": 0.6665,
+  "alpha": false
+ },
+ "eif-card-sacre-coeur": {
+  "widths": [
+   360,
+   720
+  ],
+  "ratio": 0.6665,
+  "alpha": false
+ },
+ "eif-card-invalides": {
+  "widths": [
+   360,
+   720
+  ],
+  "ratio": 0.6665,
+  "alpha": false
+ },
+ "eif-card-arco": {
+  "widths": [
+   360,
+   720
+  ],
+  "ratio": 0.6665,
+  "alpha": true
+ },
+ "eif-card-notre-dame": {
+  "widths": [
+   360,
+   720
+  ],
+  "ratio": 0.6656,
+  "alpha": true
+ },
+ "eif-card-bastilla": {
+  "widths": [
+   360,
+   720
+  ],
+  "ratio": 0.6665,
+  "alpha": true
+ },
+ "eif-card-catacumbas": {
+  "widths": [
+   360,
+   720
+  ],
+  "ratio": 0.6665,
+  "alpha": false
+ },
+ "eif-card-cementerio": {
+  "widths": [
+   360,
+   720
+  ],
+  "ratio": 0.6665,
+  "alpha": false
+ },
+ "eif-card-pont-neuf": {
+  "widths": [
+   360,
+   720
+  ],
+  "ratio": 0.6665,
+  "alpha": false
+ },
+ "eif-card-trocadero": {
+  "widths": [
+   360,
+   720
+  ],
+  "ratio": 0.6665,
+  "alpha": true
+ },
+ "eif-card-versalles": {
+  "widths": [
+   360,
+   720
+  ],
+  "ratio": 0.6665,
+  "alpha": false
+ },
+ "eif-card-caneles": {
+  "widths": [
+   360,
+   720
+  ],
+  "ratio": 0.6665,
+  "alpha": false
+ },
+ "eif-card-fondue": {
+  "widths": [
+   360,
+   720
+  ],
+  "ratio": 0.6665,
+  "alpha": true
+ },
+ "eif-card-cognac": {
+  "widths": [
+   360,
+   720
+  ],
+  "ratio": 0.6665,
+  "alpha": true
+ },
+ "eif-card-croissants": {
+  "widths": [
+   360,
+   720
+  ],
+  "ratio": 0.6665,
+  "alpha": false
+ },
+ "eif-card-baguette": {
+  "widths": [
+   360,
+   720
+  ],
+  "ratio": 0.6665,
+  "alpha": false
+ },
+ "eif-card-macarons": {
+  "widths": [
+   360,
+   720
+  ],
+  "ratio": 0.6665,
+  "alpha": false
+ },
+ "eif-card-caracoles": {
+  "widths": [
+   360,
+   720
+  ],
+  "ratio": 0.6665,
+  "alpha": false
+ },
+ "eif-card-champagne": {
+  "widths": [
+   360,
+   720
+  ],
+  "ratio": 0.6665,
+  "alpha": false
+ },
+ "eif-card-ostras": {
+  "widths": [
+   360,
+   720
+  ],
+  "ratio": 0.6665,
+  "alpha": true
+ },
+ "eif-card-ranas": {
+  "widths": [
+   360,
+   720
+  ],
+  "ratio": 0.6665,
+  "alpha": true
+ },
+ "eif-card-quesos": {
+  "widths": [
+   360,
+   720
+  ],
+  "ratio": 0.6665,
+  "alpha": false
+ },
+ "eif-card-tartare": {
+  "widths": [
+   360,
+   720
+  ],
+  "ratio": 0.6665,
+  "alpha": false
+ },
+ "eif-dream-3": {
+  "widths": [
+   240,
+   480
+  ],
+  "ratio": 1.5004,
+  "alpha": false
+ },
+ "eif-dream-4": {
+  "widths": [
+   240,
+   480
+  ],
+  "ratio": 1.5004,
+  "alpha": false
+ },
+ "eif-dream-7": {
+  "widths": [
+   240,
+   480
+  ],
+  "ratio": 1.5004,
+  "alpha": false
+ },
+ "eif-dream-10": {
+  "widths": [
+   240,
+   480
+  ],
+  "ratio": 1.5004,
+  "alpha": false
+ },
+ "eif-dream-12": {
+  "widths": [
+   240,
+   480
+  ],
+  "ratio": 1.5004,
+  "alpha": false
+ },
+ "eif-dream-13": {
+  "widths": [
+   240,
+   480
+  ],
+  "ratio": 1.5004,
+  "alpha": false
+ },
+ "eif-dream-16": {
+  "widths": [
+   240,
+   480
+  ],
+  "ratio": 1.5004,
+  "alpha": false
+ },
+ "eif-dream-18": {
+  "widths": [
+   240,
+   480
+  ],
+  "ratio": 1.5004,
+  "alpha": false
+ },
+ "oly-sport-24": {
+  "widths": [
+   360,
+   720
+  ],
+  "ratio": 0.575,
+  "alpha": false
+ },
+ "oly-sport-22": {
+  "widths": [
+   360,
+   720
+  ],
+  "ratio": 0.575,
+  "alpha": false
+ },
+ "oly-sport-2": {
+  "widths": [
+   360,
+   720
+  ],
+  "ratio": 0.575,
+  "alpha": false
+ },
+ "oly-sport-1": {
+  "widths": [
+   360,
+   720
+  ],
+  "ratio": 0.575,
+  "alpha": false
+ },
+ "oly-sport-25": {
+  "widths": [
+   360,
+   720
+  ],
+  "ratio": 0.575,
+  "alpha": false
+ },
+ "oly-sport-13": {
+  "widths": [
+   360,
+   720
+  ],
+  "ratio": 0.575,
+  "alpha": false
+ },
+ "oly-sport-7": {
+  "widths": [
+   360,
+   720
+  ],
+  "ratio": 0.575,
+  "alpha": false
+ },
+ "oly-sport-12": {
+  "widths": [
+   360,
+   720
+  ],
+  "ratio": 0.575,
+  "alpha": false
+ },
+ "oly-sport-29": {
+  "widths": [
+   360,
+   720
+  ],
+  "ratio": 0.575,
+  "alpha": false
+ },
+ "oly-sport-20": {
+  "widths": [
+   360,
+   720
+  ],
+  "ratio": 0.575,
+  "alpha": false
+ },
+ "oly-sport-14": {
+  "widths": [
+   360,
+   720
+  ],
+  "ratio": 0.575,
+  "alpha": false
+ },
+ "oly-sport-11": {
+  "widths": [
+   360,
+   720
+  ],
+  "ratio": 0.575,
+  "alpha": false
+ },
+ "oly-sport-16": {
+  "widths": [
+   360,
+   720
+  ],
+  "ratio": 0.575,
+  "alpha": false
+ },
+ "oly-sport-21": {
+  "widths": [
+   360,
+   720
+  ],
+  "ratio": 0.575,
+  "alpha": false
+ },
+ "oly-sport-28": {
+  "widths": [
+   360,
+   720
+  ],
+  "ratio": 0.575,
+  "alpha": false
+ },
+ "oly-clue-51": {
+  "widths": [
+   240,
+   480
+  ],
+  "ratio": 1.3958,
+  "alpha": false
+ },
+ "oly-clue-26": {
+  "widths": [
+   240,
+   480
+  ],
+  "ratio": 1.3958,
+  "alpha": false
+ },
+ "oly-clue-52": {
+  "widths": [
+   240,
+   480
+  ],
+  "ratio": 1.3958,
+  "alpha": false
+ },
+ "oly-clue-18": {
+  "widths": [
+   240,
+   480
+  ],
+  "ratio": 1.3958,
+  "alpha": false
+ },
+ "oly-clue-28": {
+  "widths": [
+   240,
+   480
+  ],
+  "ratio": 1.3958,
+  "alpha": false
+ },
+ "oly-clue-64": {
+  "widths": [
+   240,
+   480
+  ],
+  "ratio": 1.3958,
+  "alpha": false
+ },
+ "oly-clue-63": {
+  "widths": [
+   240,
+   480
+  ],
+  "ratio": 1.3958,
+  "alpha": false
+ },
+ "oly-clue-59": {
+  "widths": [
+   240,
+   480
+  ],
+  "ratio": 1.3958,
+  "alpha": false
+ },
+ "oly-clue-44": {
+  "widths": [
+   240,
+   480
+  ],
+  "ratio": 1.3958,
+  "alpha": false
+ },
+ "oly-clue-3": {
+  "widths": [
+   240,
+   480
+  ],
+  "ratio": 1.3958,
+  "alpha": false
+ },
+ "oly-clue-13": {
+  "widths": [
+   240,
+   480
+  ],
+  "ratio": 1.3958,
+  "alpha": false
+ },
+ "oly-clue-15": {
+  "widths": [
+   240,
+   480
+  ],
+  "ratio": 1.3958,
+  "alpha": false
+ },
+ "oly-clue-16": {
+  "widths": [
+   240,
+   480
+  ],
+  "ratio": 1.3958,
+  "alpha": false
+ },
+ "oly-clue-17": {
+  "widths": [
+   240,
+   480
+  ],
+  "ratio": 1.3958,
+  "alpha": false
+ },
+ "oly-clue-20": {
+  "widths": [
+   240,
+   480
+  ],
+  "ratio": 1.3958,
+  "alpha": false
+ },
+ "oly-clue-23": {
+  "widths": [
+   240,
+   480
+  ],
+  "ratio": 1.3958,
+  "alpha": false
+ },
+ "oly-clue-31": {
+  "widths": [
+   240,
+   480
+  ],
+  "ratio": 1.3958,
+  "alpha": false
+ },
+ "oly-clue-32": {
+  "widths": [
+   240,
+   480
+  ],
+  "ratio": 1.3958,
+  "alpha": false
+ },
+ "oly-clue-37": {
+  "widths": [
+   240,
+   480
+  ],
+  "ratio": 1.3958,
+  "alpha": false
+ },
+ "oly-clue-38": {
+  "widths": [
+   240,
+   480
+  ],
+  "ratio": 1.3958,
+  "alpha": false
+ },
+ "oly-clue-45": {
+  "widths": [
+   240,
+   480
+  ],
+  "ratio": 1.3958,
+  "alpha": false
+ },
+ "oly-clue-54": {
+  "widths": [
+   240,
+   480
+  ],
+  "ratio": 1.3958,
+  "alpha": false
+ },
+ "oly-clue-65": {
+  "widths": [
+   240,
+   480
+  ],
+  "ratio": 1.3958,
+  "alpha": false
+ },
+ "oly-clue-70": {
+  "widths": [
+   240,
+   480
+  ],
+  "ratio": 1.3958,
+  "alpha": false
+ },
+ "oly-clue-73": {
+  "widths": [
+   240,
+   480
+  ],
+  "ratio": 1.3958,
+  "alpha": false
+ },
+ "oly-medal-2": {
+  "widths": [
+   120,
+   240
+  ],
+  "ratio": 0.7,
+  "alpha": false
+ },
+ "oly-medal-3": {
+  "widths": [
+   120,
+   240
+  ],
+  "ratio": 0.7,
+  "alpha": false
+ },
+ "oly-medal-4": {
+  "widths": [
+   120,
+   240
+  ],
+  "ratio": 0.7,
+  "alpha": false
+ },
+ "oly-flag-us": {
+  "widths": [
+   64,
+   128
+  ],
+  "ratio": 1.4387,
+  "alpha": false
+ },
+ "oly-flag-ar": {
+  "widths": [
+   64,
+   128
+  ],
+  "ratio": 1.4387,
+  "alpha": false
+ },
+ "oly-flag-fr": {
+  "widths": [
+   64,
+   128
+  ],
+  "ratio": 1.4387,
+  "alpha": false
+ },
+ "oly-flag-ke": {
+  "widths": [
+   64,
+   128
+  ],
+  "ratio": 1.4387,
+  "alpha": false
+ },
+ "oly-flag-cn": {
+  "widths": [
+   64,
+   128
+  ],
+  "ratio": 1.4387,
+  "alpha": false
+ },
+ "oly-flag-au": {
+  "widths": [
+   64,
+   128
+  ],
+  "ratio": 1.4387,
+  "alpha": false
+ },
+ "oly-back": {
+  "widths": [
+   240,
+   480
+  ],
+  "ratio": 1.3958,
+  "alpha": false
  }
 }
