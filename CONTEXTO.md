@@ -63,9 +63,20 @@ Resumen de todo lo hablado y hecho hasta el 9 de noviembre de 2026, para seguir 
   - La tienda de Wix se ignora sola cuando el dominio ya apunta a esta web.
 - Pasos en el README: dominio en GitHub Pages, registros DNS en Wix y Enforce HTTPS. Falta que Diego los haga.
 
+## Contenido nuevo de 1812 (9 de noviembre de 2026)
+
+- Originales en la Mac "Cykeros": `~/Documents/DS4 games cyqueros/1812 juego/` (caja, cartas de Lector, oníricas, sobres). El repo está clonado al lado, en `ds4games/`.
+- La página de 1812 suma tres secciones, armadas desde `rows`, `dreams` y `demo` de `src/data.mjs` (sirven igual para otro juego Secret Stories):
+  - **Las 40 cartas de Lector** por pestañas (personajes, situaciones, lugares, comidas). Se usaron las versiones del PDF final de impresión (`cartas lectores 4 copia final.pdf`): el fútbol no está, y el barco es una situación.
+  - **16 cartas de Autor** (oníricas) en una tira.
+  - **Ronda de prueba**: el ejemplo del reglamento (nivel 3, código 2 4 3 1, cartas oníricas 8, 11, 9 y 29). El visitante elige una carta por fila y recibe el sobre con los aciertos. En la fila de lugares, el barco del ejemplo se cambió por Rosario.
+- Galería: se sumaron la ilustración interior de la caja y la contratapa.
+- Nombres de cartas para revisar con Diego: "El cacique" (archivo "indio"), "El señor feudal", "El vendedor de velas" (archivo "velero").
+- En esta Mac no hay Node instalado: se usó el que trae ChatGPT (`/Applications/ChatGPT.app/Contents/Resources/cua_node/bin/node build.mjs`).
+
 ## Pendientes
 
-1. **Imágenes de la carpeta `ds4` del Mac de Diego** (cartas, cajas, reglamentos): sumarlas a las galerías de la web con `tools/images.json` y `tools/optimize_images.py`.
+1. **Imágenes de Olympikos y Les Secrets de la Tour Eiffel** (cartas, cajas): en esta Mac solo están las de 1812. Sumarlas igual que las de 1812, con `tools/images.json` y `tools/optimize_images.py`.
 2. **Reglamento de Eiffel en francés**: armar el PDF con las 8 páginas. Hoy `docs/assets/pdf/tour-eiffel-regles-fr.pdf` tiene solo la tapa. No traducir.
 3. La tapa de ese reglamento dice "3 à 5 en coopération / 2 à 10 en compétition", al revés de lo que decidió Diego.
 4. 1812: en la web, los niveles 2 y 3 quedaron iguales (6 columnas, bandera, 4 turnos). Confirmar con Diego.

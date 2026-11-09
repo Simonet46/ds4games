@@ -348,5 +348,541 @@
   ],
   "ratio": 1.5,
   "alpha": false
+ },
+ "arg-card-ama-llaves": {
+  "widths": [
+   240,
+   480
+  ],
+  "ratio": 1.5004,
+  "alpha": false
+ },
+ "arg-card-vendedora": {
+  "widths": [
+   240,
+   480
+  ],
+  "ratio": 1.5004,
+  "alpha": false
+ },
+ "arg-card-cacique": {
+  "widths": [
+   240,
+   480
+  ],
+  "ratio": 1.5004,
+  "alpha": false
+ },
+ "arg-card-granadero": {
+  "widths": [
+   240,
+   480
+  ],
+  "ratio": 1.5004,
+  "alpha": false
+ },
+ "arg-card-gaucho": {
+  "widths": [
+   240,
+   480
+  ],
+  "ratio": 1.5004,
+  "alpha": false
+ },
+ "arg-card-velero": {
+  "widths": [
+   240,
+   480
+  ],
+  "ratio": 1.5004,
+  "alpha": false
+ },
+ "arg-card-senor": {
+  "widths": [
+   240,
+   480
+  ],
+  "ratio": 1.5004,
+  "alpha": false
+ },
+ "arg-card-lavandera": {
+  "widths": [
+   240,
+   480
+  ],
+  "ratio": 1.5004,
+  "alpha": false
+ },
+ "arg-card-dama": {
+  "widths": [
+   240,
+   480
+  ],
+  "ratio": 1.5004,
+  "alpha": false
+ },
+ "arg-card-fraile": {
+  "widths": [
+   240,
+   480
+  ],
+  "ratio": 1.5004,
+  "alpha": false
+ },
+ "arg-card-cena": {
+  "widths": [
+   360,
+   720
+  ],
+  "ratio": 0.6665,
+  "alpha": false
+ },
+ "arg-card-baile": {
+  "widths": [
+   360,
+   720
+  ],
+  "ratio": 0.6665,
+  "alpha": false
+ },
+ "arg-card-llegada": {
+  "widths": [
+   360,
+   720
+  ],
+  "ratio": 0.6665,
+  "alpha": false
+ },
+ "arg-card-imprenta": {
+  "widths": [
+   360,
+   720
+  ],
+  "ratio": 0.6665,
+  "alpha": false
+ },
+ "arg-card-batalla": {
+  "widths": [
+   360,
+   720
+  ],
+  "ratio": 0.6665,
+  "alpha": false
+ },
+ "arg-card-misa": {
+  "widths": [
+   360,
+   720
+  ],
+  "ratio": 0.6665,
+  "alpha": false
+ },
+ "arg-card-manzana": {
+  "widths": [
+   360,
+   720
+  ],
+  "ratio": 0.6665,
+  "alpha": false
+ },
+ "arg-card-naipes": {
+  "widths": [
+   360,
+   720
+  ],
+  "ratio": 0.6665,
+  "alpha": false
+ },
+ "arg-card-barco": {
+  "widths": [
+   360,
+   720
+  ],
+  "ratio": 0.6665,
+  "alpha": false
+ },
+ "arg-card-pato": {
+  "widths": [
+   360,
+   720
+  ],
+  "ratio": 0.6665,
+  "alpha": false
+ },
+ "arg-card-rosario": {
+  "widths": [
+   360,
+   720
+  ],
+  "ratio": 0.6665,
+  "alpha": false
+ },
+ "arg-card-ruinas": {
+  "widths": [
+   360,
+   720
+  ],
+  "ratio": 0.6665,
+  "alpha": false
+ },
+ "arg-card-fuerte": {
+  "widths": [
+   360,
+   720
+  ],
+  "ratio": 0.6665,
+  "alpha": false
+ },
+ "arg-card-centro": {
+  "widths": [
+   360,
+   720
+  ],
+  "ratio": 0.6665,
+  "alpha": false
+ },
+ "arg-card-cataratas": {
+  "widths": [
+   360,
+   720
+  ],
+  "ratio": 0.6665,
+  "alpha": false
+ },
+ "arg-card-mendoza": {
+  "widths": [
+   360,
+   720
+  ],
+  "ratio": 0.6665,
+  "alpha": false
+ },
+ "arg-card-lujan": {
+  "widths": [
+   360,
+   720
+  ],
+  "ratio": 0.6665,
+  "alpha": false
+ },
+ "arg-card-jujuy": {
+  "widths": [
+   360,
+   720
+  ],
+  "ratio": 0.6665,
+  "alpha": false
+ },
+ "arg-card-tucuman": {
+  "widths": [
+   360,
+   720
+  ],
+  "ratio": 0.6665,
+  "alpha": false
+ },
+ "arg-card-cabildo": {
+  "widths": [
+   360,
+   720
+  ],
+  "ratio": 0.6665,
+  "alpha": false
+ },
+ "arg-card-bizcochos": {
+  "widths": [
+   360,
+   720
+  ],
+  "ratio": 0.6665,
+  "alpha": false
+ },
+ "arg-card-vino": {
+  "widths": [
+   360,
+   720
+  ],
+  "ratio": 0.6665,
+  "alpha": false
+ },
+ "arg-card-mate": {
+  "widths": [
+   360,
+   720
+  ],
+  "ratio": 0.6665,
+  "alpha": false
+ },
+ "arg-card-empanadas": {
+  "widths": [
+   360,
+   720
+  ],
+  "ratio": 0.6665,
+  "alpha": false
+ },
+ "arg-card-carbonada": {
+  "widths": [
+   360,
+   720
+  ],
+  "ratio": 0.6665,
+  "alpha": false
+ },
+ "arg-card-pastelitos": {
+  "widths": [
+   360,
+   720
+  ],
+  "ratio": 0.6665,
+  "alpha": false
+ },
+ "arg-card-pollo": {
+  "widths": [
+   360,
+   720
+  ],
+  "ratio": 0.6665,
+  "alpha": false
+ },
+ "arg-card-asado": {
+  "widths": [
+   360,
+   720
+  ],
+  "ratio": 0.6665,
+  "alpha": false
+ },
+ "arg-card-mazamorra": {
+  "widths": [
+   360,
+   720
+  ],
+  "ratio": 0.6665,
+  "alpha": false
+ },
+ "arg-card-locro": {
+  "widths": [
+   360,
+   720
+  ],
+  "ratio": 0.6665,
+  "alpha": false
+ },
+ "arg-dream-8": {
+  "widths": [
+   240,
+   480
+  ],
+  "ratio": 1.4995,
+  "alpha": false
+ },
+ "arg-dream-11": {
+  "widths": [
+   240,
+   480
+  ],
+  "ratio": 1.4995,
+  "alpha": false
+ },
+ "arg-dream-9": {
+  "widths": [
+   240,
+   480
+  ],
+  "ratio": 1.4995,
+  "alpha": false
+ },
+ "arg-dream-29": {
+  "widths": [
+   240,
+   480
+  ],
+  "ratio": 1.4995,
+  "alpha": false
+ },
+ "arg-dream-1": {
+  "widths": [
+   240,
+   480
+  ],
+  "ratio": 1.4995,
+  "alpha": false
+ },
+ "arg-dream-3": {
+  "widths": [
+   240,
+   480
+  ],
+  "ratio": 1.4995,
+  "alpha": false
+ },
+ "arg-dream-10": {
+  "widths": [
+   240,
+   480
+  ],
+  "ratio": 1.4995,
+  "alpha": false
+ },
+ "arg-dream-13": {
+  "widths": [
+   240,
+   480
+  ],
+  "ratio": 1.4995,
+  "alpha": false
+ },
+ "arg-dream-19": {
+  "widths": [
+   240,
+   480
+  ],
+  "ratio": 1.4995,
+  "alpha": false
+ },
+ "arg-dream-22": {
+  "widths": [
+   240,
+   480
+  ],
+  "ratio": 1.4995,
+  "alpha": false
+ },
+ "arg-dream-24": {
+  "widths": [
+   240,
+   480
+  ],
+  "ratio": 1.4995,
+  "alpha": false
+ },
+ "arg-dream-25": {
+  "widths": [
+   240,
+   480
+  ],
+  "ratio": 1.4995,
+  "alpha": false
+ },
+ "arg-dream-33": {
+  "widths": [
+   240,
+   480
+  ],
+  "ratio": 1.4995,
+  "alpha": false
+ },
+ "arg-dream-37": {
+  "widths": [
+   240,
+   480
+  ],
+  "ratio": 1.4995,
+  "alpha": false
+ },
+ "arg-dream-40": {
+  "widths": [
+   240,
+   480
+  ],
+  "ratio": 1.4995,
+  "alpha": false
+ },
+ "arg-dream-44": {
+  "widths": [
+   240,
+   480
+  ],
+  "ratio": 1.4995,
+  "alpha": false
+ },
+ "arg-dream-45": {
+  "widths": [
+   240,
+   480
+  ],
+  "ratio": 1.4995,
+  "alpha": false
+ },
+ "arg-dream-46": {
+  "widths": [
+   240,
+   480
+  ],
+  "ratio": 1.4995,
+  "alpha": false
+ },
+ "arg-dream-51": {
+  "widths": [
+   240,
+   480
+  ],
+  "ratio": 1.4995,
+  "alpha": false
+ },
+ "arg-dream-57": {
+  "widths": [
+   240,
+   480
+  ],
+  "ratio": 1.4995,
+  "alpha": false
+ },
+ "arg-sobre-0": {
+  "widths": [
+   160,
+   320
+  ],
+  "ratio": 0.6688,
+  "alpha": true
+ },
+ "arg-sobre-1": {
+  "widths": [
+   160,
+   320
+  ],
+  "ratio": 0.6688,
+  "alpha": true
+ },
+ "arg-sobre-2": {
+  "widths": [
+   160,
+   320
+  ],
+  "ratio": 0.6688,
+  "alpha": true
+ },
+ "arg-sobre-3": {
+  "widths": [
+   160,
+   320
+  ],
+  "ratio": 0.6688,
+  "alpha": true
+ },
+ "arg-sobre-4": {
+  "widths": [
+   160,
+   320
+  ],
+  "ratio": 0.6688,
+  "alpha": true
+ },
+ "arg-shelf": {
+  "widths": [
+   480,
+   960
+  ],
+  "ratio": 1.3549,
+  "alpha": false
+ },
+ "arg-author-art": {
+  "widths": [
+   480,
+   960
+  ],
+  "ratio": 1.5002,
+  "alpha": false
  }
 }

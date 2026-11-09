@@ -129,6 +129,94 @@
     });
   }
 
+  /* Pestañas de las cartas de Lector (sin JS se ven todas las filas) */
+  doc.querySelectorAll("[data-tabs]").forEach(function (box) {
+    var tabs = [].slice.call(box.querySelectorAll('[role="tab"]'));
+    function show(tab, focus) {
+      tabs.forEach(function (t) {
+        var on = t === tab, panel = doc.getElementById(t.getAttribute("aria-controls"));
+        t.setAttribute("aria-selected", on ? "true" : "false");
+        t.tabIndex = on ? 0 : -1;
+        if (on) panel.removeAttribute("data-off"); else panel.setAttribute("data-off", "");
+      });
+      if (focus) tab.focus();
+    }
+    tabs.forEach(function (t, i) {
+      t.addEventListener("click", function () { show(t); });
+      t.addEventListener("keydown", function (e) {
+        var d = e.key === "ArrowRight" ? 1 : e.key === "ArrowLeft" ? -1 : 0;
+        if (d) { e.preventDefault(); show(tabs[(i + d + tabs.length) % tabs.length], true); }
+      });
+    });
+  });
+
+  /* Ronda de prueba: el visitante juega como Lector y recibe un sobre con los aciertos */
+  doc.querySelectorAll("[data-demo]").forEach(function (form) {
+    var D = JSON.parse(form.getAttribute("data-demo"));
+    var say = form.querySelector(".dsay"), again = form.querySelector(".dagain");
+    var turnEl = form.querySelector(".dturn"), msg = form.querySelector(".dmsg"), log = form.querySelector(".dlog");
+    var inputs = [].slice.call(form.querySelectorAll("input[type=radio]"));
+    var turn = 1, over = false;
+    function picks() {
+      return D.answer.map(function (_, i) {
+        var c = form.querySelector('input[name="r' + i + '"]:checked');
+        return c ? +c.value : 0;
+      });
+    }
+    function code(nums) {
+      return '<span class="dcode">' + nums.map(function (n, i) { return '<b style="--row:' + D.colors[i] + '">' + n + "</b>"; }).join("") + "</span>";
+    }
+    function status(keepMsg) {
+      turnEl.textContent = D.t.turn.replace("{n}", turn).replace("{total}", D.turns);
+      var ready = picks().every(Boolean);
+      say.disabled = !ready;
+      if (!keepMsg) msg.textContent = ready ? D.t.ready : D.t.pick;
+    }
+    function end(won) {
+      over = true;
+      form.classList.add("done");
+      inputs.forEach(function (inp) {
+        var lab = inp.closest("label");
+        inp.disabled = true;
+        if (+inp.value === D.answer[+inp.name.slice(1)]) lab.classList.add("ok");
+        else if (inp.checked) lab.classList.add("no");
+      });
+      form.querySelectorAll(".dwhy").forEach(function (p) { p.hidden = false; });
+      msg.innerHTML = won ? D.t.win : D.t.lose.replace("{code}", code(D.answer));
+      say.hidden = true;
+      again.hidden = false;
+      again.focus();
+    }
+    form.addEventListener("change", function () { if (!over) status(); });
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+      var p = picks();
+      if (over || !p.every(Boolean)) return;
+      var hits = p.filter(function (n, i) { return n === D.answer[i]; }).length;
+      var li = doc.createElement("li");
+      li.innerHTML = code(p) + '<img src="' + D.sobres[hits] + '" width="160" height="' + D.sobreH + '" alt="">' + "<span>" + D.t.hits[hits] + "</span>";
+      log.appendChild(li);
+      if (hits === 4) return end(true);
+      if (turn >= D.turns) return end(false);
+      turn++;
+      status(true);
+      msg.textContent = D.t.hits[hits] + ". " + D.t.pick.replace(/\.$/, "") + ".";
+    });
+    again.addEventListener("click", function () {
+      over = false;
+      turn = 1;
+      form.classList.remove("done");
+      inputs.forEach(function (inp) { inp.disabled = false; inp.checked = false; inp.closest("label").classList.remove("ok", "no"); });
+      form.querySelectorAll(".dwhy").forEach(function (p) { p.hidden = true; });
+      log.innerHTML = "";
+      say.hidden = false;
+      again.hidden = true;
+      status();
+      form.scrollIntoView({ behavior: reduce ? "auto" : "smooth", block: "start" });
+    });
+    status();
+  });
+
   /* Formulario de contacto: abre el correo con el mensaje armado */
   var form = doc.querySelector("[data-contact]");
   if (form) {

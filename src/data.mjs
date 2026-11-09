@@ -106,10 +106,33 @@ export const GAMES = {
     complexity: 2,
     best: "3–5",
     gallery: [
-      ["arg-box-photo", "box"], ["arg-book-dark", "book"], ["arg-flag", "flag", "tall"], ["arg-open-photo", "dice"], ["arg-gameplay", "play"],
-      ["arg-cards", "cards"], ["arg-grid", "grid"], ["arg-art", "art"],
+      ["arg-box-photo", "box"], ["arg-author-art", "art", "tall"], ["arg-book-dark", "book"], ["arg-flag", "flag", "tall"], ["arg-open-photo", "dice"],
+      ["arg-gameplay", "play"], ["arg-shelf", "shelf", "tall"], ["arg-cards", "cards"], ["arg-grid", "grid"],
     ],
     levels: [[1, 5, true, 5], [2, 6, true, 4], [3, 6, true, 4], [4, 6, false, 4], [5, 6, false, 3]],
+    // Prefijo de las imágenes de cartas: arg-card-…, arg-dream-…, arg-sobre-…
+    art: "arg",
+    // Las 40 cartas de Lector, en el orden del archivo de impresión. Imagen: arg-card-<nombre>. Nombres en i18n (cardNames).
+    // Colores de fila: los de los dados (azul, rojo, amarillo, verde).
+    rows: [
+      { key: "p", color: "#3b82f6", tall: true, cards: ["ama-llaves", "vendedora", "cacique", "granadero", "gaucho", "velero", "senor", "lavandera", "dama", "fraile"] },
+      { key: "s", color: "#ef4444", cards: ["cena", "baile", "llegada", "imprenta", "batalla", "misa", "manzana", "naipes", "barco", "pato"] },
+      { key: "l", color: "#facc15", cards: ["rosario", "ruinas", "fuerte", "centro", "cataratas", "mendoza", "lujan", "jujuy", "tucuman", "cabildo"] },
+      { key: "c", color: "#22c55e", cards: ["bizcochos", "vino", "mate", "empanadas", "carbonada", "pastelitos", "pollo", "asado", "mazamorra", "locro"] },
+    ],
+    // Cartas de Autor (oníricas) que se muestran en la página. Imagen: arg-dream-<número>.
+    dreams: [1, 3, 10, 13, 19, 22, 24, 25, 33, 37, 40, 44, 45, 46, 51, 57],
+    // Ronda de prueba: el ejemplo del reglamento (nivel 3, código 2 4 3 1).
+    // Por fila: carta de Autor, las 6 cartas de Lector en la mesa y la columna correcta (1 a 6).
+    demo: {
+      turns: 4,
+      rows: [
+        { dream: 8, cards: ["gaucho", "lavandera", "granadero", "cacique", "fraile", "dama"], answer: 2 },
+        { dream: 11, cards: ["llegada", "imprenta", "misa", "batalla", "manzana", "naipes"], answer: 4 },
+        { dream: 9, cards: ["rosario", "jujuy", "cabildo", "centro", "tucuman", "lujan"], answer: 3 },
+        { dream: 29, cards: ["locro", "empanadas", "mate", "carbonada", "vino", "asado"], answer: 1 },
+      ],
+    },
     pdfs: [
       { file: "1812-reglamento-es.pdf", lang: "ES", kind: "rules" },
       { file: "1812-regles-fr.pdf", lang: "FR", kind: "rules" },

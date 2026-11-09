@@ -292,6 +292,66 @@ function home(ctx) {
   return layout(ctx, { page: "home", title: h.title, description: h.description, body, ogImage: "home", jsonld });
 }
 
+/* Secret Stories: las cartas de Lector por fila, las cartas de Autor y una ronda de prueba.
+   Se muestran solo si el juego tiene rows, dreams o demo en src/data.mjs. */
+function deckSection(ctx, slug) {
+  const g = GAMES[slug], c = ctx.L.games[slug];
+  const tabs = g.rows.map((r, i) => `<button type="button" role="tab" id="tab-${r.key}" aria-controls="deck-${r.key}" aria-selected="${i === 0}"${i ? ' tabindex="-1"' : ""} style="--row:${r.color}"><i aria-hidden="true"></i>${esc(c.rowNames[r.key])}</button>`).join("");
+  const sizes = (tall) => (tall ? "(max-width: 560px) 44vw, (max-width: 900px) 30vw, 220px" : "(max-width: 560px) 44vw, (max-width: 900px) 30vw, 230px");
+  const panels = g.rows.map((r, i) => `<div class="deck" role="tabpanel" id="deck-${r.key}" aria-labelledby="tab-${r.key}" style="--row:${r.color}"${i ? " data-off" : ""}>
+    <h3 class="deck-title"><i aria-hidden="true"></i>${esc(c.rowNames[r.key])}<span class="muted">${esc(c.rowQs[r.key])}</span></h3>
+    <ul class="deck-grid${r.tall ? " tall" : ""}">${r.cards.map((k) => `<li><figure>${img(ctx, `${g.art}-card-${k}`, { alt: c.cardNames[k], sizes: sizes(r.tall) })}<figcaption>${esc(c.cardNames[k])}</figcaption></figure></li>`).join("")}</ul>
+  </div>`).join("");
+  return `<section class="section tight" id="cartas" style="scroll-margin-top:90px"><div class="wrap">
+  <div class="head reveal"><p class="eyebrow">${esc(c.deckEyebrow)}</p><h2 class="h2 grad">${esc(c.deckH2)}</h2><p class="lead">${esc(c.deckLead)}</p></div>
+  <div data-tabs><div class="tabs" role="tablist" aria-label="${esc(c.deckEyebrow)}">${tabs}</div>${panels}</div>
+</div></section>`;
+}
+
+function dreamsSection(ctx, slug) {
+  const g = GAMES[slug], c = ctx.L.games[slug];
+  const cards = g.dreams.map((n) => `<figure class="tall">${img(ctx, `${g.art}-dream-${n}`, { alt: "", sizes: "(max-width: 640px) 42vw, 220px" })}</figure>`).join("");
+  return `<section class="section tight">
+  <div class="wrap"><div class="head reveal"><p class="eyebrow">${esc(c.dreamsEyebrow)}</p><h2 class="h2 grad">${esc(c.dreamsH2)}</h2><p class="lead">${esc(c.dreamsLead)}</p></div></div>
+  <div class="gallery dreams" tabindex="0" aria-label="${esc(c.dreamsH2)}">${cards}</div>
+</section>`;
+}
+
+function demoSection(ctx, slug) {
+  const g = GAMES[slug], c = ctx.L.games[slug], d = c.demo;
+  const rows = g.demo.rows.map((r, i) => {
+    const row = g.rows[i];
+    const opts = r.cards.map((k, j) => `<label title="${esc(c.cardNames[k])}"><input type="radio" name="r${i}" value="${j + 1}"><span class="opt">${img(ctx, `${g.art}-card-${k}`, { alt: "", sizes: row.tall ? "(max-width: 760px) 28vw, 120px" : "(max-width: 760px) 28vw, 150px" })}<b aria-hidden="true">${j + 1}</b></span><span class="sr-only">${j + 1}. ${esc(c.cardNames[k])}</span></label>`).join("");
+    return `<fieldset class="drow" style="--row:${row.color}">
+      <legend><i aria-hidden="true"></i><strong>${esc(c.rowQs[row.key])}</strong><span class="muted">${esc(c.rowNames[row.key])}</span></legend>
+      <div class="drow-in">
+        <div class="dopts${row.tall ? " tall" : ""}">${opts}</div>
+        <figure class="ddream">${img(ctx, `${g.art}-dream-${r.dream}`, { alt: `${d.author} · ${c.rowNames[row.key]}`, sizes: "(max-width: 760px) 96px, 140px" })}<figcaption>${esc(d.author)}</figcaption></figure>
+      </div>
+      <p class="dwhy" hidden>${esc(d.reveal[i])}</p>
+    </fieldset>`;
+  }).join("");
+  const sobre = `${g.art}-sobre-0`;
+  const cfg = {
+    answer: g.demo.rows.map((r) => r.answer), turns: g.demo.turns, colors: g.rows.map((r) => r.color),
+    sobres: [0, 1, 2, 3, 4].map((n) => rel(ctx.path, `assets/img/${g.art}-sobre-${n}-${MANIFEST[sobre].widths.at(-1)}.webp`)),
+    sobreH: Math.round(160 * MANIFEST[sobre].ratio),
+    t: { pick: d.pick, ready: d.ready, turn: d.turn, hits: d.hits, win: d.win, lose: d.lose },
+  };
+  return `<section class="section tight" id="probar" style="scroll-margin-top:90px"><div class="wrap">
+  <div class="head reveal"><p class="eyebrow">${esc(d.eyebrow)}</p><h2 class="h2 grad">${esc(d.h2)}</h2><p class="lead">${esc(d.lead)}</p></div>
+  <form class="demo glass" data-demo="${esc(JSON.stringify(cfg))}">
+    ${rows}
+    <div class="dbar">
+      <p class="dstatus" aria-live="polite"><strong class="dturn">${esc(d.turn.replace("{n}", 1).replace("{total}", g.demo.turns))}</strong><span class="dmsg muted">${esc(d.noJs)}</span></p>
+      <div class="btns"><button class="btn btn-primary dsay" type="submit" disabled>${esc(d.say)}</button><button class="btn btn-glass dagain" type="button" hidden>${esc(d.again)}</button></div>
+      <ol class="dlog"></ol>
+    </div>
+    <p class="muted dnote">${esc(d.note)}</p>
+  </form>
+</div></section>`;
+}
+
 /* Página de cada juego */
 function gamePage(ctx, slug) {
   const { t } = ctx.L;
@@ -344,7 +404,7 @@ ${profileSection(ctx, slug)}
   <div class="rules2">${special}</div>
   ${levelsHead}${levels}
 </div></section>
-
+${g.rows ? deckSection(ctx, slug) : ""}${g.dreams ? dreamsSection(ctx, slug) : ""}${g.demo ? demoSection(ctx, slug) : ""}
 <section class="section tight">
   <div class="wrap"><div class="head reveal"><h2 class="h2 grad">${esc(c.galleryH2)}</h2><p class="lead">${esc(c.galleryLead)}</p></div></div>
   <div class="gallery" tabindex="0" aria-label="${esc(c.galleryH2)}">${gallery}</div>

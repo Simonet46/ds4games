@@ -306,5 +306,474 @@
    480,
    960
   ]
+ },
+ "arg-card-ama-llaves": {
+  "src": "cartas filas 1812/Independencia- personajes - ama de llaves.png",
+  "widths": [
+   240,
+   480
+  ]
+ },
+ "arg-card-vendedora": {
+  "src": "cartas filas 1812/Independencia- personajes - vendedora empanadas.png",
+  "widths": [
+   240,
+   480
+  ]
+ },
+ "arg-card-cacique": {
+  "src": "cartas filas 1812/Independencia- personajes - indio.png",
+  "widths": [
+   240,
+   480
+  ]
+ },
+ "arg-card-granadero": {
+  "src": "cartas filas 1812/Independencia- personajes - granadero.png",
+  "widths": [
+   240,
+   480
+  ]
+ },
+ "arg-card-gaucho": {
+  "src": "cartas filas 1812/Independencia- personajes - gaucho.png",
+  "widths": [
+   240,
+   480
+  ]
+ },
+ "arg-card-velero": {
+  "src": "cartas filas 1812/Independencia- personajes - velero.png",
+  "widths": [
+   240,
+   480
+  ]
+ },
+ "arg-card-senor": {
+  "src": "cartas filas 1812/Independencia- personajes - señor feudal.png",
+  "widths": [
+   240,
+   480
+  ]
+ },
+ "arg-card-lavandera": {
+  "src": "cartas filas 1812/Independencia- personajes - lavandera.png",
+  "widths": [
+   240,
+   480
+  ]
+ },
+ "arg-card-dama": {
+  "src": "cartas filas 1812/Independencia- personajes - dama antigua.png",
+  "widths": [
+   240,
+   480
+  ]
+ },
+ "arg-card-fraile": {
+  "src": "cartas filas 1812/Independencia- personajes - fraile.png",
+  "widths": [
+   240,
+   480
+  ]
+ },
+ "arg-card-cena": {
+  "src": "cartas filas 1812/Independencia - Acciones - cena.png",
+  "widths": [
+   360,
+   720
+  ]
+ },
+ "arg-card-baile": {
+  "src": "cartas filas 1812/Independencia - Acciones - Salon de Baile.png",
+  "widths": [
+   360,
+   720
+  ]
+ },
+ "arg-card-llegada": {
+  "src": "cartas filas 1812/Independencia - Acciones - llegada Buenos Aires.png",
+  "widths": [
+   360,
+   720
+  ]
+ },
+ "arg-card-imprenta": {
+  "src": "cartas filas 1812/Independencia - Acciones - Imprenta.png",
+  "widths": [
+   360,
+   720
+  ]
+ },
+ "arg-card-batalla": {
+  "src": "cartas filas 1812/Independencia - Acciones - guerra B.png",
+  "widths": [
+   360,
+   720
+  ]
+ },
+ "arg-card-misa": {
+  "src": "cartas filas 1812/Independencia - Acciones - misa.png",
+  "widths": [
+   360,
+   720
+  ]
+ },
+ "arg-card-manzana": {
+  "src": "cartas filas 1812/Independencia - Acciones - Manzana de las luces.png",
+  "widths": [
+   360,
+   720
+  ]
+ },
+ "arg-card-naipes": {
+  "src": "cartas filas 1812/Independencia - Acciones - jugar cartas.png",
+  "widths": [
+   360,
+   720
+  ]
+ },
+ "arg-card-barco": {
+  "src": "cartas filas 1812/Independencia - lugares - Buenos Aires Barco.png",
+  "widths": [
+   360,
+   720
+  ]
+ },
+ "arg-card-pato": {
+  "src": "cartas filas 1812/Independencia - Acciones - Pato.png",
+  "widths": [
+   360,
+   720
+  ]
+ },
+ "arg-card-rosario": {
+  "src": "cartas filas 1812/Independencia - lugares - rosario B.png",
+  "widths": [
+   360,
+   720
+  ]
+ },
+ "arg-card-ruinas": {
+  "src": "cartas filas 1812/Independencia - lugares - ruinas jesuiticas.png",
+  "widths": [
+   360,
+   720
+  ]
+ },
+ "arg-card-fuerte": {
+  "src": "cartas filas 1812/Independencia - lugares - fuerte bs as.png",
+  "widths": [
+   360,
+   720
+  ]
+ },
+ "arg-card-centro": {
+  "src": "cartas filas 1812/Independencia - lugares - centro buenos aires.png",
+  "widths": [
+   360,
+   720
+  ]
+ },
+ "arg-card-cataratas": {
+  "src": "cartas filas 1812/Independencia - lugares - cataratas.png",
+  "widths": [
+   360,
+   720
+  ]
+ },
+ "arg-card-mendoza": {
+  "src": "cartas filas 1812/Independencia - lugares - viñedos Mendoza.png",
+  "widths": [
+   360,
+   720
+  ]
+ },
+ "arg-card-lujan": {
+  "src": "cartas filas 1812/Independencia - lugares - lujan.png",
+  "widths": [
+   360,
+   720
+  ]
+ },
+ "arg-card-jujuy": {
+  "src": "cartas filas 1812/Independencia - lugares - jujuy.png",
+  "widths": [
+   360,
+   720
+  ]
+ },
+ "arg-card-tucuman": {
+  "src": "cartas filas 1812/Independencia - lugares - casa de tucuman.png",
+  "widths": [
+   360,
+   720
+  ]
+ },
+ "arg-card-cabildo": {
+  "src": "cartas filas 1812/Independencia - lugares - cabildo.png",
+  "widths": [
+   360,
+   720
+  ]
+ },
+ "arg-card-bizcochos": {
+  "src": "cartas filas 1812/Independencia - comidas - Bizcochos.png",
+  "widths": [
+   360,
+   720
+  ]
+ },
+ "arg-card-vino": {
+  "src": "cartas filas 1812/Independencia - comidas - botellon de vino.png",
+  "widths": [
+   360,
+   720
+  ]
+ },
+ "arg-card-mate": {
+  "src": "cartas filas 1812/Independencia - comidas - mate y pava.png",
+  "widths": [
+   360,
+   720
+  ]
+ },
+ "arg-card-empanadas": {
+  "src": "cartas filas 1812/Independencia - comidas - empanadas.png",
+  "widths": [
+   360,
+   720
+  ]
+ },
+ "arg-card-carbonada": {
+  "src": "cartas filas 1812/Independencia - comidas - carbonada criolla.png",
+  "widths": [
+   360,
+   720
+  ]
+ },
+ "arg-card-pastelitos": {
+  "src": "cartas filas 1812/Independencia - comidas - pastelitos.png",
+  "widths": [
+   360,
+   720
+  ]
+ },
+ "arg-card-pollo": {
+  "src": "cartas filas 1812/Independencia - comidas - Pollo.png",
+  "widths": [
+   360,
+   720
+  ]
+ },
+ "arg-card-asado": {
+  "src": "cartas filas 1812/Independencia - comidas - Asado.png",
+  "widths": [
+   360,
+   720
+  ]
+ },
+ "arg-card-mazamorra": {
+  "src": "cartas filas 1812/Independencia - comidas - mazamorra.png",
+  "widths": [
+   360,
+   720
+  ]
+ },
+ "arg-card-locro": {
+  "src": "cartas filas 1812/Independencia - comidas - locro.png",
+  "widths": [
+   360,
+   720
+  ]
+ },
+ "arg-dream-8": {
+  "src": "oniricas 1812/Independencia- oniricas 8.png",
+  "widths": [
+   240,
+   480
+  ]
+ },
+ "arg-dream-11": {
+  "src": "oniricas 1812/Independencia- oniricas 11.png",
+  "widths": [
+   240,
+   480
+  ]
+ },
+ "arg-dream-9": {
+  "src": "oniricas 1812/Independencia- oniricas 9.png",
+  "widths": [
+   240,
+   480
+  ]
+ },
+ "arg-dream-29": {
+  "src": "oniricas 1812/Independencia- oniricas 29.png",
+  "widths": [
+   240,
+   480
+  ]
+ },
+ "arg-dream-1": {
+  "src": "oniricas 1812/Independencia- oniricas 1.png",
+  "widths": [
+   240,
+   480
+  ]
+ },
+ "arg-dream-3": {
+  "src": "oniricas 1812/Independencia- oniricas 3.png",
+  "widths": [
+   240,
+   480
+  ]
+ },
+ "arg-dream-10": {
+  "src": "oniricas 1812/Independencia- oniricas 10.png",
+  "widths": [
+   240,
+   480
+  ]
+ },
+ "arg-dream-13": {
+  "src": "oniricas 1812/Independencia- oniricas 13.png",
+  "widths": [
+   240,
+   480
+  ]
+ },
+ "arg-dream-19": {
+  "src": "oniricas 1812/Independencia- oniricas 19.png",
+  "widths": [
+   240,
+   480
+  ]
+ },
+ "arg-dream-22": {
+  "src": "oniricas 1812/Independencia- oniricas 22.png",
+  "widths": [
+   240,
+   480
+  ]
+ },
+ "arg-dream-24": {
+  "src": "oniricas 1812/Independencia- oniricas 24.png",
+  "widths": [
+   240,
+   480
+  ]
+ },
+ "arg-dream-25": {
+  "src": "oniricas 1812/Independencia- oniricas 25.png",
+  "widths": [
+   240,
+   480
+  ]
+ },
+ "arg-dream-33": {
+  "src": "oniricas 1812/Independencia- oniricas 33.png",
+  "widths": [
+   240,
+   480
+  ]
+ },
+ "arg-dream-37": {
+  "src": "oniricas 1812/Independencia- oniricas 37.png",
+  "widths": [
+   240,
+   480
+  ]
+ },
+ "arg-dream-40": {
+  "src": "oniricas 1812/Independencia- oniricas 40.png",
+  "widths": [
+   240,
+   480
+  ]
+ },
+ "arg-dream-44": {
+  "src": "oniricas 1812/Independencia- oniricas 44.png",
+  "widths": [
+   240,
+   480
+  ]
+ },
+ "arg-dream-45": {
+  "src": "oniricas 1812/Independencia- oniricas 45.png",
+  "widths": [
+   240,
+   480
+  ]
+ },
+ "arg-dream-46": {
+  "src": "oniricas 1812/Independencia- oniricas 46.png",
+  "widths": [
+   240,
+   480
+  ]
+ },
+ "arg-dream-51": {
+  "src": "oniricas 1812/Independencia- oniricas 51.png",
+  "widths": [
+   240,
+   480
+  ]
+ },
+ "arg-dream-57": {
+  "src": "oniricas 1812/Independencia- oniricas 57.png",
+  "widths": [
+   240,
+   480
+  ]
+ },
+ "arg-sobre-0": {
+  "src": "sobres 1812/4 mal sobre.png",
+  "widths": [
+   160,
+   320
+  ]
+ },
+ "arg-sobre-1": {
+  "src": "sobres 1812/1 bien sobre.png",
+  "widths": [
+   160,
+   320
+  ]
+ },
+ "arg-sobre-2": {
+  "src": "sobres 1812/2 bien sobre.png",
+  "widths": [
+   160,
+   320
+  ]
+ },
+ "arg-sobre-3": {
+  "src": "sobres 1812/3 bien sobre.png",
+  "widths": [
+   160,
+   320
+  ]
+ },
+ "arg-sobre-4": {
+  "src": "sobres 1812/4 bien sobre.png",
+  "widths": [
+   160,
+   320
+  ]
+ },
+ "arg-shelf": {
+  "src": "caja 1812/Copia de Independencia - contratapa color final.png",
+  "widths": [
+   480,
+   960
+  ]
+ },
+ "arg-author-art": {
+  "src": "cartas filas 1812/Independencia-dibujo interior DE TAPA CAJA.png",
+  "widths": [
+   480,
+   960
+  ]
  }
 }
