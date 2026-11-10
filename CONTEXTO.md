@@ -91,6 +91,13 @@ Resumen de todo lo hablado y hecho hasta el 9 de noviembre de 2026, para seguir 
   - Las pistas de las dos rondas, que se cambian en `src/data.mjs`.
   - Los nombres en español de "El despertador" (archivo "reveilleur"), "La taxista" ("cochere"), "El cargador de Les Halles" y "La florista" ("florera").
 
+## Videos de cómo se juega (10 de noviembre de 2026)
+
+- `videos/<juego>-reglas-es.mp4` y `-fr.mp4`: animaciones minimalistas de 45 s, 1080×1920, sin sonido, con fondo claro y las cartas reales. Cada una tiene una intro, 5 pasos y un cierre con la caja y ds4games.com.
+- Olympikos usa la ronda del ejemplo del reglamento (el bate para la esgrima en silla de ruedas). Eiffel usa la misma mesa y las mismas pistas que la ronda de prueba de la web. 1812 usa el ejemplo del reglamento (código 2 4 3 1).
+- Diego pidió "/minimalistic-graphics", pero esa habilidad no existe en Claude: se hicieron con `tools/video/` como los otros videos.
+- En esta Mac no hay ffmpeg ni Playwright: se grabaron con `tools/video/render.swift` (WebKit + AVFoundation). Ver el README.
+
 ## Pendientes
 
 1. **Revisar las pistas y los nombres de cartas** de las rondas de prueba (ver arriba).

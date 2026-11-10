@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Olympikos · cómo se juega</title>
+<link rel="stylesheet" href="lib/video.css">
+<link rel="stylesheet" href="lib/howto.css">
+<style>#stage { --bg: #f4f1ea; --acc: #c9901c; } .medal { mix-blend-mode: multiply; }</style>
+</head>
+<body>
+<div id="stage"></div>
+<script src="lib/engine.js"></script>
+<script src="lib/howto.js"></script>
+<script>
+// Cómo se juega Olympikos, en 5 pasos. La ronda es la del ejemplo del reglamento
+// (deportes 24, 22, 2, 1 y 25; el bate como pista regular para la esgrima en silla de ruedas).
+const { p, put, lang } = V;
+const { mk, pic, card, flipCard, text, vis, heads, renderHeads, progress, outro, IMG } = HT;
+const T = {
+  es: {
+    how: "Cómo se juega",
+    steps: [
+      { k: "Paso 1", t: "5 deportes, 5 aros", s: "Cada ronda empieza con cinco deportes a la vista, uno debajo de cada aro." },
+      { k: "Paso 2", t: "El Entrenador da 3 pistas", s: "Una por medalla. Vertical: pista muy buena. Horizontal: pista regular." },
+      { k: "Paso 3", t: "¡A votar, rápido!", s: "Cada Atleta apoya su carta sobre la pila. Una carta apoyada ya no se mueve." },
+      { k: "Paso 4", t: "Entrega de medallas", s: "El primero que acierta gana 2, 3 o 4 puntos. Los siguientes, 1." },
+      { k: "Paso 5", t: "Todos son Entrenador", s: "Cada jugador entrena una vez. Gana quien suma más puntos." },
+    ],
+    coach: "Entrenador", chips: ["2–6 jugadores", "+8 años", "20 min"],
+  },
+  fr: {
+    how: "Comment jouer",
+    steps: [
+      { k: "Étape 1", t: "5 sports, 5 anneaux", s: "Chaque manche commence avec cinq sports visibles, un sous chaque anneau." },
+      { k: "Étape 2", t: "L’Entraîneur donne 3 indices", s: "Un par médaille. Vertical : très bon indice. Horizontal : indice moyen." },
+      { k: "Étape 3", t: "Votez, vite !", s: "Chaque Athlète pose sa carte sur la pile. Une carte posée ne bouge plus." },
+      { k: "Étape 4", t: "Remise des médailles", s: "Le premier qui trouve gagne 2, 3 ou 4 points. Les suivants, 1." },
+      { k: "Étape 5", t: "Chacun son tour", s: "Chaque joueur est Entraîneur une fois. Le plus de points l’emporte." },
+    ],
+    coach: "Entraîneur", chips: ["2–6 joueurs", "8 ans et +", "20 min"],
+  },
+  en: {
+    how: "How to play",
+    steps: [
+      { k: "Step 1", t: "5 sports, 5 rings", s: "Each round starts with five sports in view, one under each ring." },
+      { k: "Step 2", t: "The Coach gives 3 clues", s: "One per medal. Upright: very good clue. Sideways: average clue." },
+      { k: "Step 3", t: "Vote, fast!", s: "Each Athlete lays a card on the pile. Once it is down, it stays." },
+      { k: "Step 4", t: "Medal ceremony", s: "The first to get it right scores 2, 3 or 4 points. The rest, 1." },
+      { k: "Step 5", t: "Everyone coaches", s: "Each player is Coach once. Most points wins." },
+    ],
+    coach: "Coach", chips: ["2–6 players", "Ages 8+", "20 min"],
+  },
+}[lang];
+document.documentElement.lang = lang;
+
+const RINGS = ["#1a1919", "#3d78ad", "#e4a758", "#43925b", "#cc4f5c"];
+const SC = [[3.4, 10.4], [10.4, 18], [18, 25], [25, 32.6], [32.6, 39.6]];
+const END = 39.6;
+window.DURATION = 44.6;
+
+// Intro
+const kick0 = text("kick", T.how);
+const logo = pic("oly-logo-640", 560);
+const box0 = pic("oly-box-1080", 620);
+box0.style.filter = "drop-shadow(0 40px 50px rgba(40,25,10,.35))";
+
+// Paso 1: aros y deportes
+const SPORTS = [24, 22, 2, 1, 25];
+const rings = RINGS.map((c) => { const r = mk("c ring"); r.style.setProperty("--r", c); r.style.width = r.style.height = "118px"; return r; });
+const sports = SPORTS.map((n) => card(`oly-sport-${n}-720`, 380, 218));
+
+// Paso 2: medallas y pistas
+const CLUES = [[51, false], [26, true], [52, false]];
+const medals = [2, 3, 4].map((n) => pic(`oly-medal-${n}-240`, 210, "medal"));
+const clues = CLUES.map(([n]) => flipCard("oly-back-480", `oly-clue-${n}-480`, 220, 307));
+
+// Pasos 3 y 4: la pila del bronce
+const medalB = pic("oly-medal-2-240", 240, "medal");
+const bat = card("oly-clue-51-480", 150, 209);
+// [nación, aro] en el orden en que se apoyan. La primera es la del Entrenador.
+const PILE = [["au", 2], ["ar", 2], ["fr", 4], ["us", 2], ["cn", 3]];
+const DROP = [1.0, 2.5, 3.2, 3.8, 4.6];
+const pile = PILE.map(([n, r]) => {
+  const d = mk("c deleg", `<img src="${IMG(`oly-flag-${n}-128`)}" alt=""><i></i>`);
+  d.style.width = "150px"; d.style.height = "216px"; d.style.setProperty("--r", RINGS[r - 1]);
+  return d;
+});
+const coachTag = text("tag", T.coach);
+const BADGES = [null, "+2", "0", "+1", "0"];
+const badges = BADGES.map((b) => { if (!b) return null; const d = text("badge" + (b === "0" ? " zero" : ""), b); return d; });
+const coachTag2 = text("label", T.coach);
+// La respuesta: el aro azul, la esgrima en silla de ruedas.
+const ansRing = mk("c ring"); ansRing.style.setProperty("--r", RINGS[1]); ansRing.style.width = ansRing.style.height = "118px";
+const ansSport = card("oly-sport-22-720", 380, 218);
+
+// Paso 5: cada uno es Entrenador
+const PLAYERS = ["fr", "ar", "ke", "us"];
+const SCORES = ["11", "15", "9", "12"];
+const players = PLAYERS.map((n) => { const d = mk("c player", `<img src="${IMG(`oly-flag-${n}-128`)}" alt="">`); d.style.width = d.style.height = "190px"; return d; });
+const scores = SCORES.map((s) => text("score", s));
+const coachTag3 = text("tag", T.coach);
+const gold = pic("oly-medal-4-240", 190, "medal");
+
+const H = heads(T.steps, SC);
+const prog = progress(SC);
+const out = outro("oly-box-1080", 560, T.chips, "ds4games.com", END);
+
+const PX = [-375, -125, 125, 375];
+
+window.render = function (t) {
+  // Intro
+  const io = vis(t, -1, SC[0][0], 0.4, 0.5);
+  put(kick0, { y: -720 + (1 - p(t, 0.1, 0.6, "expo")) * 20, op: p(t, 0.1, 0.6) * io });
+  put(logo, { y: -590 + (1 - p(t, 0.2, 0.9, "expo")) * 30, op: p(t, 0.2, 0.8) * io });
+  put(box0, { y: 110 + (1 - p(t, 0.4, 1.3, "expo")) * 120, s: 0.94 + 0.06 * p(t, 0.4, 3.4, "out"), op: p(t, 0.4, 1.0) * io });
+
+  renderHeads(H, t);
+  prog(t);
+
+  // Paso 1
+  {
+    const [a, b] = SC[0], o = vis(t, a, b, 0.01);
+    rings.forEach((r, i) => {
+      const y = -360 + i * 215;
+      const k = p(t, a + 0.6 + i * 0.16, a + 1.1 + i * 0.16, "back");
+      put(r, { x: -330, y, s: k, op: Math.min(1, k * 1.5) * o });
+      const ks = p(t, a + 0.8 + i * 0.16, a + 1.4 + i * 0.16, "expo");
+      put(sports[i], { x: 95 + (1 - ks) * 160, y, op: ks * o });
+    });
+  }
+
+  // Paso 2
+  {
+    const [a, b] = SC[1], o = vis(t, a, b, 0.01);
+    medals.forEach((m, i) => {
+      const k = p(t, a + 0.5 + i * 0.15, a + 1.0 + i * 0.15, "back");
+      put(m, { x: (i - 1) * 330, y: -300, s: k, op: Math.min(1, k * 1.5) * o });
+    });
+    clues.forEach((c, i) => {
+      const kin = p(t, a + 1.2 + i * 0.15, a + 1.8 + i * 0.15, "expo");
+      const f = p(t, a + 3.0 + i * 0.22, a + 3.5 + i * 0.22, "inOut");
+      put(c, { x: (i - 1) * 330, y: 80 + (1 - kin) * 120, r: CLUES[i][1] ? 0 : 90, ry: f * 180, s: 1 + Math.sin(f * Math.PI) * 0.08, op: kin * o });
+    });
+  }
+
+  // Pasos 3 y 4: se apoyan las cartas y se reparten las medallas
+  {
+    const a = SC[2][0], b = SC[3][1], a4 = SC[3][0];
+    const o = vis(t, a, b, 0.01);
+    const k3 = p(t, a + 0.4, a + 1.0, "expo");
+    const s4 = p(t, a4 + 0.3, a4 + 1.1, "inOut");
+    put(medalB, { y: -330 + s4 * -20, s: 1 - s4 * 0.15, op: k3 * o });
+    put(bat, { y: -50, r: 90, s: 1 - s4 * 0.2, op: k3 * o * (1 - s4) });
+    pile.forEach((d, k) => {
+      const kd = p(t, a + DROP[k], a + DROP[k] + 0.35, "out");
+      const px = (k - 2) * 16 + [4, -9, 7, -5, 3][k], py = 330 - k * 7, pr = [-4, 3, -2, 5, -3][k];
+      const rx = -380 + k * 190, ry = 70;
+      const x = px + (rx - px) * s4, y = py + (ry - py) * s4, r = pr * (1 - s4);
+      // Se dan vuelta una por una (se aplana y vuelve con el aro a la vista).
+      const fa = a4 + 1.4 + k * 0.55, f = p(t, fa, fa + 0.4, "inOut");
+      const sx = Math.abs(Math.cos(f * Math.PI)) * 0.98 + 0.02;
+      d.style.setProperty("--o", f > 0.5 ? 1 : 0);
+      put(d, { x, y: y - (1 - kd) * 280, r, sx: t >= a4 ? sx : 1, s: 1.12 - 0.12 * kd, op: kd * o });
+      d.style.zIndex = 10 + k;
+      if (badges[k]) {
+        const kb = p(t, fa + 0.35, fa + 0.75, "back");
+        put(badges[k], { x: rx, y: 270, s: kb, op: Math.min(1, kb * 1.5) * o });
+      }
+    });
+    put(coachTag, { x: 250, y: 300, op: vis(t, a + DROP[0] + 0.2, a + DROP[1], 0.3, 0.3) * o });
+    const kc = p(t, a4 + 1.7, a4 + 2.1, "expo");
+    put(coachTag2, { x: -380, y: 270, op: kc * o });
+    const ka = p(t, a4 + 1.8, a4 + 2.4, "expo");
+    put(ansRing, { x: -270, y: 560, s: 0.6 + 0.4 * ka, op: ka * o });
+    put(ansSport, { x: 95, y: 560 + (1 - ka) * 40, op: ka * o });
+  }
+
+  // Paso 5
+  {
+    const [a, b] = SC[4], o = vis(t, a, b, 0.01);
+    players.forEach((pl, i) => {
+      const k = p(t, a + 0.5 + i * 0.12, a + 1.0 + i * 0.12, "back");
+      put(pl, { x: PX[i], y: 40, s: k, op: Math.min(1, k * 1.5) * o });
+      const ks = p(t, a + 4.6 + i * 0.1, a + 5.0 + i * 0.1, "expo");
+      put(scores[i], { x: PX[i], y: 220 + (1 - ks) * 20, op: ks * o });
+    });
+    // El cartel de Entrenador pasa de un jugador al siguiente.
+    const hop = (t - (a + 1.2)) / 0.85;
+    const i0 = Math.max(0, Math.min(3, Math.floor(hop))), fr = Math.max(0, Math.min(1, hop - i0));
+    const e = i0 >= 3 ? 0 : V.ease.inOut(Math.min(1, fr / 0.45));
+    const x = PX[i0] + (PX[Math.min(3, i0 + 1)] - PX[i0]) * (hop >= 3 ? 0 : e);
+    const kc = p(t, a + 1.0, a + 1.4, "expo") * (1 - p(t, a + 4.2, a + 4.5, "in"));
+    put(coachTag3, { x, y: -110 - Math.sin(e * Math.PI) * 40, op: kc * o });
+    const kg = p(t, a + 5.3, a + 5.8, "bounce");
+    put(gold, { x: PX[1], y: -150 + kg * 60, op: p(t, a + 5.3, a + 5.5) * o, r: (1 - kg) * -20 });
+  }
+
+  // Cierre
+  out(t);
+};
+</script>
+</body>
+</html>

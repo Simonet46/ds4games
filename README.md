@@ -143,3 +143,27 @@ node tools/video/render.cjs olympikos es
 ```
 
 Juegos: `olympikos`, `tour-eiffel`, `1812`. Idiomas: `es`, `fr`, `en`. Hace falta Node, Playwright con Chromium y ffmpeg. Para ver cuadros sueltos antes de grabar todo: `node tools/video/render.cjs olympikos es --still 2,9,15`.
+
+### Videos de cómo se juega
+
+Animaciones minimalistas de unos 45 segundos (1080×1920, sin sonido) que explican cada juego en 5 pasos con las cartas reales:
+
+| Juego | Español | Francés |
+|---|---|---|
+| Olympikos | `videos/olympikos-reglas-es.mp4` | `videos/olympikos-reglas-fr.mp4` |
+| Les Secrets de la Tour Eiffel | `videos/tour-eiffel-reglas-es.mp4` | `videos/tour-eiffel-reglas-fr.mp4` |
+| 1812 | `videos/1812-reglas-es.mp4` | `videos/1812-reglas-fr.mp4` |
+
+Los textos están arriba de cada `tools/video/<juego>-reglas.html` (también en inglés). Eiffel y 1812 comparten `tools/video/lib/secret-stories.js`.
+
+En una Mac se pueden grabar sin instalar nada, con `tools/video/render.swift` (usa WebKit y AVFoundation de macOS):
+
+```bash
+swiftc -O -o /tmp/ds4-render tools/video/render.swift
+```
+
+```bash
+/tmp/ds4-render olympikos-reglas es
+```
+
+Sirve para todos los videos de `tools/video/`. Para ver cuadros sueltos: `/tmp/ds4-render olympikos-reglas es --still 5,12,20`. Compilalo con la ruta del repositorio tal cual (como arriba, desde la carpeta del repositorio) para que encuentre los HTML.

@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>1812 · cómo se juega</title>
+<link rel="stylesheet" href="lib/video.css">
+<link rel="stylesheet" href="lib/howto.css">
+<style>#stage { --bg: #eef2f5; --acc: #2f78b7; }</style>
+</head>
+<body>
+<div id="stage"></div>
+<script src="lib/engine.js"></script>
+<script src="lib/howto.js"></script>
+<script src="lib/secret-stories.js"></script>
+<script>
+// Cómo se juega 1812, con el ejemplo del reglamento: nivel 3, código 2 4 3 1 y las cartas de Autor 8, 11, 9 y 29.
+const T = {
+  es: {
+    how: "Cómo se juega", name: "1812",
+    steps: [
+      { k: "Paso 1", t: "Cuatro filas boca arriba", s: "Personajes, situaciones, lugares y comidas de 1812: seis cartas de cada uno en el nivel 3." },
+      { k: "Paso 2", t: "El Autor tira los dados", s: "El color marca la fila y el número, la columna. Solo el Autor ve el código." },
+      { k: "Paso 3", t: "Pistas sin palabras", s: "Prohibido hablar: el Autor deja una carta de ensueño junto a cada fila." },
+      { k: "Paso 4", t: "Los Lectores debaten", s: "Dicen un código y reciben un sobre con la cantidad de aciertos, nunca cuáles." },
+      { k: "Paso 5", t: "¡Ganan todos juntos!", s: "Si descifran el código antes de que se acaben los turnos, ganan Autor y Lectores." },
+    ],
+    hits: ["Ningún acierto", "1 acierto", "2 aciertos", "3 aciertos", "4 aciertos"],
+    chips: ["2–7 jugadores", "+8 años", "20 min"],
+  },
+  fr: {
+    how: "Comment jouer", name: "1812",
+    steps: [
+      { k: "Étape 1", t: "Quatre rangées face visible", s: "Personnages, situations, lieux et plats de 1812 : six cartes de chaque au niveau 3." },
+      { k: "Étape 2", t: "L’Auteur lance les dés", s: "La couleur donne la rangée et le chiffre, la colonne. Seul l’Auteur voit le code." },
+      { k: "Étape 3", t: "Des indices sans un mot", s: "Interdit de parler : l’Auteur pose une carte de rêve à côté de chaque rangée." },
+      { k: "Étape 4", t: "Les Lecteurs débattent", s: "Ils annoncent un code et reçoivent une enveloppe avec le nombre de bonnes réponses." },
+      { k: "Étape 5", t: "Tout le monde gagne !", s: "Si le code est trouvé avant la fin des tours, l’Auteur et les Lecteurs gagnent ensemble." },
+    ],
+    hits: ["Aucune bonne réponse", "1 bonne réponse", "2 bonnes réponses", "3 bonnes réponses", "4 bonnes réponses"],
+    chips: ["2–7 joueurs", "8 ans et +", "20 min"],
+  },
+  en: {
+    how: "How to play", name: "1812",
+    steps: [
+      { k: "Step 1", t: "Four rows face up", s: "Characters, situations, places and dishes from 1812: six cards of each on level 3." },
+      { k: "Step 2", t: "The Author rolls the dice", s: "The color picks the row and the number, the column. Only the Author sees the code." },
+      { k: "Step 3", t: "Clues without words", s: "No talking: the Author places a dreamlike card next to each row." },
+      { k: "Step 4", t: "The Readers debate", s: "They say a code and get an envelope with the number of hits, never which ones." },
+      { k: "Step 5", t: "Everyone wins together!", s: "Crack the code before the turns run out and the Author and the Readers win." },
+    ],
+    hits: ["No hits", "1 hit", "2 hits", "3 hits", "4 hits"],
+    chips: ["2–7 players", "Ages 8+", "20 min"],
+  },
+}[V.lang];
+document.documentElement.lang = V.lang;
+const c = (n, tall) => `arg-card-${n}-${tall ? 480 : 360}`;
+secretStories({
+  T,
+  rows: [
+    { color: "#3b82f6", tall: true, cards: ["gaucho", "lavandera", "granadero", "cacique", "fraile", "dama"].map((n) => c(n, true)) },
+    { color: "#ef4444", cards: ["llegada", "imprenta", "misa", "batalla", "manzana", "naipes"].map((n) => c(n)) },
+    { color: "#eab308", cards: ["rosario", "jujuy", "cabildo", "centro", "tucuman", "lujan"].map((n) => c(n)) },
+    { color: "#22c55e", cards: ["locro", "empanadas", "mate", "carbonada", "vino", "asado"].map((n) => c(n)) },
+  ],
+  dreams: [8, 11, 9, 29].map((n) => `arg-dream-${n}-480`),
+  code: [2, 4, 3, 1],
+  guess: [2, 2, 5, 1],
+  sobres: [0, 1, 2, 3, 4].map((n) => `arg-sobre-${n}-320`),
+  box: "arg-box-1020", boxW: 540, url: "ds4games.com",
+});
+</script>
+</body>
+</html>

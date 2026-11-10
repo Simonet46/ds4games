@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Les Secrets de la Tour Eiffel · cómo se juega</title>
+<link rel="stylesheet" href="lib/video.css">
+<link rel="stylesheet" href="lib/howto.css">
+<style>#stage { --bg: #f4eee5; --acc: #b0642a; }</style>
+</head>
+<body>
+<div id="stage"></div>
+<script src="lib/engine.js"></script>
+<script src="lib/howto.js"></script>
+<script src="lib/secret-stories.js"></script>
+<script>
+// Cómo se juega Les Secrets de la Tour Eiffel. La mesa es la del ejemplo del reglamento;
+// las cartas de Autor y el código (5 1 6 3) son los de la ronda de prueba de la web.
+const T = {
+  es: {
+    how: "Cómo se juega", name: "Les Secrets de la Tour Eiffel",
+    steps: [
+      { k: "Paso 1", t: "Una mesa de 4 × 6", s: "Personajes, situaciones, lugares y comidas de París: seis cartas de cada uno." },
+      { k: "Paso 2", t: "El Autor tira los dados", s: "El color marca la fila y el número, la columna. Solo el Autor ve el código." },
+      { k: "Paso 3", t: "Pistas sin palabras", s: "El Autor no puede hablar: deja una carta surrealista junto a cada fila." },
+      { k: "Paso 4", t: "Cada Lector anota", s: "En secreto, escribe un código. El Autor dice cuántas cifras acertó, nunca cuáles." },
+      { k: "Paso 5", t: "¡Código descifrado!", s: "Hay 4 rondas y una última oportunidad. Quien lo descifra gana junto al Autor." },
+    ],
+    hits: ["Ningún acierto", "1 acierto", "2 aciertos", "3 aciertos", "4 aciertos"],
+    chips: ["3–5 jugadores", "2–10 en cooperativo", "25 min"],
+  },
+  fr: {
+    how: "Comment jouer", name: "Les Secrets de la Tour Eiffel",
+    steps: [
+      { k: "Étape 1", t: "Une table de 4 × 6", s: "Personnages, situations, lieux et plats de Paris : six cartes de chaque." },
+      { k: "Étape 2", t: "L’Auteur lance les dés", s: "La couleur donne la rangée et le chiffre, la colonne. Seul l’Auteur voit le code." },
+      { k: "Étape 3", t: "Des indices sans un mot", s: "L’Auteur ne peut pas parler : il pose une carte surréaliste à côté de chaque rangée." },
+      { k: "Étape 4", t: "Chaque Lecteur note", s: "En secret, il écrit un code. L’Auteur dit combien de chiffres sont justes, jamais lesquels." },
+      { k: "Étape 5", t: "Code trouvé !", s: "4 manches et une dernière chance. Celui qui trouve gagne avec l’Auteur." },
+    ],
+    hits: ["Aucune bonne réponse", "1 bonne réponse", "2 bonnes réponses", "3 bonnes réponses", "4 bonnes réponses"],
+    chips: ["3–5 joueurs", "2–10 en coopératif", "25 min"],
+  },
+  en: {
+    how: "How to play", name: "Les Secrets de la Tour Eiffel",
+    steps: [
+      { k: "Step 1", t: "A 4 × 6 table", s: "Characters, situations, places and dishes of Paris: six cards of each." },
+      { k: "Step 2", t: "The Author rolls the dice", s: "The color picks the row and the number, the column. Only the Author sees the code." },
+      { k: "Step 3", t: "Clues without words", s: "The Author can’t speak: a surreal card goes next to each row." },
+      { k: "Step 4", t: "Each Reader guesses", s: "In secret, they write a code. The Author says how many digits are right, never which ones." },
+      { k: "Step 5", t: "Code cracked!", s: "4 rounds and one last chance. Whoever cracks it wins with the Author." },
+    ],
+    hits: ["No hits", "1 hit", "2 hits", "3 hits", "4 hits"],
+    chips: ["3–5 players", "2–10 co-op", "25 min"],
+  },
+}[V.lang];
+document.documentElement.lang = V.lang;
+const c = (n, tall) => `eif-card-${n}-${tall ? 480 : 360}`;
+secretStories({
+  T,
+  rows: [
+    { color: "#3b82f6", tall: true, cards: ["florera", "telefonista", "lumiere", "bailarina", "cireur", "policia"].map((n) => c(n, true)) },
+    { color: "#ef4444", cards: ["cabaret", "cafe", "petanca", "flores", "bouquinistes", "circo"].map((n) => c(n)) },
+    { color: "#eab308", cards: ["luxemburgo", "orsay", "sacre-coeur", "invalides", "arco", "notre-dame"].map((n) => c(n)) },
+    { color: "#22c55e", cards: ["caneles", "fondue", "cognac", "croissants", "baguette", "macarons"].map((n) => c(n)) },
+  ],
+  dreams: [7, 16, 12, 18].map((n) => `eif-dream-${n}-480`),
+  code: [5, 1, 6, 3],
+  guess: [5, 1, 2, 2],
+  box: "eif-box-1080", boxW: 450, url: "ds4games.com",
+});
+</script>
+</body>
+</html>
