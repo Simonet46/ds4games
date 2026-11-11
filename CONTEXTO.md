@@ -46,7 +46,7 @@ Resumen de todo lo hablado y hecho hasta el 9 de noviembre de 2026, para seguir 
 
 - `videos/`: 3 videos verticales (Olympikos, Eiffel, 1812) en español y francés, de unos 21 s, sin sonido.
 - Se graban con `node tools/video/render.cjs <juego> <idioma>`, que usa Playwright y ffmpeg.
-- Higgsfield (plan Ultra, unos 2.382 créditos). Propuesta en espera del OK de Diego:
+- Higgsfield (plan Ultra). Diego aprobó usarlo para la voz de las anécdotas de Olympikos (ver abajo). El resto de la propuesta sigue en espera de su OK:
   - Sí: música propia para los videos, animar sus propias ilustraciones, fotos de ambiente con la caja real.
   - No: inventar componentes, testimonios falsos ni caras de personas reales.
 
@@ -94,9 +94,27 @@ Resumen de todo lo hablado y hecho hasta el 9 de noviembre de 2026, para seguir 
 - Diego pidió "/minimalistic-graphics", pero esa habilidad no existe en Claude: se hicieron con `tools/video/` como los otros videos.
 - En esta Mac no hay ffmpeg ni Playwright: se grabaron con `tools/video/render.swift` (WebKit + AVFoundation). Ver el README.
 
+## Anécdotas de Olympikos con voz (10 de noviembre de 2026)
+
+- Diego pidió animaciones narradas de anécdotas del libreto de Olympikos. Eligió la voz de Higgsfield (es el primer uso de Higgsfield que aprobó) y español y francés.
+- Cinco anécdotas: Bradbury (patinaje de velocidad), Vinci (halterofilia), Karelin (lucha), Stevenson (boxeo) e Im Dong-Hyun (tiro con arco). Se eligieron entre las que tienen carta de deporte en el juego, para usar su ilustración. La de Lis Hartel (equitación) quedó afuera porque no hay carta de equitación.
+- Los textos siguen el libreto en español y el livret en francés, adaptados para leer en voz alta. No se agregaron datos que no estén en el libreto. No hay caras de atletas reales: solo las ilustraciones del juego.
+- Voces: Marisol (español) y Luc (francés), motor ElevenLabs. Costaron unos 18 créditos (quedan 2.111). Claude no pudo escucharlas: si Diego prefiere otra voz, se generan de nuevo y los videos se vuelven a grabar sin tocar la animación.
+- `tools/video/render.swift` ahora mezcla la voz: la página define `window.VOICE` y el video sale con audio AAC.
+
+## 2080, el próximo Secret Stories (11 de noviembre de 2026)
+
+- Originales en `~/Documents/DS4 games cyqueros/2080 juego futurista/`: cartas de Personajes (79), Situaciones (41), Lugares (29) e Inventos (27), 3 ideas de caja y 7 dorsos. Todavía no está impreso.
+- Única regla nueva: todos los Lectores dicen su código en voz alta al mismo tiempo, pero el Autor le contesta a cada uno en privado. El resto es como Les Secrets de la Tour Eiffel.
+- En la web: página `/2080/` en modo "Próximamente" (`soon: true` en `src/data.mjs`): sin precio ni compra, con un botón "Avisame cuando salga" que abre un correo. Aparece en el menú, en la portada y en "Otros juegos".
+- Cartas elegidas por Claude de la serie numerada (`2080_<fila>_NNN`): 12 personajes, 12 situaciones, 12 lugares y los 8 inventos verticales. Imágenes `f80-…` en `tools/images.json`.
+- Ronda de prueba: código 4 3 6 5. No hay cartas de Autor de 2080, así que cada fila tiene una **pista provisoria en palabras** (`demo.hints` en i18n). Dos Lectores rivales dicen su código en cada ronda; sus aciertos se ven recién al final.
+- **Cartas para imprimir (11/11/2026):** Diego eligió 131 cartas: 52 personajes, 37 situaciones, 29 lugares y 13 inventos, todos horizontales salvo los personajes. Están en `2080 juego futurista/Cartas para imprimir/`, numeradas (P01, S01, L01, I01), a 300 dpi y con la misma medida que Eiffel y 1812: 12 × 18 cm vertical y 18 × 12 cm horizontal. Se agrandaron sin IA. Los carteles con el nombre se dejaron, incluidos los que no tienen tilde. Las 45 que quedaron afuera están en `Descartadas/`. La web usa esas cartas (`f80-card-p01…`).
+- Para revisar con Diego: los nombres de las cartas, las pistas provisorias, la caja (se usa la idea 003, que dice "Un juego de asociaciones oníricas" en español también en las páginas en francés e inglés), jugadores y duración (se copiaron de la Torre Eiffel).
+
 ## Pendientes
 
-1. **Revisar las pistas y los nombres de cartas** de las rondas de prueba (ver arriba).
+1. **Revisar las pistas y los nombres de cartas** de las rondas de prueba (ver arriba), y **escuchar las voces** de las anécdotas de Olympikos.
 2. **Reglamento de Eiffel en francés**: armar el PDF con las 8 páginas. Hoy `docs/assets/pdf/tour-eiffel-regles-fr.pdf` tiene solo la tapa. No traducir. En el Drive están las páginas impresas: "reglamento "Les secrets" en frances impreso1…7.png" y los PDF "LOW QUALITY REGLES EN FRANCAIS SECRETS".
 3. La tapa de ese reglamento dice "3 à 5 en coopération / 2 à 10 en compétition", al revés de lo que decidió Diego.
 4. 1812: en la web, los niveles 2 y 3 quedaron iguales (6 columnas, bandera, 4 turnos). Confirmar con Diego.

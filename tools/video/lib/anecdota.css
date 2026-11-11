@@ -1,0 +1,40 @@
+/* Videos narrados de anécdotas de Olympikos: fondo claro, un color de aro por deporte y la ilustración de la carta. */
+#stage {
+  background: var(--bg, #f1efe9); color: #16171c;
+  font-family: -apple-system, "SF Pro Display", "Helvetica Neue", Helvetica, Arial, sans-serif; letter-spacing: -.01em;
+}
+.kick { font-size: 30px; font-weight: 750; letter-spacing: .18em; text-transform: uppercase; color: var(--acc); white-space: nowrap; }
+.spill { display: flex; align-items: center; gap: 16px; padding: 14px 32px 14px 22px; border-radius: 999px; background: #fff;
+  font-size: 34px; font-weight: 700; white-space: nowrap; box-shadow: 0 10px 24px -14px rgba(0, 0, 0, .35); }
+.spill i { width: 32px; height: 32px; border-radius: 50%; border: 7px solid var(--acc); }
+.atitle { width: 980px; text-align: center; text-wrap: balance; font-size: 88px; font-weight: 850; letter-spacing: -.04em; line-height: 1.02; }
+.photo { width: 940px; height: 540px; border-radius: 30px; overflow: hidden; background: #d9d9d9;
+  box-shadow: 0 34px 60px -34px rgba(20, 20, 30, .6); }
+.photo img { width: 100%; height: 100%; object-fit: cover; display: block; transform-origin: 50% 45%; }
+.acap { width: 940px; text-align: center; text-wrap: balance; font-size: 46px; font-weight: 650; line-height: 1.24; letter-spacing: -.015em; }
+.acap.q { font-family: "Playfair", Georgia, serif; font-style: italic; font-weight: 700; font-size: 50px; letter-spacing: 0; }
+.acap.out { width: 900px; font-size: 56px; font-weight: 800; letter-spacing: -.03em; line-height: 1.12; }
+.abar { width: 940px; height: 6px; border-radius: 3px; background: rgba(22, 23, 28, .1); overflow: hidden; }
+.abar i { display: block; width: 100%; height: 100%; background: var(--acc); transform-origin: 0 50%; }
+.pill { padding: 16px 32px; border-radius: 999px; border: 2px solid rgba(22, 23, 28, .13); background: #fff; font-size: 36px; font-weight: 650; white-space: nowrap; }
+.url { font-size: 76px; font-weight: 800; letter-spacing: -.035em; white-space: nowrap; }
+
+/* Piezas de las escenas */
+.stat { text-align: center; white-space: nowrap; }
+.stat b { display: block; font-size: 124px; font-weight: 850; letter-spacing: -.05em; line-height: .92; color: var(--acc); font-variant-numeric: tabular-nums; }
+.stat span { display: block; margin-top: 12px; font-size: 34px; font-weight: 700; color: #5d5f68; }
+.stat.dark b { color: #16171c; }
+.stat.mute b { color: rgba(22, 23, 28, .28); }
+.stat.sm b { font-size: 96px; }
+.medal { mix-blend-mode: multiply; }
+.year { font-size: 40px; font-weight: 800; letter-spacing: -.02em; white-space: nowrap; }
+.badge { padding: 14px 34px; border-radius: 999px; font-size: 44px; font-weight: 850; color: #fff; background: var(--acc); white-space: nowrap; }
+.lcd { padding: 18px 40px; border-radius: 22px; background: #16171c; color: #fff; font-size: 96px; font-weight: 800;
+  letter-spacing: -.02em; font-variant-numeric: tabular-nums; white-space: nowrap; box-shadow: 0 20px 40px -20px rgba(0, 0, 0, .6); }
+.lcd.bad { color: #ff7a7a; }
+.lcd.ok { color: #6be3a4; }
+.note { font-size: 32px; font-weight: 700; color: #5d5f68; white-space: nowrap; }
+.qmark { font-family: "Playfair", Georgia, serif; font-weight: 900; font-size: 360px; line-height: 1; color: var(--acc); }
+.dotp { width: 44px; height: 44px; border-radius: 50%; background: var(--r); border: 5px solid #fff; box-shadow: 0 6px 14px -6px rgba(0, 0, 0, .5); }
+.tagp { padding: 6px 16px; border-radius: 999px; background: #16171c; color: #fff; font-size: 26px; font-weight: 800; white-space: nowrap; }
+.svg { overflow: visible; }

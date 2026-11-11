@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Olympikos · anécdota · Karelin</title>
+<link rel="stylesheet" href="lib/video.css">
+<link rel="stylesheet" href="lib/anecdota.css">
+</head>
+<body>
+<div id="stage"></div>
+<script src="lib/engine.js"></script>
+<script src="lib/howto.js"></script>
+<script src="lib/anecdotas-textos.js"></script>
+<script src="lib/anecdota.js"></script>
+<script>
+// Lucha: Aleksandr Karelin (libreto, deporte 2). Carta del juego: deporte 5.
+const L = {
+  es: { years: "años", wins: "victorias", losses: "derrotas", unbeaten: "años invicto" },
+  fr: { years: "ans", wins: "victoires", losses: "défaites", unbeaten: "ans invaincu" },
+};
+anecdota({
+  id: "karelin", img: "vid-oly-sport-5-1080", acc: "#43925b", bg: "#eef4ef",
+  gaps: { 2: 0.6, 3: 0.6 },
+  quotes: [3],
+  build({ lang }) {
+    const { p, put } = V;
+    const { text, mk } = HT;
+    const t9 = L[lang];
+    const Y = 280;
+    const s15 = AN.stat("15", t9.years, "dark");
+    const crack = AN.svg(260, 200, `<path class="cr" d="M-110 -70 L-40 -10 L-75 15 L10 60 L-15 85 L110 90" fill="none" stroke="#cc4f5c" stroke-width="14" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="520" stroke-dashoffset="520"/>`);
+    const cr = crack.querySelector(".cr");
+    const q = text("qmark", "«");
+    const golds = ["1988", "1992", "1996"].map((y) => AN.gold(y, 180));
+    const sW = AN.stat("0", t9.wins), sL = AN.stat("0", t9.losses, "mute");
+    const s13 = AN.stat("13", t9.unbeaten);
+    const ticks = Array.from({ length: 13 }, () => { const d = mk("c"); d.style.cssText = "width:30px;height:30px;border-radius:50%;background:var(--acc)"; return d; });
+
+    return (t, C) => {
+      // Línea 1: a los 15 años se rompe la pierna
+      const o1 = Math.min(C.vis(t, 1, 3), 1);
+      put(s15, { x: -170, y: Y - 10 + (1 - C.k(t, 1, 0.1)) * 40, op: o1 });
+      const kc = C.k(t, 1, C.dur(1) * 0.45, 0.45, "out");
+      cr.setAttribute("stroke-dashoffset", String(520 * (1 - kc)));
+      put(crack, { x: 190, y: Y - 10, op: o1, s: 1 + 0.05 * Math.sin(kc * Math.PI) });
+
+      // Línea 3: la respuesta
+      const oq = C.vis(t, 3, 4);
+      put(q, { y: Y + 20, s: 0.85 + 0.15 * C.k(t, 3, 0, 0.8, "back"), op: oq * 0.9 });
+
+      // Línea 4: tres veces campeón olímpico
+      golds.forEach((g, i) => {
+        const a = 0.3 + i * C.dur(4) * 0.2;
+        const k = C.k(t, 4, a, 0.5, "back");
+        const o = Math.min(p(t, C.cue(4) + a, C.cue(4) + a + 0.3), C.vis(t, 4, 5));
+        put(g.m, { x: (i - 1) * 270, y: Y - 30, s: 0.6 + 0.4 * k, op: o });
+        put(g.y, { x: (i - 1) * 270, y: Y + 100, op: o });
+      });
+
+      // Línea 5: 887 victorias y 2 derrotas
+      const o5 = C.vis(t, 5, 6);
+      const kw = C.k(t, 5, 0.2, C.dur(5) * 0.55, "out");
+      sW.querySelector("b").textContent = AN.num(887 * kw, lang);
+      sL.querySelector("b").textContent = String(Math.round(2 * C.k(t, 5, C.dur(5) * 0.7, 0.3, "lin")));
+      put(sW, { x: -170, y: Y - 10, op: o5 });
+      put(sL, { x: 230, y: Y - 10, op: o5 });
+
+      // Línea 6: 13 años invicto
+      const o6 = C.vis(t, 6);
+      put(s13, { y: Y - 40 + (1 - C.k(t, 6, 0.1)) * 40, op: o6 });
+      ticks.forEach((d, i) => {
+        const k = C.k(t, 6, 0.3 + i * 0.1, 0.3, "back");
+        put(d, { x: (i - 6) * 46, y: Y + 110, s: k, op: o6 * Math.min(1, k * 2) });
+      });
+
+      return { zoom: 0.06 * C.vis(t, 2, 3) };
+    };
+  },
+});
+</script>
+</body>
+</html>

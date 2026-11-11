@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Olympikos · anécdota · Vinci</title>
+<link rel="stylesheet" href="lib/video.css">
+<link rel="stylesheet" href="lib/anecdota.css">
+</head>
+<body>
+<div id="stage"></div>
+<script src="lib/engine.js"></script>
+<script src="lib/howto.js"></script>
+<script src="lib/anecdotas-textos.js"></script>
+<script src="lib/anecdota.js"></script>
+<script>
+// Halterofilia: Charles Vinci, Melbourne 1956 (libreto, deporte 15). Carta del juego: deporte 24.
+const L = {
+  es: { limit: "Límite: 56,000 kg", hour: "1 hora", ok: "✓ 56 kg" },
+  fr: { limit: "Limite : 56,000 kg", hour: "1 heure", ok: "✓ 56 kg" },
+};
+anecdota({
+  id: "vinci", img: "vid-oly-sport-24-1080", acc: "#cc4f5c", bg: "#f6efed",
+  gaps: { 4: 0.6 },
+  build({ lang }) {
+    const { p, put, lerp } = V;
+    const { text } = HT;
+    const t9 = L[lang];
+    const Y = 280;
+    const sYear = AN.stat("1956", "Melbourne");
+    const lcd = text("lcd", "0,000 kg");
+    const limit = text("note", t9.limit);
+    const clock = AN.svg(200, 200, `
+      <circle r="84" fill="#fff" stroke="rgba(22,23,28,.12)" stroke-width="14"/>
+      <circle class="arc" r="84" fill="none" style="stroke: var(--acc)" stroke-width="14" stroke-linecap="round" transform="rotate(-90)" stroke-dasharray="528" stroke-dashoffset="528"/>
+      <line class="hand" x1="0" y1="0" x2="0" y2="-58" stroke="#16171c" stroke-width="8" stroke-linecap="round"/>
+      <circle r="9" fill="#16171c"/>`);
+    const arc = clock.querySelector(".arc"), hand = clock.querySelector(".hand");
+    const hour = text("note", t9.hour);
+    const scis = text("qmark", "✂");
+    scis.style.fontSize = "150px";
+    const hairs = Array.from({ length: 10 }, (_, i) => {
+      const h = AN.svg(40, 60, `<path d="M-10 -24 C 8 -10, -8 10, 10 24" fill="none" stroke="#3a2a1e" stroke-width="5" stroke-linecap="round"/>`);
+      h.dataset.i = i;
+      return h;
+    });
+    const golds = ["1956", "1960"].map((y) => AN.gold(y, 210));
+    const fmt = (g) => (g / 1000).toFixed(3).replace(".", ",") + " kg";
+
+    return (t, C) => {
+      // Línea 1: Melbourne 1956 y la balanza
+      const o1 = C.vis(t, 1, 2);
+      put(sYear, { x: -250, y: Y + (1 - C.k(t, 1, 0.1)) * 40, op: o1 });
+      // Balanza: aparece al final de la línea 1 y se queda hasta la 5
+      const kl = p(t, C.cue(1) + C.dur(1) * 0.55, C.cue(1) + C.dur(1) * 0.55 + 0.5, "expo");
+      const ol = Math.min(kl, 1 - p(t, C.cue(5) - 0.3, C.cue(5), "in"));
+      let lx = 190;
+      if (t >= C.cue(2)) lx = lerp(190, 0, C.k(t, 2, 0, 0.6, "inOut"));
+      if (t >= C.cue(3)) lx = lerp(0, 110, C.k(t, 3, 0, 0.6, "inOut"));
+      let g = 0;
+      if (t >= C.cue(2)) g = 56750 * p(t, C.cue(2) + 0.3, C.cue(2) + C.dur(2) * 0.55, "out");
+      if (t >= C.cue(3)) g = lerp(56750, 56200, p(t, C.cue(3) + 0.3, C.end(3) - 0.2, "inOut"));
+      const okk = t >= C.cue(4) + C.dur(4) * 0.75;
+      lcd.textContent = okk ? t9.ok : t < C.cue(2) ? "0,000 kg" : fmt(Math.round(g / 10) * 10);
+      lcd.className = "c lcd" + (okk ? " ok" : g > 56000 ? " bad" : "");
+      put(lcd, { x: lx, y: Y - 10 + (1 - kl) * 30, s: okk ? 1 + 0.08 * (1 - p(t, C.cue(4) + C.dur(4) * 0.75, C.cue(4) + C.dur(4) * 0.75 + 0.4)) : 1, op: ol });
+      put(limit, { x: lx, y: Y + 105, op: Math.min(C.vis(t, 2, 4), ol) });
+
+      // Línea 3: una hora de carrera
+      const oc = C.vis(t, 3, 4);
+      const kc = p(t, C.cue(3) + 0.2, C.end(3), "inOut");
+      arc.setAttribute("stroke-dashoffset", String(528 * (1 - kc)));
+      hand.setAttribute("transform", `rotate(${kc * 360})`);
+      put(clock, { x: -300, y: Y - 15, s: 0.8 + 0.2 * C.k(t, 3, 0, 0.5, "back"), op: oc });
+      put(hour, { x: -300, y: Y + 105, op: oc });
+
+      // Línea 4: ¡a afeitarse la cabeza!
+      const os = C.vis(t, 4, 5);
+      const ks = C.k(t, 4, C.dur(4) * 0.45, 0.4, "back");
+      put(scis, { x: -300, y: Y - 10, r: Math.sin(t * 18) * 14 * ks, s: ks, op: os });
+      hairs.forEach((h, i) => {
+        const a = C.cue(4) + C.dur(4) * 0.5 + i * 0.07;
+        const k = p(t, a, a + 1.1, "in");
+        put(h, { x: -300 + (i - 4.5) * 22 + Math.sin(i * 2.1) * 30 * k, y: Y - 120 + k * 260, r: k * (i % 2 ? 200 : -160), op: os * (t > a ? 1 - k * 0.8 : 0) });
+      });
+
+      // Línea 5: dos medallas de oro
+      golds.forEach((gd, i) => {
+        const k = C.k(t, 5, i ? C.dur(5) * 0.55 : 0.1, 0.5, "back");
+        const o = Math.min(p(t, C.cue(5) + (i ? C.dur(5) * 0.55 : 0.1), C.cue(5) + (i ? C.dur(5) * 0.55 : 0.1) + 0.3), C.vis(t, 5));
+        put(gd.m, { x: i ? 150 : -150, y: Y - 30, s: 0.6 + 0.4 * k, op: o });
+        put(gd.y, { x: i ? 150 : -150, y: Y + 110, op: o });
+      });
+    };
+  },
+});
+</script>
+</body>
+</html>

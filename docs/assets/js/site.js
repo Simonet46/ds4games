@@ -156,7 +156,49 @@
     var say = form.querySelector(".dsay"), again = form.querySelector(".dagain");
     var turnEl = form.querySelector(".dturn"), msg = form.querySelector(".dmsg"), log = form.querySelector(".dlog");
     var inputs = [].slice.call(form.querySelectorAll("input[type=radio]"));
-    var turn = 1, over = false;
+    var turn = 1, over = false, last = [];
+    function rnd(n) { return Math.floor(Math.random() * n); }
+    // Mesa nueva: por fila, una carta correcta (con sus cartas de Autor) y cinco cartas al azar del mazo.
+    function deal() {
+      if (!D.pool) return;
+      D.pool.forEach(function (opts, i) {
+        var s = rnd(opts.length);
+        if (opts.length > 1 && s === last[i]) s = (s + 1 + rnd(opts.length - 1)) % opts.length;
+        last[i] = s;
+        var sc = opts[s];
+        var rest = D.deck[i].filter(function (c) { return c[0] !== sc.c; });
+        for (var k = rest.length - 1; k > 0; k--) { var x = rnd(k + 1), y = rest[k]; rest[k] = rest[x]; rest[x] = y; }
+        var right = D.deck[i].filter(function (c) { return c[0] === sc.c; })[0];
+        var cards = rest.slice(0, 5), pos = rnd(6);
+        cards.splice(pos, 0, right);
+        D.answer[i] = pos + 1;
+        var row = form.querySelectorAll(".drow")[i];
+        row.querySelectorAll(".dopts label").forEach(function (lab, j) {
+          var c = cards[j], im = lab.querySelector("img");
+          lab.title = c[1];
+          im.removeAttribute("srcset");
+          im.src = c[2];
+          lab.querySelector(".sr-only").textContent = (j + 1) + ". " + c[1];
+        });
+        row.querySelectorAll(".dcard img").forEach(function (im, k) { im.removeAttribute("srcset"); im.src = sc.d[k]; });
+        var why = row.querySelector(".dwhy");
+        why.textContent = sc.w || "";
+        why.setAttribute("data-has", sc.w ? "1" : "");
+      });
+      // 2080: los rivales inventan sus códigos (nunca los cuatro correctos).
+      if (D.rivals) {
+        D.codes = [];
+        for (var r = 0; r < D.rivals; r++) {
+          var list = [];
+          for (var t = 0; t < maxTurns; t++) {
+            var cd;
+            do { cd = D.answer.map(function () { return 1 + rnd(6); }); } while (cd.every(function (n, i) { return n === D.answer[i]; }));
+            list.push(cd);
+          }
+          D.codes.push(list);
+        }
+      }
+    }
     // Con última oportunidad (Tour Eiffel) hay un intento más después de los turnos con cartas.
     var maxTurns = D.turns + (D.last ? 1 : 0);
     function picks() {
@@ -183,8 +225,10 @@
         if (+inp.value === D.answer[+inp.name.slice(1)]) lab.classList.add("ok");
         else if (inp.checked) lab.classList.add("no");
       });
-      form.querySelectorAll(".dwhy").forEach(function (p) { p.hidden = false; });
-      msg.innerHTML = won ? (turn > D.turns ? D.t.winLast : D.t.win) : D.t.lose.replace("{code}", code(D.answer));
+      form.querySelectorAll(".dwhy").forEach(function (p) { p.hidden = p.getAttribute("data-has") === ""; });
+      // 2080: al final se ven los aciertos que el Autor les dijo en secreto a los rivales.
+      log.querySelectorAll(".dlock").forEach(function (s) { s.textContent = D.t.hits[+s.getAttribute("data-h")]; s.classList.add("open"); });
+      msg.innerHTML = (won ? (turn > D.turns ? D.t.winLast : D.t.win) : D.t.lose.replace("{code}", code(D.answer))) + (D.rivals ? " " + D.t.theirs : "");
       say.hidden = true;
       again.hidden = false;
       again.focus();
@@ -200,10 +244,28 @@
       var answer = D.sobres ? '<img src="' + D.sobres[hits] + '" width="160" height="' + D.sobreH + '" alt="">'
         : '<span class="dhits" aria-hidden="true">' + [0, 1, 2, 3].map(function (i) { return i < hits ? '<i class="on"></i>' : "<i></i>"; }).join("") + "</span>";
       li.innerHTML = code(p) + answer + "<span>" + D.t.hits[hits] + "</span>";
-      log.appendChild(li);
+      if (D.rivals) {
+        // Todos dicen su código en voz alta, pero el Autor contesta a cada uno en privado.
+        li.insertAdjacentHTML("afterbegin", '<span class="dwho">' + D.t.you + "</span>");
+        li.querySelector("span:last-child").textContent = D.t.hits[hits] + " · " + D.t.secret;
+        log.appendChild(li);
+        D.codes.forEach(function (codes, r) {
+          var rc = codes[Math.min(turn, codes.length) - 1];
+          var h = rc.filter(function (n, i) { return n === D.answer[i]; }).length;
+          var rl = doc.createElement("li");
+          rl.className = "drival";
+          rl.innerHTML = '<span class="dwho">' + D.names[r] + "</span>" + code(rc) + '<span class="dlock" data-h="' + h + '">🔒</span>';
+          log.appendChild(rl);
+        });
+      } else log.appendChild(li);
       if (hits === 4) return end(true);
       if (turn >= maxTurns) return end(false);
       turn++;
+      // El Autor suma una carta nueva al lado de cada fila (hasta cuatro).
+      form.querySelectorAll(".dstack").forEach(function (st) {
+        var c = st.querySelectorAll(".dcard")[turn - 1];
+        if (c) { c.hidden = false; c.classList.add("new"); }
+      });
       status(true);
       msg.textContent = D.t.hits[hits] + ". " + (turn > D.turns ? D.t.lastMsg : D.t.pick.replace(/\.$/, "") + ".");
     });
@@ -213,12 +275,15 @@
       form.classList.remove("done");
       inputs.forEach(function (inp) { inp.disabled = false; inp.checked = false; inp.closest("label").classList.remove("ok", "no"); });
       form.querySelectorAll(".dwhy").forEach(function (p) { p.hidden = true; });
+      form.querySelectorAll(".dcard").forEach(function (c, i) { c.hidden = !c.matches(":first-child"); c.classList.remove("new"); });
       log.innerHTML = "";
       say.hidden = false;
       again.hidden = true;
+      deal();
       status();
       form.scrollIntoView({ behavior: reduce ? "auto" : "smooth", block: "start" });
     });
+    deal();
     status();
   });
 

@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Olympikos · anécdota · Stevenson</title>
+<link rel="stylesheet" href="lib/video.css">
+<link rel="stylesheet" href="lib/anecdota.css">
+</head>
+<body>
+<div id="stage"></div>
+<script src="lib/engine.js"></script>
+<script src="lib/howto.js"></script>
+<script src="lib/anecdotas-textos.js"></script>
+<script src="lib/anecdota.js"></script>
+<script>
+// Boxeo: Teófilo Stevenson (libreto, deporte 5). Carta del juego: deporte 3.
+const L = {
+  es: { cuba: "Cuba", us: "Estados Unidos", offer: "para pelear con Muhammad Ali", dollars: "1 millón de $", cubans: "8 millones de cubanos" },
+  fr: { cuba: "Cuba", us: "États-Unis", offer: "pour affronter Mohamed Ali", dollars: "1 million de $", cubans: "8 millions de Cubains" },
+};
+anecdota({
+  id: "stevenson", img: "vid-oly-sport-3-1080", acc: "#b97a12", bg: "#f6f1e6",
+  gaps: { 3: 0.5 },
+  build({ lang }) {
+    const { p, put } = V;
+    const { text } = HT;
+    const t9 = L[lang];
+    const Y = 280;
+    const golds = ["1972", "1976", "1980"].map((y) => AN.gold(y, 180));
+
+    // Banderas dibujadas (Cuba y Estados Unidos, simplificadas)
+    const W = 230, H = 140;
+    const cuba = AN.svg(W, H, `<g transform="translate(${-W / 2},${-H / 2})">
+      ${[0, 1, 2, 3, 4].map((i) => `<rect y="${(i * H) / 5}" width="${W}" height="${H / 5}" fill="${i % 2 ? "#fff" : "#1d3f8f"}"/>`).join("")}
+      <path d="M0 0 L${H * 0.87} ${H / 2} L0 ${H} Z" fill="#d52b1e"/>
+      <path transform="translate(${H * 0.3},${H / 2}) scale(15)" d="M0 -1 L0.2245 -0.309 L0.951 -0.309 L0.363 0.118 L0.588 0.809 L0 0.382 L-0.588 0.809 L-0.363 0.118 L-0.951 -0.309 L-0.2245 -0.309 Z" fill="#fff"/></g>`);
+    const usa = AN.svg(W, H, `<g transform="translate(${-W / 2},${-H / 2})">
+      ${Array.from({ length: 13 }, (_, i) => `<rect y="${(i * H) / 13}" width="${W}" height="${H / 13 + 0.5}" fill="${i % 2 ? "#fff" : "#b22234"}"/>`).join("")}
+      <rect width="${W * 0.42}" height="${(H * 7) / 13}" fill="#3c3b6e"/>
+      ${Array.from({ length: 12 }, (_, i) => `<circle cx="${12 + (i % 4) * 22}" cy="${11 + Math.floor(i / 4) * 22}" r="4" fill="#fff"/>`).join("")}</g>`);
+    [cuba, usa].forEach((f) => { f.style.borderRadius = "10px"; f.style.overflow = "hidden"; f.style.boxShadow = "0 16px 30px -16px rgba(0,0,0,.55)"; });
+    const lCuba = text("note", t9.cuba), lUs = text("note", t9.us);
+    const arrow = AN.svg(160, 60, `<path d="M-60 0 H50 M28 -20 L52 0 L28 20" fill="none" stroke="#16171c" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/>`);
+    const cross = AN.svg(200, 200, `<path class="x" d="M-70 -70 L70 70 M70 -70 L-70 70" fill="none" stroke="#cc4f5c" stroke-width="20" stroke-linecap="round" stroke-dasharray="400" stroke-dashoffset="400"/>`);
+    const crossP = cross.querySelector(".x");
+
+    // Los dólares y la balanza
+    const money = AN.stat("0 $", t9.offer, "dark");
+    const beam = AN.svg(820, 40, `<rect x="-400" y="-9" width="800" height="18" rx="9" fill="#16171c"/>`);
+    const base = AN.svg(120, 110, `<path d="M0 -50 L48 50 H-48 Z" fill="#16171c"/>`);
+    const left = text("pill", t9.dollars), right = text("pill", t9.cubans);
+    right.style.background = "var(--acc)";
+    right.style.color = "#fff";
+    right.style.borderColor = "transparent";
+    const heart = text("qmark", "♥");
+    heart.style.fontSize = "110px";
+    heart.style.color = "#cc4f5c";
+
+    return (t, C) => {
+      // Línea 1: tres oros
+      golds.forEach((g, i) => {
+        const a = C.dur(1) * (0.48 + i * 0.16);
+        const k = C.k(t, 1, a, 0.5, "back");
+        const o = Math.min(p(t, C.cue(1) + a, C.cue(1) + a + 0.3), C.vis(t, 1, 2));
+        put(g.m, { x: (i - 1) * 270, y: Y - 30, s: 0.6 + 0.4 * k, op: o });
+        put(g.y, { x: (i - 1) * 270, y: Y + 100, op: o });
+      });
+
+      // Línea 2: no se fue de Cuba
+      const o2 = C.vis(t, 2, 3);
+      const ka = C.k(t, 2, C.dur(2) * 0.35, 0.6, "out");
+      put(cuba, { x: -250, y: Y - 20, op: o2 });
+      put(lCuba, { x: -250, y: Y + 85, op: o2 });
+      put(arrow, { x: 0, y: Y - 20, op: o2 * ka, sx: 0.4 + 0.6 * ka });
+      put(usa, { x: 250, y: Y - 20, op: o2 * (0.35 + 0.65 * ka) });
+      put(lUs, { x: 250, y: Y + 85, op: o2 * ka });
+      crossP.setAttribute("stroke-dashoffset", String(400 * (1 - C.k(t, 2, C.dur(2) * 0.7, 0.5, "out"))));
+      put(cross, { x: 250, y: Y - 20, op: o2 });
+
+      // Línea 3: millones de dólares
+      const o3 = C.vis(t, 3, 4);
+      money.querySelector("b").textContent = AN.num(1e6 * C.k(t, 3, 0.2, C.dur(3) * 0.6, "out"), lang) + " $";
+      put(money, { y: Y - 10, op: o3 });
+
+      // Línea 4: un millón de dólares contra el amor de ocho millones de cubanos
+      const o4 = C.vis(t, 4);
+      const tilt = 9 * C.k(t, 4, C.dur(4) * 0.62, 0.9, "back");
+      const ang = (tilt * Math.PI) / 180;
+      put(base, { y: Y + 80, op: o4 });
+      put(beam, { y: Y + 30, r: tilt, op: o4 });
+      put(left, { x: -270 * Math.cos(ang), y: Y + 30 - 270 * Math.sin(ang) - 52, op: o4 });
+      put(right, { x: 270 * Math.cos(ang), y: Y + 30 + 270 * Math.sin(ang) - 52, op: o4 * (0.4 + 0.6 * C.k(t, 4, C.dur(4) * 0.55, 0.4)) });
+      put(heart, { x: 270 * Math.cos(ang), y: Y + 30 + 270 * Math.sin(ang) - 150, s: C.k(t, 4, C.dur(4) * 0.7, 0.5, "back") * (1 + 0.05 * Math.sin(t * 8)), op: o4 });
+    };
+  },
+});
+</script>
+</body>
+</html>

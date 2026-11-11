@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Olympikos · anécdota · Bradbury</title>
+<link rel="stylesheet" href="lib/video.css">
+<link rel="stylesheet" href="lib/anecdota.css">
+</head>
+<body>
+<div id="stage"></div>
+<script src="lib/engine.js"></script>
+<script src="lib/howto.js"></script>
+<script src="lib/anecdotas-textos.js"></script>
+<script src="lib/anecdota.js"></script>
+<script>
+// Patinaje de velocidad: Steven Bradbury, Salt Lake City 2002 (libreto, deporte 3). Carta del juego: deporte 1.
+const L = {
+  es: { final: "Final", laps: ["2 vueltas", "1 vuelta"], south: "Hemisferio sur", quote: "«Hacer una Bradbury»" },
+  fr: { final: "Finale", laps: ["2 tours", "1 tour"], south: "Hémisphère Sud", quote: "« Faire une Bradbury »" },
+};
+anecdota({
+  id: "bradbury", img: "vid-oly-sport-1-1080", acc: "#3d78ad", bg: "#edf2f6",
+  gaps: { 3: 0.7, 4: 1.0 },
+  build({ lang }) {
+    const { p, put } = V;
+    const { text, mk } = HT;
+    const t9 = L[lang];
+    const Y = 280;
+    const sYear = AN.stat("2002", "Salt Lake City");
+    const sDist = AN.stat("1000 m", t9.final, "dark");
+
+    // Pista: dos rectas y dos curvas (en píxeles, centro en 0,0)
+    const S = 305, R = 118, P = 4 * S + 2 * Math.PI * R;
+    const pos = (u) => {
+      let s = ((u % 1) + 1) % 1 * P;
+      if (s < 2 * S) return { x: -S + s, y: -R };
+      s -= 2 * S;
+      if (s < Math.PI * R) { const a = -Math.PI / 2 + s / R; return { x: S + R * Math.cos(a), y: R * Math.sin(a) }; }
+      s -= Math.PI * R;
+      if (s < 2 * S) return { x: S - s, y: R };
+      s -= 2 * S;
+      const a = Math.PI / 2 + s / R;
+      return { x: -S + R * Math.cos(a), y: R * Math.sin(a) };
+    };
+    const track = AN.svg(940, 330, `
+      <rect x="${-S - R}" y="${-R}" width="${2 * (S + R)}" height="${2 * R}" rx="${R}" fill="none" stroke="rgba(22,23,28,.09)" stroke-width="46"/>
+      <rect x="${-S - R}" y="${-R}" width="${2 * (S + R)}" height="${2 * R}" rx="${R}" fill="none" stroke="rgba(22,23,28,.18)" stroke-width="2" stroke-dasharray="10 12"/>
+      <line x1="${-S}" y1="${-R - 26}" x2="${-S}" y2="${-R + 26}" stroke="#16171c" stroke-width="6"/>`);
+    const lap = [text("note", t9.laps[0]), text("note", t9.laps[1])];
+    const RIV = [AN.RINGS.blue, AN.RINGS.black, AN.RINGS.green, AN.RINGS.red];
+    const riv = RIV.map((c) => { const d = mk("c dotp"); d.style.setProperty("--r", c); return d; });
+    const brad = mk("c dotp");
+    brad.style.setProperty("--r", "#f2b705");
+    const tag = text("tagp", "AUS");
+    const fall = [[-1, -0.6], [0.4, -1], [1, 0.3], [-0.3, 1]];
+    const medal = AN.gold(t9.south, 230);
+    const quote = text("acap q", t9.quote);
+    quote.style.fontSize = "84px";
+    quote.style.color = "var(--acc)";
+
+    return (t, C) => {
+      // Línea 1: año y distancia
+      const o1 = C.vis(t, 1, 2);
+      put(sYear, { x: -235, y: Y + (1 - C.k(t, 1, 0.1)) * 40, op: o1 });
+      put(sDist, { x: 235, y: Y + (1 - C.k(t, 1, 0.35)) * 40, op: o1 });
+
+      // Líneas 2 a 5: la carrera
+      const tA = C.cue(2), tF = C.cue(4) + C.dur(4) * 0.62;
+      const v = 1.62 / (tF - tA);
+      const tW = tF + 0.5 / v;            // Bradbury cruza la meta
+      const ot = Math.min(p(t, tA, tA + 0.4), 1 - p(t, tW + 0.5, tW + 0.9, "in"));
+      put(track, { y: Y, op: ot });
+      const half = tA + (tF - tA) * 0.55;
+      put(lap[0], { y: Y, op: ot * (1 - p(t, half - 0.2, half)) });
+      put(lap[1], { y: Y, op: ot * p(t, half, half + 0.2) * (1 - p(t, tF, tF + 0.3)) });
+      const ut = Math.max(0, t - tA) * v;
+      const uFall = (tF - tA) * v;
+      riv.forEach((d, i) => {
+        const u0 = 0.2 - i * 0.022;
+        if (t < tF) {
+          const q = pos(u0 + ut);
+          put(d, { x: q.x, y: Y + q.y, op: ot });
+          d.style.filter = "none";
+        } else {
+          const q = pos(u0 + uFall), k = p(t, tF, tF + 0.7, "out");
+          put(d, { x: q.x + fall[i][0] * 70 * k, y: Y + q.y + fall[i][1] * 50 * k, r: k * 220 * (i % 2 ? 1 : -1), s: 1 - 0.2 * k, op: ot * (1 - 0.45 * k) });
+          d.style.filter = `grayscale(${k})`;
+        }
+      });
+      const ub = Math.min(2, ut);
+      const qb = pos(ub);
+      put(brad, { x: qb.x, y: Y + qb.y, s: t > tW ? 1 + 0.4 * p(t, tW, tW + 0.3, "back") : 1, op: ot });
+      put(tag, { x: qb.x, y: Y + qb.y - 50, op: ot });
+
+      // Medalla y frase
+      const om = Math.min(p(t, tW + 0.4, tW + 0.9, "back"), 1 - p(t, C.cue(6) - 0.3, C.cue(6), "in"));
+      put(medal.m, { y: Y - 30, s: 0.6 + 0.4 * om, op: om });
+      put(medal.y, { y: Y + 130, op: om });
+      const oq = C.vis(t, 6);
+      put(quote, { y: Y + (1 - C.k(t, 6, 0.2, 0.6)) * 30, op: oq, s: 0.94 + 0.06 * C.k(t, 6, 0.2, 0.8) });
+
+      return { shake: t > tF && t < tF + 0.55 ? 1 - p(t, tF, tF + 0.55) : 0 };
+    };
+  },
+});
+</script>
+</body>
+</html>

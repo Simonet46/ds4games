@@ -1571,5 +1571,1777 @@
    240,
    480
   ]
+ },
+ "vid-oly-sport-1": {
+  "src": "olympikos (Drive)/render/deportes/p01.png",
+  "widths": [
+   1080
+  ]
+ },
+ "vid-oly-sport-3": {
+  "src": "olympikos (Drive)/render/deportes/p03.png",
+  "widths": [
+   1080
+  ]
+ },
+ "vid-oly-sport-5": {
+  "src": "olympikos (Drive)/render/deportes/p05.png",
+  "widths": [
+   1080
+  ]
+ },
+ "vid-oly-sport-12": {
+  "src": "olympikos (Drive)/render/deportes/p12.png",
+  "widths": [
+   1080
+  ]
+ },
+ "vid-oly-sport-24": {
+  "src": "olympikos (Drive)/render/deportes/p24.png",
+  "widths": [
+   1080
+  ]
+ },
+ "vid-oly-libreto-es": {
+  "src": "olympikos (Drive)/render/libreto/anecdotas-es-p01.png",
+  "widths": [
+   720
+  ]
+ },
+ "vid-oly-livret-fr": {
+  "src": "olympikos (Drive)/render/libreto/livret-fr-p01.png",
+  "widths": [
+   720
+  ]
+ },
+ "f80-box": {
+  "src": "2080 juego futurista/Ideas de caja/2080_Caja_003 transparente.png",
+  "widths": [
+   360,
+   720,
+   1080
+  ]
+ },
+ "f80-box-1": {
+  "src": "2080 juego futurista/Ideas de caja/2080_Caja_001 transparente.png",
+  "widths": [
+   480,
+   960
+  ]
+ },
+ "f80-box-2": {
+  "src": "2080 juego futurista/Ideas de caja/2080_Caja_002 transparente.png",
+  "widths": [
+   480,
+   960
+  ]
+ },
+ "f80-hero": {
+  "src": "2080 juego futurista/Cartas - Lugares/2080_Lugares_002_Torre_Eiffel.png",
+  "widths": [
+   640,
+   960,
+   1536
+  ]
+ },
+ "f80-tile": {
+  "src": "2080 juego futurista/Cartas - Lugares/2080_Lugares_008_Ocean_City.png",
+  "widths": [
+   1376
+  ]
+ },
+ "f80-back-lugares": {
+  "src": "2080 juego futurista/image-gen-1(20260927-145133).png",
+  "widths": [
+   480,
+   960
+  ]
+ },
+ "f80-back-personajes": {
+  "src": "2080 juego futurista/image-gen-2(20260927-145136).png",
+  "widths": [
+   480,
+   960
+  ]
+ },
+ "f80-back-situaciones": {
+  "src": "2080 juego futurista/image-gen-3(20260927-145138).png",
+  "widths": [
+   480,
+   960
+  ]
+ },
+ "f80-back-inventos": {
+  "src": "2080 juego futurista/image-gen-4(20260927-145141).png",
+  "widths": [
+   480,
+   960
+  ]
+ },
+ "f80-card-p01": {
+  "src": "2080 juego futurista/Cartas para imprimir/1 Personajes (vertical 12x18 cm)/Personaje 01 Arquitecto de ciudades flotantes.png",
+  "widths": [
+   240,
+   480
+  ]
+ },
+ "f80-card-p02": {
+  "src": "2080 juego futurista/Cartas para imprimir/1 Personajes (vertical 12x18 cm)/Personaje 02 Aprendiz de drones.png",
+  "widths": [
+   240,
+   480
+  ]
+ },
+ "f80-card-p03": {
+  "src": "2080 juego futurista/Cartas para imprimir/1 Personajes (vertical 12x18 cm)/Personaje 03 Cronista de siglos.png",
+  "widths": [
+   240,
+   480
+  ]
+ },
+ "f80-card-p04": {
+  "src": "2080 juego futurista/Cartas para imprimir/1 Personajes (vertical 12x18 cm)/Personaje 04 Guardiana de semillas.png",
+  "widths": [
+   240,
+   480
+  ]
+ },
+ "f80-card-p05": {
+  "src": "2080 juego futurista/Cartas para imprimir/1 Personajes (vertical 12x18 cm)/Personaje 05 Mecánico de robots.png",
+  "widths": [
+   240,
+   480
+  ]
+ },
+ "f80-card-p06": {
+  "src": "2080 juego futurista/Cartas para imprimir/1 Personajes (vertical 12x18 cm)/Personaje 06 Restaurador de océanos.png",
+  "widths": [
+   240,
+   480
+  ]
+ },
+ "f80-card-p07": {
+  "src": "2080 juego futurista/Cartas para imprimir/1 Personajes (vertical 12x18 cm)/Personaje 07 Bioimpresora de órganos.png",
+  "widths": [
+   240,
+   480
+  ]
+ },
+ "f80-card-p08": {
+  "src": "2080 juego futurista/Cartas para imprimir/1 Personajes (vertical 12x18 cm)/Personaje 08 Gestor del clima.png",
+  "widths": [
+   240,
+   480
+  ]
+ },
+ "f80-card-p09": {
+  "src": "2080 juego futurista/Cartas para imprimir/1 Personajes (vertical 12x18 cm)/Personaje 09 Archivista de memorias.png",
+  "widths": [
+   240,
+   480
+  ]
+ },
+ "f80-card-p10": {
+  "src": "2080 juego futurista/Cartas para imprimir/1 Personajes (vertical 12x18 cm)/Personaje 10 Arquitecta lunar.png",
+  "widths": [
+   240,
+   480
+  ]
+ },
+ "f80-card-p11": {
+  "src": "2080 juego futurista/Cartas para imprimir/1 Personajes (vertical 12x18 cm)/Personaje 11 Veterinaria de animales robóticos.png",
+  "widths": [
+   240,
+   480
+  ]
+ },
+ "f80-card-p12": {
+  "src": "2080 juego futurista/Cartas para imprimir/1 Personajes (vertical 12x18 cm)/Personaje 12 Jardinero de rascacielos.png",
+  "widths": [
+   240,
+   480
+  ]
+ },
+ "f80-card-p13": {
+  "src": "2080 juego futurista/Cartas para imprimir/1 Personajes (vertical 12x18 cm)/Personaje 13 Pastora de nubes.png",
+  "widths": [
+   240,
+   480
+  ]
+ },
+ "f80-card-p14": {
+  "src": "2080 juego futurista/Cartas para imprimir/1 Personajes (vertical 12x18 cm)/Personaje 14 Diseñador de prótesis deportivas.png",
+  "widths": [
+   240,
+   480
+  ]
+ },
+ "f80-card-p15": {
+  "src": "2080 juego futurista/Cartas para imprimir/1 Personajes (vertical 12x18 cm)/Personaje 15 Recolector de basura orbital.png",
+  "widths": [
+   240,
+   480
+  ]
+ },
+ "f80-card-p16": {
+  "src": "2080 juego futurista/Cartas para imprimir/1 Personajes (vertical 12x18 cm)/Personaje 16 Mensajera de tubos urbanos.png",
+  "widths": [
+   240,
+   480
+  ]
+ },
+ "f80-card-p17": {
+  "src": "2080 juego futurista/Cartas para imprimir/1 Personajes (vertical 12x18 cm)/Personaje 17 Ingeniera de puentes vivos.png",
+  "widths": [
+   240,
+   480
+  ]
+ },
+ "f80-card-p18": {
+  "src": "2080 juego futurista/Cartas para imprimir/1 Personajes (vertical 12x18 cm)/Personaje 18 Criador de insectos alimentarios.png",
+  "widths": [
+   240,
+   480
+  ]
+ },
+ "f80-card-p19": {
+  "src": "2080 juego futurista/Cartas para imprimir/1 Personajes (vertical 12x18 cm)/Personaje 19 Guía de ciudades submarinas.png",
+  "widths": [
+   240,
+   480
+  ]
+ },
+ "f80-card-p20": {
+  "src": "2080 juego futurista/Cartas para imprimir/1 Personajes (vertical 12x18 cm)/Personaje 20 Alienígena.png",
+  "widths": [
+   240,
+   480
+  ]
+ },
+ "f80-card-p21": {
+  "src": "2080 juego futurista/Cartas para imprimir/1 Personajes (vertical 12x18 cm)/Personaje 21 Animador de emociones.png",
+  "widths": [
+   240,
+   480
+  ]
+ },
+ "f80-card-p22": {
+  "src": "2080 juego futurista/Cartas para imprimir/1 Personajes (vertical 12x18 cm)/Personaje 22 Barman de playa.png",
+  "widths": [
+   240,
+   480
+  ]
+ },
+ "f80-card-p23": {
+  "src": "2080 juego futurista/Cartas para imprimir/1 Personajes (vertical 12x18 cm)/Personaje 23 Cachorro humanoide.png",
+  "widths": [
+   240,
+   480
+  ]
+ },
+ "f80-card-p24": {
+  "src": "2080 juego futurista/Cartas para imprimir/1 Personajes (vertical 12x18 cm)/Personaje 24 Chef molecular callejero.png",
+  "widths": [
+   240,
+   480
+  ]
+ },
+ "f80-card-p25": {
+  "src": "2080 juego futurista/Cartas para imprimir/1 Personajes (vertical 12x18 cm)/Personaje 25 Coleccionista del siglo XXI.png",
+  "widths": [
+   240,
+   480
+  ]
+ },
+ "f80-card-p26": {
+  "src": "2080 juego futurista/Cartas para imprimir/1 Personajes (vertical 12x18 cm)/Personaje 26 Cuidadora de dinosaurios.png",
+  "widths": [
+   240,
+   480
+  ]
+ },
+ "f80-card-p27": {
+  "src": "2080 juego futurista/Cartas para imprimir/1 Personajes (vertical 12x18 cm)/Personaje 27 Gimnasta del futuro.png",
+  "widths": [
+   240,
+   480
+  ]
+ },
+ "f80-card-p28": {
+  "src": "2080 juego futurista/Cartas para imprimir/1 Personajes (vertical 12x18 cm)/Personaje 28 Moni, el niño del bosque.png",
+  "widths": [
+   240,
+   480
+  ]
+ },
+ "f80-card-p29": {
+  "src": "2080 juego futurista/Cartas para imprimir/1 Personajes (vertical 12x18 cm)/Personaje 29 Obrero con propulsores.png",
+  "widths": [
+   240,
+   480
+  ]
+ },
+ "f80-card-p30": {
+  "src": "2080 juego futurista/Cartas para imprimir/1 Personajes (vertical 12x18 cm)/Personaje 30 Paseadora de perros.png",
+  "widths": [
+   240,
+   480
+  ]
+ },
+ "f80-card-p31": {
+  "src": "2080 juego futurista/Cartas para imprimir/1 Personajes (vertical 12x18 cm)/Personaje 31 Peluquera genética.png",
+  "widths": [
+   240,
+   480
+  ]
+ },
+ "f80-card-p32": {
+  "src": "2080 juego futurista/Cartas para imprimir/1 Personajes (vertical 12x18 cm)/Personaje 32 Policía del tráfico aéreo.png",
+  "widths": [
+   240,
+   480
+  ]
+ },
+ "f80-card-p33": {
+  "src": "2080 juego futurista/Cartas para imprimir/1 Personajes (vertical 12x18 cm)/Personaje 33 Presidente robot.png",
+  "widths": [
+   240,
+   480
+  ]
+ },
+ "f80-card-p34": {
+  "src": "2080 juego futurista/Cartas para imprimir/1 Personajes (vertical 12x18 cm)/Personaje 34 Saboteadora de monorrieles.png",
+  "widths": [
+   240,
+   480
+  ]
+ },
+ "f80-card-p35": {
+  "src": "2080 juego futurista/Cartas para imprimir/1 Personajes (vertical 12x18 cm)/Personaje 35 Aprendiz de cartografía celeste.png",
+  "widths": [
+   240,
+   480
+  ]
+ },
+ "f80-card-p36": {
+  "src": "2080 juego futurista/Cartas para imprimir/1 Personajes (vertical 12x18 cm)/Personaje 36 Piloto de taxi aéreo.png",
+  "widths": [
+   240,
+   480
+  ]
+ },
+ "f80-card-p37": {
+  "src": "2080 juego futurista/Cartas para imprimir/1 Personajes (vertical 12x18 cm)/Personaje 37 Ilusionista de hologramas.png",
+  "widths": [
+   240,
+   480
+  ]
+ },
+ "f80-card-p38": {
+  "src": "2080 juego futurista/Cartas para imprimir/1 Personajes (vertical 12x18 cm)/Personaje 38 Dueña del refugio prohibido.png",
+  "widths": [
+   240,
+   480
+  ]
+ },
+ "f80-card-p39": {
+  "src": "2080 juego futurista/Cartas para imprimir/1 Personajes (vertical 12x18 cm)/Personaje 39 Capitana del tranvía aéreo.png",
+  "widths": [
+   240,
+   480
+  ]
+ },
+ "f80-card-p40": {
+  "src": "2080 juego futurista/Cartas para imprimir/1 Personajes (vertical 12x18 cm)/Personaje 40 Coleccionista de voces.png",
+  "widths": [
+   240,
+   480
+  ]
+ },
+ "f80-card-p41": {
+  "src": "2080 juego futurista/Cartas para imprimir/1 Personajes (vertical 12x18 cm)/Personaje 41 Cirujano del mercado negro.png",
+  "widths": [
+   240,
+   480
+  ]
+ },
+ "f80-card-p42": {
+  "src": "2080 juego futurista/Cartas para imprimir/1 Personajes (vertical 12x18 cm)/Personaje 42 Mercader de sueños prohibidos.png",
+  "widths": [
+   240,
+   480
+  ]
+ },
+ "f80-card-p43": {
+  "src": "2080 juego futurista/Cartas para imprimir/1 Personajes (vertical 12x18 cm)/Personaje 43 Reparador de patinetas magnéticas.png",
+  "widths": [
+   240,
+   480
+  ]
+ },
+ "f80-card-p44": {
+  "src": "2080 juego futurista/Cartas para imprimir/1 Personajes (vertical 12x18 cm)/Personaje 44 Domadora de enjambres.png",
+  "widths": [
+   240,
+   480
+  ]
+ },
+ "f80-card-p45": {
+  "src": "2080 juego futurista/Cartas para imprimir/1 Personajes (vertical 12x18 cm)/Personaje 45 Bailarina de escenario inmersivo.png",
+  "widths": [
+   240,
+   480
+  ]
+ },
+ "f80-card-p46": {
+  "src": "2080 juego futurista/Cartas para imprimir/1 Personajes (vertical 12x18 cm)/Personaje 46 Ladrona de identidades.png",
+  "widths": [
+   240,
+   480
+  ]
+ },
+ "f80-card-p47": {
+  "src": "2080 juego futurista/Cartas para imprimir/1 Personajes (vertical 12x18 cm)/Personaje 47 Pintor de paisajes aumentados.png",
+  "widths": [
+   240,
+   480
+  ]
+ },
+ "f80-card-p48": {
+  "src": "2080 juego futurista/Cartas para imprimir/1 Personajes (vertical 12x18 cm)/Personaje 48 Cuidadora de personas dependientes.png",
+  "widths": [
+   240,
+   480
+  ]
+ },
+ "f80-card-p49": {
+  "src": "2080 juego futurista/Cartas para imprimir/1 Personajes (vertical 12x18 cm)/Personaje 49 Banquera del tiempo.png",
+  "widths": [
+   240,
+   480
+  ]
+ },
+ "f80-card-p50": {
+  "src": "2080 juego futurista/Cartas para imprimir/1 Personajes (vertical 12x18 cm)/Personaje 50 Mediadora entre humanos y robots.png",
+  "widths": [
+   240,
+   480
+  ]
+ },
+ "f80-card-p51": {
+  "src": "2080 juego futurista/Cartas para imprimir/1 Personajes (vertical 12x18 cm)/Personaje 51 Agente de seguridad urbana.png",
+  "widths": [
+   240,
+   480
+  ]
+ },
+ "f80-card-s01": {
+  "src": "2080 juego futurista/Cartas para imprimir/2 Situaciones (horizontal 18x12 cm)/Situación 01 Bebé diseñado antes de nacer.png",
+  "widths": [
+   360,
+   720
+  ]
+ },
+ "f80-card-s02": {
+  "src": "2080 juego futurista/Cartas para imprimir/2 Situaciones (horizontal 18x12 cm)/Situación 02 Funeral con holograma.png",
+  "widths": [
+   360,
+   720
+  ]
+ },
+ "f80-card-s03": {
+  "src": "2080 juego futurista/Cartas para imprimir/2 Situaciones (horizontal 18x12 cm)/Situación 03 Boda con una IA.png",
+  "widths": [
+   360,
+   720
+  ]
+ },
+ "f80-card-s04": {
+  "src": "2080 juego futurista/Cartas para imprimir/2 Situaciones (horizontal 18x12 cm)/Situación 04 Juicio dirigido por una IA.png",
+  "widths": [
+   360,
+   720
+  ]
+ },
+ "f80-card-s05": {
+  "src": "2080 juego futurista/Cartas para imprimir/2 Situaciones (horizontal 18x12 cm)/Situación 05 Borrar un recuerdo.png",
+  "widths": [
+   360,
+   720
+  ]
+ },
+ "f80-card-s06": {
+  "src": "2080 juego futurista/Cartas para imprimir/2 Situaciones (horizontal 18x12 cm)/Situación 06 Último animal real.png",
+  "widths": [
+   360,
+   720
+  ]
+ },
+ "f80-card-s07": {
+  "src": "2080 juego futurista/Cartas para imprimir/2 Situaciones (horizontal 18x12 cm)/Situación 07 Despedida hacia Marte.png",
+  "widths": [
+   360,
+   720
+  ]
+ },
+ "f80-card-s08": {
+  "src": "2080 juego futurista/Cartas para imprimir/2 Situaciones (horizontal 18x12 cm)/Situación 08 Una persona dos cuerpos.png",
+  "widths": [
+   360,
+   720
+  ]
+ },
+ "f80-card-s09": {
+  "src": "2080 juego futurista/Cartas para imprimir/2 Situaciones (horizontal 18x12 cm)/Situación 09 Restaurante de carne cultivada.png",
+  "widths": [
+   360,
+   720
+  ]
+ },
+ "f80-card-s10": {
+  "src": "2080 juego futurista/Cartas para imprimir/2 Situaciones (horizontal 18x12 cm)/Situación 10 Desconexión de la red.png",
+  "widths": [
+   360,
+   720
+  ]
+ },
+ "f80-card-s11": {
+  "src": "2080 juego futurista/Cartas para imprimir/2 Situaciones (horizontal 18x12 cm)/Situación 11 Desayuno con robot.png",
+  "widths": [
+   360,
+   720
+  ]
+ },
+ "f80-card-s12": {
+  "src": "2080 juego futurista/Cartas para imprimir/2 Situaciones (horizontal 18x12 cm)/Situación 12 Taxi aéreo.png",
+  "widths": [
+   360,
+   720
+  ]
+ },
+ "f80-card-s13": {
+  "src": "2080 juego futurista/Cartas para imprimir/2 Situaciones (horizontal 18x12 cm)/Situación 13 Transporte autónomo.png",
+  "widths": [
+   360,
+   720
+  ]
+ },
+ "f80-card-s14": {
+  "src": "2080 juego futurista/Cartas para imprimir/2 Situaciones (horizontal 18x12 cm)/Situación 14 Comida con familiar holográfico.png",
+  "widths": [
+   360,
+   720
+  ]
+ },
+ "f80-card-s15": {
+  "src": "2080 juego futurista/Cartas para imprimir/2 Situaciones (horizontal 18x12 cm)/Situación 15 Supermercado con robots.png",
+  "widths": [
+   360,
+   720
+  ]
+ },
+ "f80-card-s16": {
+  "src": "2080 juego futurista/Cartas para imprimir/2 Situaciones (horizontal 18x12 cm)/Situación 16 Entrega por dron.png",
+  "widths": [
+   360,
+   720
+  ]
+ },
+ "f80-card-s17": {
+  "src": "2080 juego futurista/Cartas para imprimir/2 Situaciones (horizontal 18x12 cm)/Situación 17 Entrenador holográfico.png",
+  "widths": [
+   360,
+   720
+  ]
+ },
+ "f80-card-s18": {
+  "src": "2080 juego futurista/Cartas para imprimir/2 Situaciones (horizontal 18x12 cm)/Situación 18 Trabajo con robot asistente.png",
+  "widths": [
+   360,
+   720
+  ]
+ },
+ "f80-card-s19": {
+  "src": "2080 juego futurista/Cartas para imprimir/2 Situaciones (horizontal 18x12 cm)/Situación 19 Juego de mesa con realidad aumentada.png",
+  "widths": [
+   360,
+   720
+  ]
+ },
+ "f80-card-s20": {
+  "src": "2080 juego futurista/Cartas para imprimir/2 Situaciones (horizontal 18x12 cm)/Situación 20 Clase de historia holográfica.png",
+  "widths": [
+   360,
+   720
+  ]
+ },
+ "f80-card-s21": {
+  "src": "2080 juego futurista/Cartas para imprimir/2 Situaciones (horizontal 18x12 cm)/Situación 21 Café y trabajo futuro.png",
+  "widths": [
+   360,
+   720
+  ]
+ },
+ "f80-card-s22": {
+  "src": "2080 juego futurista/Cartas para imprimir/2 Situaciones (horizontal 18x12 cm)/Situación 22 Vacaciones submarinas.png",
+  "widths": [
+   360,
+   720
+  ]
+ },
+ "f80-card-s23": {
+  "src": "2080 juego futurista/Cartas para imprimir/2 Situaciones (horizontal 18x12 cm)/Situación 23 Celebración con hologramas.png",
+  "widths": [
+   360,
+   720
+  ]
+ },
+ "f80-card-s24": {
+  "src": "2080 juego futurista/Cartas para imprimir/2 Situaciones (horizontal 18x12 cm)/Situación 24 Concierto holográfico.png",
+  "widths": [
+   360,
+   720
+  ]
+ },
+ "f80-card-s25": {
+  "src": "2080 juego futurista/Cartas para imprimir/2 Situaciones (horizontal 18x12 cm)/Situación 25 Parque de baja gravedad.png",
+  "widths": [
+   360,
+   720
+  ]
+ },
+ "f80-card-s26": {
+  "src": "2080 juego futurista/Cartas para imprimir/2 Situaciones (horizontal 18x12 cm)/Situación 26 Estación con exoesqueletos.png",
+  "widths": [
+   360,
+   720
+  ]
+ },
+ "f80-card-s27": {
+  "src": "2080 juego futurista/Cartas para imprimir/2 Situaciones (horizontal 18x12 cm)/Situación 27 Turismo con realidad aumentada.png",
+  "widths": [
+   360,
+   720
+  ]
+ },
+ "f80-card-s28": {
+  "src": "2080 juego futurista/Cartas para imprimir/2 Situaciones (horizontal 18x12 cm)/Situación 28 Aventura en las dunas.png",
+  "widths": [
+   360,
+   720
+  ]
+ },
+ "f80-card-s29": {
+  "src": "2080 juego futurista/Cartas para imprimir/2 Situaciones (horizontal 18x12 cm)/Situación 29 Cabina sobre las nubes.png",
+  "widths": [
+   360,
+   720
+  ]
+ },
+ "f80-card-s30": {
+  "src": "2080 juego futurista/Cartas para imprimir/2 Situaciones (horizontal 18x12 cm)/Situación 30 Entrada exclusiva.png",
+  "widths": [
+   360,
+   720
+  ]
+ },
+ "f80-card-s31": {
+  "src": "2080 juego futurista/Cartas para imprimir/2 Situaciones (horizontal 18x12 cm)/Situación 31 Estadio albiceleste.png",
+  "widths": [
+   360,
+   720
+  ]
+ },
+ "f80-card-s32": {
+  "src": "2080 juego futurista/Cartas para imprimir/2 Situaciones (horizontal 18x12 cm)/Situación 32 Mate con vista a la montaña.png",
+  "widths": [
+   360,
+   720
+  ]
+ },
+ "f80-card-s33": {
+  "src": "2080 juego futurista/Cartas para imprimir/2 Situaciones (horizontal 18x12 cm)/Situación 33 Muralla China.png",
+  "widths": [
+   360,
+   720
+  ]
+ },
+ "f80-card-s34": {
+  "src": "2080 juego futurista/Cartas para imprimir/2 Situaciones (horizontal 18x12 cm)/Situación 34 Oasis flotante.png",
+  "widths": [
+   360,
+   720
+  ]
+ },
+ "f80-card-s35": {
+  "src": "2080 juego futurista/Cartas para imprimir/2 Situaciones (horizontal 18x12 cm)/Situación 35 Santuario ecológico australiano.png",
+  "widths": [
+   360,
+   720
+  ]
+ },
+ "f80-card-s36": {
+  "src": "2080 juego futurista/Cartas para imprimir/2 Situaciones (horizontal 18x12 cm)/Situación 36 Moda holográfica en Seúl.png",
+  "widths": [
+   360,
+   720
+  ]
+ },
+ "f80-card-l01": {
+  "src": "2080 juego futurista/Cartas para imprimir/3 Lugares (horizontal 18x12 cm)/Lugar 01 Cena futurista al atardecer.png",
+  "widths": [
+   360,
+   720
+  ]
+ },
+ "f80-card-l02": {
+  "src": "2080 juego futurista/Cartas para imprimir/3 Lugares (horizontal 18x12 cm)/Lugar 02 Taj Mahal.png",
+  "widths": [
+   360,
+   720
+  ]
+ },
+ "f80-card-l03": {
+  "src": "2080 juego futurista/Cartas para imprimir/3 Lugares (horizontal 18x12 cm)/Lugar 03 Torre Eiffel.png",
+  "widths": [
+   360,
+   720
+  ]
+ },
+ "f80-card-l04": {
+  "src": "2080 juego futurista/Cartas para imprimir/3 Lugares (horizontal 18x12 cm)/Lugar 04 Venecia flotante.png",
+  "widths": [
+   360,
+   720
+  ]
+ },
+ "f80-card-l05": {
+  "src": "2080 juego futurista/Cartas para imprimir/3 Lugares (horizontal 18x12 cm)/Lugar 05 Coliseo inmersivo.png",
+  "widths": [
+   360,
+   720
+  ]
+ },
+ "f80-card-l06": {
+  "src": "2080 juego futurista/Cartas para imprimir/3 Lugares (horizontal 18x12 cm)/Lugar 06 Pirámides nocturnas.png",
+  "widths": [
+   360,
+   720
+  ]
+ },
+ "f80-card-l07": {
+  "src": "2080 juego futurista/Cartas para imprimir/3 Lugares (horizontal 18x12 cm)/Lugar 07 Gran cráter.png",
+  "widths": [
+   360,
+   720
+  ]
+ },
+ "f80-card-l08": {
+  "src": "2080 juego futurista/Cartas para imprimir/3 Lugares (horizontal 18x12 cm)/Lugar 08 Zoo marciano.png",
+  "widths": [
+   360,
+   720
+  ]
+ },
+ "f80-card-l09": {
+  "src": "2080 juego futurista/Cartas para imprimir/3 Lugares (horizontal 18x12 cm)/Lugar 09 Ocean City.png",
+  "widths": [
+   360,
+   720
+  ]
+ },
+ "f80-card-l10": {
+  "src": "2080 juego futurista/Cartas para imprimir/3 Lugares (horizontal 18x12 cm)/Lugar 10 Hotel orbital.png",
+  "widths": [
+   360,
+   720
+  ]
+ },
+ "f80-card-l11": {
+  "src": "2080 juego futurista/Cartas para imprimir/3 Lugares (horizontal 18x12 cm)/Lugar 11 Hotel lunar.png",
+  "widths": [
+   360,
+   720
+  ]
+ },
+ "f80-card-l12": {
+  "src": "2080 juego futurista/Cartas para imprimir/3 Lugares (horizontal 18x12 cm)/Lugar 12 Terminal estratosférica.png",
+  "widths": [
+   360,
+   720
+  ]
+ },
+ "f80-card-l13": {
+  "src": "2080 juego futurista/Cartas para imprimir/3 Lugares (horizontal 18x12 cm)/Lugar 13 Reserva de hielo.png",
+  "widths": [
+   360,
+   720
+  ]
+ },
+ "f80-card-l14": {
+  "src": "2080 juego futurista/Cartas para imprimir/3 Lugares (horizontal 18x12 cm)/Lugar 14 Observatorio del Sahara.png",
+  "widths": [
+   360,
+   720
+  ]
+ },
+ "f80-card-l15": {
+  "src": "2080 juego futurista/Cartas para imprimir/3 Lugares (horizontal 18x12 cm)/Lugar 15 Valle de mamuts.png",
+  "widths": [
+   360,
+   720
+  ]
+ },
+ "f80-card-l16": {
+  "src": "2080 juego futurista/Cartas para imprimir/3 Lugares (horizontal 18x12 cm)/Lugar 16 Cuevas bioluminiscentes.png",
+  "widths": [
+   360,
+   720
+  ]
+ },
+ "f80-card-l17": {
+  "src": "2080 juego futurista/Cartas para imprimir/3 Lugares (horizontal 18x12 cm)/Lugar 17 Niagara Sky Walk.png",
+  "widths": [
+   360,
+   720
+  ]
+ },
+ "f80-card-l18": {
+  "src": "2080 juego futurista/Cartas para imprimir/3 Lugares (horizontal 18x12 cm)/Lugar 18 Muralla del mar del Norte.png",
+  "widths": [
+   360,
+   720
+  ]
+ },
+ "f80-card-l19": {
+  "src": "2080 juego futurista/Cartas para imprimir/3 Lugares (horizontal 18x12 cm)/Lugar 19 Pasarelas entre secuoyas.png",
+  "widths": [
+   360,
+   720
+  ]
+ },
+ "f80-card-l20": {
+  "src": "2080 juego futurista/Cartas para imprimir/3 Lugares (horizontal 18x12 cm)/Lugar 20 Jardines elevados de Kioto.png",
+  "widths": [
+   360,
+   720
+  ]
+ },
+ "f80-card-l21": {
+  "src": "2080 juego futurista/Cartas para imprimir/3 Lugares (horizontal 18x12 cm)/Lugar 21 Primera base marciana.png",
+  "widths": [
+   360,
+   720
+  ]
+ },
+ "f80-card-l22": {
+  "src": "2080 juego futurista/Cartas para imprimir/3 Lugares (horizontal 18x12 cm)/Lugar 22 Surf en olas turquesa.png",
+  "widths": [
+   360,
+   720
+  ]
+ },
+ "f80-card-l23": {
+  "src": "2080 juego futurista/Cartas para imprimir/3 Lugares (horizontal 18x12 cm)/Lugar 23 Cruce del desierto.png",
+  "widths": [
+   360,
+   720
+  ]
+ },
+ "f80-card-l24": {
+  "src": "2080 juego futurista/Cartas para imprimir/3 Lugares (horizontal 18x12 cm)/Lugar 24 Desfile de Día de Muertos.png",
+  "widths": [
+   360,
+   720
+  ]
+ },
+ "f80-card-l25": {
+  "src": "2080 juego futurista/Cartas para imprimir/3 Lugares (horizontal 18x12 cm)/Lugar 25 Dominó en la Pequeña Habana.png",
+  "widths": [
+   360,
+   720
+  ]
+ },
+ "f80-card-l26": {
+  "src": "2080 juego futurista/Cartas para imprimir/3 Lugares (horizontal 18x12 cm)/Lugar 26 Mercado flotante del futuro.png",
+  "widths": [
+   360,
+   720
+  ]
+ },
+ "f80-card-l27": {
+  "src": "2080 juego futurista/Cartas para imprimir/3 Lugares (horizontal 18x12 cm)/Lugar 27 Safari de lujo.png",
+  "widths": [
+   360,
+   720
+  ]
+ },
+ "f80-card-l28": {
+  "src": "2080 juego futurista/Cartas para imprimir/3 Lugares (horizontal 18x12 cm)/Lugar 28 Glaciar con pasarelas.png",
+  "widths": [
+   360,
+   720
+  ]
+ },
+ "f80-card-i01": {
+  "src": "2080 juego futurista/Cartas para imprimir/4 Inventos (horizontal 18x12 cm)/Invento 01 Banco de clonación de ADN.png",
+  "widths": [
+   360,
+   720
+  ]
+ },
+ "f80-card-i02": {
+  "src": "2080 juego futurista/Cartas para imprimir/4 Inventos (horizontal 18x12 cm)/Invento 02 Cápsula submarina de paseo.png",
+  "widths": [
+   360,
+   720
+  ]
+ },
+ "f80-card-i03": {
+  "src": "2080 juego futurista/Cartas para imprimir/4 Inventos (horizontal 18x12 cm)/Invento 03 Clonación de especies extintas.png",
+  "widths": [
+   360,
+   720
+  ]
+ },
+ "f80-card-i04": {
+  "src": "2080 juego futurista/Cartas para imprimir/4 Inventos (horizontal 18x12 cm)/Invento 04 Floraviva.png",
+  "widths": [
+   360,
+   720
+  ]
+ },
+ "f80-card-i05": {
+  "src": "2080 juego futurista/Cartas para imprimir/4 Inventos (horizontal 18x12 cm)/Invento 05 Impresora 3D de alimentos.png",
+  "widths": [
+   360,
+   720
+  ]
+ },
+ "f80-card-i06": {
+  "src": "2080 juego futurista/Cartas para imprimir/4 Inventos (horizontal 18x12 cm)/Invento 06 El tercer ojo.png",
+  "widths": [
+   360,
+   720
+  ]
+ },
+ "f80-card-i07": {
+  "src": "2080 juego futurista/Cartas para imprimir/4 Inventos (horizontal 18x12 cm)/Invento 07 Lámpara purificadora.png",
+  "widths": [
+   360,
+   720
+  ]
+ },
+ "f80-card-i08": {
+  "src": "2080 juego futurista/Cartas para imprimir/4 Inventos (horizontal 18x12 cm)/Invento 08 Mesa cocinera inteligente.png",
+  "widths": [
+   360,
+   720
+  ]
+ },
+ "f80-card-i09": {
+  "src": "2080 juego futurista/Cartas para imprimir/4 Inventos (horizontal 18x12 cm)/Invento 09 Mochila cohete urbana.png",
+  "widths": [
+   360,
+   720
+  ]
+ },
+ "f80-card-i10": {
+  "src": "2080 juego futurista/Cartas para imprimir/4 Inventos (horizontal 18x12 cm)/Invento 10 Monorriel personal.png",
+  "widths": [
+   360,
+   720
+  ]
+ },
+ "f80-card-i11": {
+  "src": "2080 juego futurista/Cartas para imprimir/4 Inventos (horizontal 18x12 cm)/Invento 11 Ventana climática Montpellier.png",
+  "widths": [
+   360,
+   720
+  ]
+ },
+ "f80-card-i12": {
+  "src": "2080 juego futurista/Cartas para imprimir/4 Inventos (horizontal 18x12 cm)/Invento 12 Collar traductor.png",
+  "widths": [
+   360,
+   720
+  ]
+ },
+ "f80-card-i13": {
+  "src": "2080 juego futurista/Cartas para imprimir/4 Inventos (horizontal 18x12 cm)/Invento 13 Almohada de sueños.png",
+  "widths": [
+   360,
+   720
+  ]
+ },
+ "f80-card-i14": {
+  "src": "2080 juego futurista/Cartas para imprimir/4 Inventos (horizontal 18x12 cm)/Invento 14 Botella de aire.png",
+  "widths": [
+   360,
+   720
+  ]
+ },
+ "f80-card-i15": {
+  "src": "2080 juego futurista/Cartas para imprimir/4 Inventos (horizontal 18x12 cm)/Invento 15 Bici voladora.png",
+  "widths": [
+   360,
+   720
+  ]
+ },
+ "f80-card-i16": {
+  "src": "2080 juego futurista/Cartas para imprimir/4 Inventos (horizontal 18x12 cm)/Invento 16 Zapatillas antigravedad.png",
+  "widths": [
+   360,
+   720
+  ]
+ },
+ "f80-card-i17": {
+  "src": "2080 juego futurista/Cartas para imprimir/4 Inventos (horizontal 18x12 cm)/Invento 17 Paraguas de escudo.png",
+  "widths": [
+   360,
+   720
+  ]
+ },
+ "f80-card-i18": {
+  "src": "2080 juego futurista/Cartas para imprimir/4 Inventos (horizontal 18x12 cm)/Invento 18 Espejo probador.png",
+  "widths": [
+   360,
+   720
+  ]
+ },
+ "f80-card-i19": {
+  "src": "2080 juego futurista/Cartas para imprimir/4 Inventos (horizontal 18x12 cm)/Invento 19 Huerta de bolsillo.png",
+  "widths": [
+   360,
+   720
+  ]
+ },
+ "f80-card-i20": {
+  "src": "2080 juego futurista/Cartas para imprimir/4 Inventos (horizontal 18x12 cm)/Invento 20 Dron niñera.png",
+  "widths": [
+   360,
+   720
+  ]
+ },
+ "f80-card-i21": {
+  "src": "2080 juego futurista/Cartas para imprimir/4 Inventos (horizontal 18x12 cm)/Invento 21 Exoesqueleto senior.png",
+  "widths": [
+   360,
+   720
+  ]
+ },
+ "f80-card-i22": {
+  "src": "2080 juego futurista/Cartas para imprimir/4 Inventos (horizontal 18x12 cm)/Invento 22 Tatuaje médico.png",
+  "widths": [
+   360,
+   720
+  ]
+ },
+ "f80-card-i23": {
+  "src": "2080 juego futurista/Cartas para imprimir/4 Inventos (horizontal 18x12 cm)/Invento 23 Auriculares traductores.png",
+  "widths": [
+   360,
+   720
+  ]
+ },
+ "f80-card-i24": {
+  "src": "2080 juego futurista/Cartas para imprimir/4 Inventos (horizontal 18x12 cm)/Invento 24 Carpa automática.png",
+  "widths": [
+   360,
+   720
+  ]
+ },
+ "f80-card-i25": {
+  "src": "2080 juego futurista/Cartas para imprimir/4 Inventos (horizontal 18x12 cm)/Invento 25 Lentes aumentados.png",
+  "widths": [
+   360,
+   720
+  ]
+ },
+ "f80-card-i26": {
+  "src": "2080 juego futurista/Cartas para imprimir/4 Inventos (horizontal 18x12 cm)/Invento 26 Abejas robot.png",
+  "widths": [
+   360,
+   720
+  ]
+ },
+ "f80-card-i27": {
+  "src": "2080 juego futurista/Cartas para imprimir/4 Inventos (horizontal 18x12 cm)/Invento 27 Ropa camaleón.png",
+  "widths": [
+   360,
+   720
+  ]
+ },
+ "f80-card-i28": {
+  "src": "2080 juego futurista/Cartas para imprimir/4 Inventos (horizontal 18x12 cm)/Invento 28 Pulsera de emociones.png",
+  "widths": [
+   360,
+   720
+  ]
+ },
+ "f80-card-i29": {
+  "src": "2080 juego futurista/Cartas para imprimir/4 Inventos (horizontal 18x12 cm)/Invento 29 Recicladora casera.png",
+  "widths": [
+   360,
+   720
+  ]
+ },
+ "f80-card-i30": {
+  "src": "2080 juego futurista/Cartas para imprimir/4 Inventos (horizontal 18x12 cm)/Invento 30 Cerradura de identidad.png",
+  "widths": [
+   360,
+   720
+  ]
+ },
+ "f80-card-i31": {
+  "src": "2080 juego futurista/Cartas para imprimir/4 Inventos (horizontal 18x12 cm)/Invento 31 Pelota entrenadora.png",
+  "widths": [
+   360,
+   720
+  ]
+ },
+ "f80-dream-80": {
+  "src": "2080 juego futurista/Cartas para imprimir/5 Visión (vertical 12x18 cm)/Visión 080 Frasco de luciérnagas y helicóptero.png",
+  "widths": [
+   240,
+   480
+  ]
+ },
+ "f80-dream-100": {
+  "src": "2080 juego futurista/Cartas para imprimir/5 Visión (vertical 12x18 cm)/Visión 100 Calesita de autos voladores.png",
+  "widths": [
+   240,
+   480
+  ]
+ },
+ "f80-dream-36": {
+  "src": "2080 juego futurista/Cartas para imprimir/5 Visión (vertical 12x18 cm)/Visión 036 Control aéreo sobre un mundo fantástico.png",
+  "widths": [
+   240,
+   480
+  ]
+ },
+ "f80-dream-63": {
+  "src": "2080 juego futurista/Cartas para imprimir/5 Visión (vertical 12x18 cm)/Visión 063 Viajero contemplando la ciudad celeste.png",
+  "widths": [
+   240,
+   480
+  ]
+ },
+ "f80-dream-76": {
+  "src": "2080 juego futurista/Cartas para imprimir/5 Visión (vertical 12x18 cm)/Visión 076 Brindis con copa de luz.png",
+  "widths": [
+   240,
+   480
+  ]
+ },
+ "f80-dream-101": {
+  "src": "2080 juego futurista/Cartas para imprimir/5 Visión (vertical 12x18 cm)/Visión 101 Vela de dos llamas.png",
+  "widths": [
+   240,
+   480
+  ]
+ },
+ "f80-dream-29": {
+  "src": "2080 juego futurista/Cartas para imprimir/5 Visión (vertical 12x18 cm)/Visión 029 Beso bajo la tormenta de pétalos.png",
+  "widths": [
+   240,
+   480
+  ]
+ },
+ "f80-dream-46": {
+  "src": "2080 juego futurista/Cartas para imprimir/5 Visión (vertical 12x18 cm)/Visión 046 Fábrica nocturna de sonrisas mágicas.png",
+  "widths": [
+   240,
+   480
+  ]
+ },
+ "f80-dream-8": {
+  "src": "2080 juego futurista/Cartas para imprimir/5 Visión (vertical 12x18 cm)/Visión 008 Pez con ciudad.png",
+  "widths": [
+   240,
+   480
+  ]
+ },
+ "f80-dream-11": {
+  "src": "2080 juego futurista/Cartas para imprimir/5 Visión (vertical 12x18 cm)/Visión 011 Living sumergido.png",
+  "widths": [
+   240,
+   480
+  ]
+ },
+ "f80-dream-98": {
+  "src": "2080 juego futurista/Cartas para imprimir/5 Visión (vertical 12x18 cm)/Visión 098 Bombilla pecera con buzo guía.png",
+  "widths": [
+   240,
+   480
+  ]
+ },
+ "f80-dream-21": {
+  "src": "2080 juego futurista/Cartas para imprimir/5 Visión (vertical 12x18 cm)/Visión 021 Ventana al océano en el pecho.png",
+  "widths": [
+   240,
+   480
+  ]
+ },
+ "f80-dream-4": {
+  "src": "2080 juego futurista/Cartas para imprimir/5 Visión (vertical 12x18 cm)/Visión 004 Paraguas con tormenta.png",
+  "widths": [
+   240,
+   480
+  ]
+ },
+ "f80-dream-5": {
+  "src": "2080 juego futurista/Cartas para imprimir/5 Visión (vertical 12x18 cm)/Visión 005 Heladera con atardecer.png",
+  "widths": [
+   240,
+   480
+  ]
+ },
+ "f80-dream-17": {
+  "src": "2080 juego futurista/Cartas para imprimir/5 Visión (vertical 12x18 cm)/Visión 017 Lluvia que sube de una maceta.png",
+  "widths": [
+   240,
+   480
+  ]
+ },
+ "f80-dream-14": {
+  "src": "2080 juego futurista/Cartas para imprimir/5 Visión (vertical 12x18 cm)/Visión 014 Árbol de las cuatro estaciones.png",
+  "widths": [
+   240,
+   480
+  ]
+ },
+ "f80-dream-15": {
+  "src": "2080 juego futurista/Cartas para imprimir/5 Visión (vertical 12x18 cm)/Visión 015 Sombra independiente.png",
+  "widths": [
+   240,
+   480
+  ]
+ },
+ "f80-dream-18": {
+  "src": "2080 juego futurista/Cartas para imprimir/5 Visión (vertical 12x18 cm)/Visión 018 Playa plegada.png",
+  "widths": [
+   240,
+   480
+  ]
+ },
+ "f80-dream-19": {
+  "src": "2080 juego futurista/Cartas para imprimir/5 Visión (vertical 12x18 cm)/Visión 019 Casa dentro de maceta.png",
+  "widths": [
+   240,
+   480
+  ]
+ },
+ "f80-dream-33": {
+  "src": "2080 juego futurista/Cartas para imprimir/5 Visión (vertical 12x18 cm)/Visión 033 Chef en la cocina flotante mágica.png",
+  "widths": [
+   240,
+   480
+  ]
+ },
+ "f80-dream-47": {
+  "src": "2080 juego futurista/Cartas para imprimir/5 Visión (vertical 12x18 cm)/Visión 047 Gimnasio de energía dorada.png",
+  "widths": [
+   240,
+   480
+  ]
+ },
+ "f80-dream-57": {
+  "src": "2080 juego futurista/Cartas para imprimir/5 Visión (vertical 12x18 cm)/Visión 057 Reparando un corazón mecánico en el bosque.png",
+  "widths": [
+   240,
+   480
+  ]
+ },
+ "f80-dream-66": {
+  "src": "2080 juego futurista/Cartas para imprimir/5 Visión (vertical 12x18 cm)/Visión 066 Balanza en el campo de girasoles.png",
+  "widths": [
+   240,
+   480
+  ]
+ },
+ "f80-dream-70": {
+  "src": "2080 juego futurista/Cartas para imprimir/5 Visión (vertical 12x18 cm)/Visión 070 Bufanda muralla.png",
+  "widths": [
+   240,
+   480
+  ]
+ },
+ "f80-dream-74": {
+  "src": "2080 juego futurista/Cartas para imprimir/5 Visión (vertical 12x18 cm)/Visión 074 Bola de nieve marciana.png",
+  "widths": [
+   240,
+   480
+  ]
+ },
+ "f80-dream-85": {
+  "src": "2080 juego futurista/Cartas para imprimir/5 Visión (vertical 12x18 cm)/Visión 085 Ola congelada con faro.png",
+  "widths": [
+   240,
+   480
+  ]
+ },
+ "f80-dream-87": {
+  "src": "2080 juego futurista/Cartas para imprimir/5 Visión (vertical 12x18 cm)/Visión 087 Caracol que suelta voces.png",
+  "widths": [
+   240,
+   480
+  ]
+ },
+ "f80-dream-94": {
+  "src": "2080 juego futurista/Cartas para imprimir/5 Visión (vertical 12x18 cm)/Visión 094 Reloj de arena casita.png",
+  "widths": [
+   240,
+   480
+  ]
+ },
+ "f80-dream-103": {
+  "src": "2080 juego futurista/Cartas para imprimir/5 Visión (vertical 12x18 cm)/Visión 103 Naranja planeta.png",
+  "widths": [
+   240,
+   480
+  ]
+ },
+ "f80-dream-106": {
+  "src": "2080 juego futurista/Cartas para imprimir/5 Visión (vertical 12x18 cm)/Visión 106 Osito astronauta se despide.png",
+  "widths": [
+   240,
+   480
+  ]
+ },
+ "f80-dream-108": {
+  "src": "2080 juego futurista/Cartas para imprimir/5 Visión (vertical 12x18 cm)/Visión 108 Calabaza volcán y tren colgando.png",
+  "widths": [
+   240,
+   480
+  ]
+ },
+ "f80-dream-111": {
+  "src": "2080 juego futurista/Cartas para imprimir/5 Visión (vertical 12x18 cm)/Visión 111 Enchufe con enredadera de luz.png",
+  "widths": [
+   240,
+   480
+  ]
+ },
+ "arg-dream-18": {
+  "src": "1812 juego/oniricas 1812/Independencia- oniricas 18.png",
+  "widths": [
+   240,
+   480
+  ]
+ },
+ "arg-dream-27": {
+  "src": "1812 juego/oniricas 1812/Independencia- oniricas 27.png",
+  "widths": [
+   240,
+   480
+  ]
+ },
+ "arg-dream-6": {
+  "src": "1812 juego/oniricas 1812/Independencia- oniricas 6.png",
+  "widths": [
+   240,
+   480
+  ]
+ },
+ "arg-dream-52": {
+  "src": "1812 juego/oniricas 1812/Independencia- oniricas 52.png",
+  "widths": [
+   240,
+   480
+  ]
+ },
+ "arg-dream-58": {
+  "src": "1812 juego/oniricas 1812/Independencia- oniricas 58.png",
+  "widths": [
+   240,
+   480
+  ]
+ },
+ "arg-dream-39": {
+  "src": "1812 juego/oniricas 1812/Independencia- oniricas 39.png",
+  "widths": [
+   240,
+   480
+  ]
+ },
+ "arg-dream-12": {
+  "src": "1812 juego/oniricas 1812/Independencia- oniricas 12.png",
+  "widths": [
+   240,
+   480
+  ]
+ },
+ "arg-dream-2": {
+  "src": "1812 juego/oniricas 1812/Independencia- oniricas 2.png",
+  "widths": [
+   240,
+   480
+  ]
+ },
+ "arg-dream-5": {
+  "src": "1812 juego/oniricas 1812/Independencia- oniricas 5.png",
+  "widths": [
+   240,
+   480
+  ]
+ },
+ "arg-dream-14": {
+  "src": "1812 juego/oniricas 1812/Independencia- oniricas 14.png",
+  "widths": [
+   240,
+   480
+  ]
+ },
+ "arg-dream-15": {
+  "src": "1812 juego/oniricas 1812/Independencia- oniricas 15.png",
+  "widths": [
+   240,
+   480
+  ]
+ },
+ "arg-dream-17": {
+  "src": "1812 juego/oniricas 1812/Independencia- oniricas 17.png",
+  "widths": [
+   240,
+   480
+  ]
+ },
+ "arg-dream-21": {
+  "src": "1812 juego/oniricas 1812/Independencia- oniricas 21.png",
+  "widths": [
+   240,
+   480
+  ]
+ },
+ "arg-dream-26": {
+  "src": "1812 juego/oniricas 1812/Independencia- oniricas 26.png",
+  "widths": [
+   240,
+   480
+  ]
+ },
+ "arg-dream-28": {
+  "src": "1812 juego/oniricas 1812/Independencia- oniricas 28.png",
+  "widths": [
+   240,
+   480
+  ]
+ },
+ "arg-dream-30": {
+  "src": "1812 juego/oniricas 1812/Independencia- oniricas 30.png",
+  "widths": [
+   240,
+   480
+  ]
+ },
+ "arg-dream-31": {
+  "src": "1812 juego/oniricas 1812/Independencia- oniricas 31.png",
+  "widths": [
+   240,
+   480
+  ]
+ },
+ "arg-dream-34": {
+  "src": "1812 juego/oniricas 1812/Independencia- oniricas 34.png",
+  "widths": [
+   240,
+   480
+  ]
+ },
+ "arg-dream-36": {
+  "src": "1812 juego/oniricas 1812/Independencia- oniricas 36.png",
+  "widths": [
+   240,
+   480
+  ]
+ },
+ "arg-dream-38": {
+  "src": "1812 juego/oniricas 1812/Independencia- oniricas 38.png",
+  "widths": [
+   240,
+   480
+  ]
+ },
+ "arg-dream-41": {
+  "src": "1812 juego/oniricas 1812/Independencia- oniricas 41.png",
+  "widths": [
+   240,
+   480
+  ]
+ },
+ "arg-dream-43": {
+  "src": "1812 juego/oniricas 1812/Independencia- oniricas 43.png",
+  "widths": [
+   240,
+   480
+  ]
+ },
+ "arg-dream-49": {
+  "src": "1812 juego/oniricas 1812/Independencia- oniricas 49.png",
+  "widths": [
+   240,
+   480
+  ]
+ },
+ "arg-dream-50": {
+  "src": "1812 juego/oniricas 1812/Independencia- oniricas 50.png",
+  "widths": [
+   240,
+   480
+  ]
+ },
+ "arg-dream-53": {
+  "src": "1812 juego/oniricas 1812/Independencia- oniricas 53.png",
+  "widths": [
+   240,
+   480
+  ]
+ },
+ "arg-dream-59": {
+  "src": "1812 juego/oniricas 1812/Independencia- oniricas 59.png",
+  "widths": [
+   240,
+   480
+  ]
+ },
+ "arg-dream-60": {
+  "src": "1812 juego/oniricas 1812/Independencia- oniricas 60.png",
+  "widths": [
+   240,
+   480
+  ]
+ },
+ "f80-dream-68": {
+  "src": "2080 juego futurista/Cartas para imprimir/5 Visión (vertical 12x18 cm)/Visión 068 Corbata y collar en la oficina.png",
+  "widths": [
+   240,
+   480
+  ]
+ },
+ "f80-dream-54": {
+  "src": "2080 juego futurista/Cartas para imprimir/5 Visión (vertical 12x18 cm)/Visión 054 Noche lluviosa sobre Roma y el perrito.png",
+  "widths": [
+   240,
+   480
+  ]
+ },
+ "f80-dream-40": {
+  "src": "2080 juego futurista/Cartas para imprimir/5 Visión (vertical 12x18 cm)/Visión 040 El niño y la montaña alada.png",
+  "widths": [
+   240,
+   480
+  ]
+ },
+ "f80-dream-97": {
+  "src": "2080 juego futurista/Cartas para imprimir/5 Visión (vertical 12x18 cm)/Visión 097 Oveja de algodón de azúcar.png",
+  "widths": [
+   240,
+   480
+  ]
+ },
+ "f80-dream-75": {
+  "src": "2080 juego futurista/Cartas para imprimir/5 Visión (vertical 12x18 cm)/Visión 075 Abuela barre el anillo del planeta.png",
+  "widths": [
+   240,
+   480
+  ]
+ },
+ "f80-dream-22": {
+  "src": "2080 juego futurista/Cartas para imprimir/5 Visión (vertical 12x18 cm)/Visión 022 Alienígenas viajan en un meteorito.png",
+  "widths": [
+   240,
+   480
+  ]
+ },
+ "f80-dream-69": {
+  "src": "2080 juego futurista/Cartas para imprimir/5 Visión (vertical 12x18 cm)/Visión 069 Carretilla con cohetes.png",
+  "widths": [
+   240,
+   480
+  ]
+ },
+ "f80-dream-59": {
+  "src": "2080 juego futurista/Cartas para imprimir/5 Visión (vertical 12x18 cm)/Visión 059 Surfista entre dinosaurios y nubes.png",
+  "widths": [
+   240,
+   480
+  ]
+ },
+ "f80-dream-99": {
+  "src": "2080 juego futurista/Cartas para imprimir/5 Visión (vertical 12x18 cm)/Visión 099 Huevo con sombra de dodo.png",
+  "widths": [
+   240,
+   480
+  ]
+ },
+ "f80-dream-53": {
+  "src": "2080 juego futurista/Cartas para imprimir/5 Visión (vertical 12x18 cm)/Visión 053 Museo del tiempo y la vida.png",
+  "widths": [
+   240,
+   480
+  ]
+ },
+ "f80-dream-30": {
+  "src": "2080 juego futurista/Cartas para imprimir/5 Visión (vertical 12x18 cm)/Visión 030 Burbuja viajera entre mundos.png",
+  "widths": [
+   240,
+   480
+  ]
+ },
+ "f80-dream-107": {
+  "src": "2080 juego futurista/Cartas para imprimir/5 Visión (vertical 12x18 cm)/Visión 107 Cinta que se vuelve cascada.png",
+  "widths": [
+   240,
+   480
+  ]
+ },
+ "f80-dream-52": {
+  "src": "2080 juego futurista/Cartas para imprimir/5 Visión (vertical 12x18 cm)/Visión 052 Mensajero del bosque encantado.png",
+  "widths": [
+   240,
+   480
+  ]
+ },
+ "f80-dream-34": {
+  "src": "2080 juego futurista/Cartas para imprimir/5 Visión (vertical 12x18 cm)/Visión 034 Cine submarino en un barco encantado.png",
+  "widths": [
+   240,
+   480
+  ]
+ },
+ "f80-dream-64": {
+  "src": "2080 juego futurista/Cartas para imprimir/5 Visión (vertical 12x18 cm)/Visión 064 Gol submarino del pulpo.png",
+  "widths": [
+   240,
+   480
+  ]
+ },
+ "f80-dream-9": {
+  "src": "2080 juego futurista/Cartas para imprimir/5 Visión (vertical 12x18 cm)/Visión 009 Montaña con grieta de luz.png",
+  "widths": [
+   240,
+   480
+  ]
+ },
+ "f80-dream-12": {
+  "src": "2080 juego futurista/Cartas para imprimir/5 Visión (vertical 12x18 cm)/Visión 012 Cocinero corta atardecer.png",
+  "widths": [
+   240,
+   480
+  ]
+ },
+ "f80-dream-26": {
+  "src": "2080 juego futurista/Cartas para imprimir/5 Visión (vertical 12x18 cm)/Visión 026 Aventura lunar en el hotel fantástico.png",
+  "widths": [
+   240,
+   480
+  ]
+ },
+ "f80-dream-1": {
+  "src": "2080 juego futurista/Cartas para imprimir/5 Visión (vertical 12x18 cm)/Visión 001 Lectura en la Luna.png",
+  "widths": [
+   240,
+   480
+  ]
+ },
+ "f80-dream-31": {
+  "src": "2080 juego futurista/Cartas para imprimir/5 Visión (vertical 12x18 cm)/Visión 031 Carrera lunar sobre hielo.png",
+  "widths": [
+   240,
+   480
+  ]
+ },
+ "f80-dream-81": {
+  "src": "2080 juego futurista/Cartas para imprimir/5 Visión (vertical 12x18 cm)/Visión 081 Merengue cúpula en el estanque.png",
+  "widths": [
+   240,
+   480
+  ]
+ },
+ "f80-dream-102": {
+  "src": "2080 juego futurista/Cartas para imprimir/5 Visión (vertical 12x18 cm)/Visión 102 Cebolla boya en el mar.png",
+  "widths": [
+   240,
+   480
+  ]
+ },
+ "f80-dream-27": {
+  "src": "2080 juego futurista/Cartas para imprimir/5 Visión (vertical 12x18 cm)/Visión 027 Banquete mágico sobre la ciudad flotante.png",
+  "widths": [
+   240,
+   480
+  ]
+ },
+ "f80-dream-61": {
+  "src": "2080 juego futurista/Cartas para imprimir/5 Visión (vertical 12x18 cm)/Visión 061 Tormenta mágica sobre el oasis.png",
+  "widths": [
+   240,
+   480
+  ]
+ },
+ "f80-dream-56": {
+  "src": "2080 juego futurista/Cartas para imprimir/5 Visión (vertical 12x18 cm)/Visión 056 Rave espectral bajo la luna llena.png",
+  "widths": [
+   240,
+   480
+  ]
+ },
+ "f80-dream-42": {
+  "src": "2080 juego futurista/Cartas para imprimir/5 Visión (vertical 12x18 cm)/Visión 042 Esqueletos viajeros bajo el sol desértico.png",
+  "widths": [
+   240,
+   480
+  ]
+ },
+ "f80-dream-35": {
+  "src": "2080 juego futurista/Cartas para imprimir/5 Visión (vertical 12x18 cm)/Visión 035 Concierto de rock bajo la luna llena.png",
+  "widths": [
+   240,
+   480
+  ]
+ },
+ "f80-dream-84": {
+  "src": "2080 juego futurista/Cartas para imprimir/5 Visión (vertical 12x18 cm)/Visión 084 Ornitorrinco con cohete.png",
+  "widths": [
+   240,
+   480
+  ]
+ },
+ "f80-dream-25": {
+  "src": "2080 juego futurista/Cartas para imprimir/5 Visión (vertical 12x18 cm)/Visión 025 Aventura burbujeante en la cascada.png",
+  "widths": [
+   240,
+   480
+  ]
+ },
+ "f80-dream-48": {
+  "src": "2080 juego futurista/Cartas para imprimir/5 Visión (vertical 12x18 cm)/Visión 048 Jardín mágico de palabras y alas.png",
+  "widths": [
+   240,
+   480
+  ]
+ },
+ "f80-dream-112": {
+  "src": "2080 juego futurista/Cartas para imprimir/5 Visión (vertical 12x18 cm)/Visión 112 Carrito de caramelos insecto.png",
+  "widths": [
+   240,
+   480
+  ]
+ },
+ "f80-dream-72": {
+  "src": "2080 juego futurista/Cartas para imprimir/5 Visión (vertical 12x18 cm)/Visión 072 Máscara de gas con cerezo.png",
+  "widths": [
+   240,
+   480
+  ]
+ },
+ "f80-dream-20": {
+  "src": "2080 juego futurista/Cartas para imprimir/5 Visión (vertical 12x18 cm)/Visión 020 Edificios dormidos.png",
+  "widths": [
+   240,
+   480
+  ]
  }
 }

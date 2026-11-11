@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Olympikos · anécdota · Im Dong-Hyun</title>
+<link rel="stylesheet" href="lib/video.css">
+<link rel="stylesheet" href="lib/anecdota.css">
+</head>
+<body>
+<div id="stage"></div>
+<script src="lib/engine.js"></script>
+<script src="lib/howto.js"></script>
+<script src="lib/anecdotas-textos.js"></script>
+<script src="lib/anecdota.js"></script>
+<script>
+// Tiro con arco: Im Dong-Hyun, Londres 2012 (libreto, deporte 12). Carta del juego: deporte 12.
+const L = {
+  es: { points: "puntos", arrows: "72 flechas", record: "Récord mundial", left: "ojo izquierdo", right: "ojo derecho" },
+  fr: { points: "points", arrows: "72 flèches", record: "Record du monde", left: "œil gauche", right: "œil droit" },
+};
+anecdota({
+  id: "im", img: "vid-oly-sport-12-1080", acc: "#2f6fa8", bg: "#eef1f4",
+  gaps: { 3: 0.5, 4: 0.4 },
+  build({ lang }) {
+    const { p, put, lerp } = V;
+    const { text, mk } = HT;
+    const t9 = L[lang];
+    const Y = 280;
+    const s699 = AN.stat("0", t9.points);
+    const arrows = Array.from({ length: 72 }, () => { const d = mk("c"); d.style.cssText = "width:6px;height:30px;border-radius:3px;background:#16171c"; return d; });
+    const lArrows = text("note", t9.arrows);
+    const badge = text("badge", t9.record);
+    // Diana: blanco, negro, azul, rojo y oro
+    const rings = ["#f4f4f2", "#1a1919", "#3d78ad", "#cc4f5c", "#f2c230"];
+    const target = AN.svg(320, 320, rings.map((c, i) => `<circle r="${150 - i * 30}" fill="${c}" stroke="${i === 1 ? "#555" : "rgba(0,0,0,.25)"}" stroke-width="2"/>`).join("") + `<circle r="6" fill="#1a1919"/>`);
+    const eyeL = AN.stat("1/10", t9.left, "sm dark"), eyeR = AN.stat("2/10", t9.right, "sm dark");
+
+    return (t, C) => {
+      // Línea 1: 699 puntos en 72 flechas
+      const o1 = C.vis(t, 1, 2);
+      s699.querySelector("b").textContent = String(Math.round(699 * C.k(t, 1, C.dur(1) * 0.4, C.dur(1) * 0.5, "out")));
+      put(s699, { x: -230, y: Y - 10, op: o1 });
+      arrows.forEach((d, i) => {
+        const k = C.k(t, 1, C.dur(1) * 0.4 + i * 0.03, 0.25, "back");
+        put(d, { x: 110 + (i % 12) * 26, y: Y - 80 + Math.floor(i / 12) * 38, s: k, op: o1 * Math.min(1, k * 2) });
+      });
+      put(lArrows, { x: 253, y: Y + 140, op: o1 });
+
+      // Línea 2: récord mundial
+      const o2 = C.vis(t, 2, 3);
+      put(badge, { y: Y, s: 0.6 + 0.4 * C.k(t, 2, C.dur(2) * 0.55, 0.5, "back"), op: Math.min(o2, C.k(t, 2, C.dur(2) * 0.55, 0.3)) });
+
+      // Líneas 3 a 5: la diana se ve cada vez más borrosa
+      const ot = C.vis(t, 3);
+      const side = C.k(t, 4, 0, 0.7, "inOut") * (1 - C.k(t, 5, 0, 0.8, "inOut"));
+      const blur = lerp(0, 5, C.k(t, 3, C.dur(3) * 0.5, 1.2, "inOut")) + lerp(0, 9, C.k(t, 5, 0.3, 2.5, "inOut"));
+      const wob = C.k(t, 5, 0.3, 2, "inOut");
+      put(target, {
+        x: -270 * side + Math.sin(t * 2.3) * 10 * wob, y: Y - 5 + Math.cos(t * 1.9) * 8 * wob,
+        s: lerp(0.95, 0.72, side) * (1 + 0.04 * wob * Math.sin(t * 3)), r: Math.sin(t * 1.4) * 4 * wob, op: ot, blur,
+      });
+      const o4 = C.vis(t, 4, 5);
+      put(eyeL, { x: 40, y: Y - 10 + (1 - C.k(t, 4, C.dur(4) * 0.3)) * 30, op: Math.min(o4, C.k(t, 4, C.dur(4) * 0.3, 0.3)) });
+      put(eyeR, { x: 320, y: Y - 10 + (1 - C.k(t, 4, C.dur(4) * 0.65)) * 30, op: Math.min(o4, C.k(t, 4, C.dur(4) * 0.65, 0.3)) });
+
+      // La ilustración también se vuelve un cuadro impresionista
+      return { blur: 7 * C.k(t, 5, 0.4, 2.5, "inOut") };
+    };
+  },
+});
+</script>
+</body>
+</html>

@@ -167,3 +167,23 @@ swiftc -O -o /tmp/ds4-render tools/video/render.swift
 ```
 
 Sirve para todos los videos de `tools/video/`. Para ver cuadros sueltos: `/tmp/ds4-render olympikos-reglas es --still 5,12,20`. Compilalo con la ruta del repositorio tal cual (como arriba, desde la carpeta del repositorio) para que encuentre los HTML.
+
+### Anécdotas de Olympikos, con voz
+
+Cinco anécdotas del libreto de Olympikos contadas en voz alta, de unos 40 segundos (1080×1920, con voz y subtítulos), en español y francés: `videos/olympikos-anecdota-<anécdota>-<idioma>.mp4`.
+
+| Anécdota | Deporte |
+|---|---|
+| `bradbury` | Patinaje de velocidad: Steven Bradbury, Salt Lake City 2002 |
+| `vinci` | Halterofilia: Charles Vinci, Melbourne 1956 |
+| `karelin` | Lucha: Aleksandr Karelin |
+| `stevenson` | Boxeo: Teófilo Stevenson |
+| `im` | Tiro con arco: Im Dong-Hyun, Londres 2012 |
+
+- Los textos están en `tools/video/lib/anecdotas-textos.js`: lo que dice la voz (con los números en letras) y el subtítulo.
+- La voz está en `tools/video/voz/`, un MP3 por línea. Se generó con Higgsfield (Text to Speech V2, motor ElevenLabs): en español la voz **Marisol** (`75e72cd5-011b-4130-a474-e8b1ab341f04`) y en francés **Luc** (`04e867c7-9e41-5cff-80d3-5284e74d7bd1`).
+- Si cambiás un texto, generá de nuevo ese MP3 con el mismo nombre y volvé a grabar el video. La animación se acomoda sola a la duración de cada audio:
+
+```bash
+/tmp/ds4-render olympikos-anecdota-bradbury es
+```

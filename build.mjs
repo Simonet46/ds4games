@@ -18,8 +18,8 @@ if (DOMAIN) SITE.baseUrl = `https://${DOMAIN}/`;
 for (const g of Object.values(GAMES)) if (DOMAIN && g.store && new URL(g.store).host === DOMAIN) g.store = "";
 const L = { es, fr, en };
 const MANIFEST = JSON.parse(readFileSync(join(OUT, "assets/img/manifest.json"), "utf8"));
-const CONTENT_IMG = { olympikos: "oly-content", "tour-eiffel": "eif-components", "1812": "arg-gameplay" };
-const ACCENT = { olympikos: "var(--oly)", "tour-eiffel": "var(--eif)", "1812": "var(--arg)" };
+const CONTENT_IMG = { olympikos: "oly-content", "tour-eiffel": "eif-components", "1812": "arg-gameplay", "2080": "f80-box-2" };
+const ACCENT = { olympikos: "var(--oly)", "tour-eiffel": "var(--eif)", "1812": "var(--arg)", "2080": "var(--f80)" };
 
 const esc = (s = "") => String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
 
@@ -95,8 +95,14 @@ function mailOrder(ctx, slug) {
   const name = ctx.L.games[slug].name;
   return `mailto:${SITE.email}?subject=${encodeURIComponent(ctx.L.t.mailSubject.replace("{game}", name))}`;
 }
+// Juego que todavía no salió: un correo para que le avisemos.
+function notifyLink(ctx, slug, cls) {
+  const t = ctx.L.t, name = ctx.L.games[slug].name;
+  return `<a class="${cls}" href="mailto:${SITE.email}?subject=${encodeURIComponent(t.notifySubject.replace("{game}", name))}">${esc(t.notify)}</a>`;
+}
 function buyLink(ctx, slug, cls) {
   const g = GAMES[slug], t = ctx.L.t;
+  if (g.soon) return notifyLink(ctx, slug, cls);
   const href = g.links.FR || g.store;
   return href
     ? `<a class="${cls} buy-link" href="${href}" target="_blank" rel="noopener">${esc(t.buy)}</a>`
@@ -106,6 +112,7 @@ function buyLink(ctx, slug, cls) {
 function buyBlock(ctx, slug) {
   const { t } = ctx.L;
   const g = GAMES[slug];
+  if (g.soon) return `<div class="buy"><div class="buy-row"><p class="buy-price soon">${esc(t.soon)}</p>${notifyLink(ctx, slug, "btn btn-primary")}</div><p class="buy-note">${esc(t.soonNote)}</p></div>`;
   const toyco = g.toycoAR ? `<noscript><p class="buy-note"><a class="link" href="${g.links.AR}" target="_blank" rel="noopener">${esc(t.noJsToyco)}</a></p></noscript>` : "";
   return `<div class="buy" data-buy="${slug}">
   <div class="buy-row">
@@ -141,7 +148,7 @@ function footer(ctx) {
 
 function config(ctx) {
   const { t } = ctx.L;
-  const games = Object.fromEntries(Object.entries(GAMES).map(([k, g]) => [k, { price: g.price, store: g.store, links: g.links, toycoAR: !!g.toycoAR, mail: mailOrder(ctx, k) }]));
+  const games = Object.fromEntries(Object.entries(GAMES).filter(([, g]) => !g.soon).map(([k, g]) => [k, { price: g.price, store: g.store, links: g.links, toycoAR: !!g.toycoAR, mail: mailOrder(ctx, k) }]));
   const data = { email: SITE.email, rate: SITE.rate, ship: SITE.ship, games, t: { buy: t.buy, buyToyco: t.buyToyco, buyMail: t.buyMail, approx: t.approx, shipFR: t.shipFR, shipINT: t.shipINT, shipAR: t.shipAR, toycoNote: t.toycoNote } };
   return `<script type="application/json" id="ds4-config">${JSON.stringify(data).replace(/</g, "\\u003c")}</script>`;
 }
@@ -238,10 +245,10 @@ function home(ctx) {
     <h3 class="h2 grad">${esc(c.name)}</h3>
     <p class="lead">${esc(c.tagline)}</p>
     <ul class="chips">${chips}</ul>
-    <div class="btns" data-buy="${slug}">
+    <div class="btns"${g.soon ? "" : ` data-buy="${slug}"`}>
       <a class="btn btn-primary" href="${gp(slug)}">${esc(t.learnMore)}</a>
       ${buyLink(ctx, slug, "btn btn-glass")}
-      <p class="price buy-price">${g.price} €</p>
+      <p class="price buy-price${g.soon ? " soon" : ""}">${g.soon ? esc(t.soon) : `${g.price} €`}</p>
     </div>
   </div>
   <a href="${gp(slug)}" tabindex="-1" aria-hidden="true">${img(ctx, g.box, { alt: "", cls: "box", sizes: "(max-width: 860px) 62vw, 380px", attrs: "data-tilt" })}</a>
@@ -329,6 +336,7 @@ function cluesSection(ctx, slug) {
 
 function demoSection(ctx, slug) {
   const g = GAMES[slug], c = ctx.L.games[slug], d = c.demo;
+  // Cada fila tiene hasta cuatro cartas de Autor: se ve la primera y en cada ronda el Autor suma una más.
   const rows = g.demo.rows.map((r, i) => {
     const row = g.rows[i];
     const opts = r.cards.map((k, j) => `<label title="${esc(c.cardNames[k])}"><input type="radio" name="r${i}" value="${j + 1}"><span class="opt">${img(ctx, `${g.art}-card-${k}`, { alt: "", sizes: row.tall ? "(max-width: 760px) 28vw, 120px" : "(max-width: 760px) 28vw, 150px" })}<b aria-hidden="true">${j + 1}</b></span><span class="sr-only">${j + 1}. ${esc(c.cardNames[k])}</span></label>`).join("");
@@ -336,7 +344,7 @@ function demoSection(ctx, slug) {
       <legend><i aria-hidden="true"></i><strong>${esc(c.rowQs[row.key])}</strong><span class="muted">${esc(c.rowNames[row.key])}</span></legend>
       <div class="drow-in">
         <div class="dopts${row.tall ? " tall" : ""}">${opts}</div>
-        <figure class="ddream">${img(ctx, `${g.art}-dream-${r.dream}`, { alt: `${d.author} · ${c.rowNames[row.key]}`, sizes: "(max-width: 760px) 96px, 140px" })}<figcaption>${esc(d.author)}</figcaption></figure>
+        <figure class="ddream"><div class="dstack">${r.dreams.map((n, k) => `<span class="dcard"${k ? " hidden" : ""}>${img(ctx, `${g.art}-dream-${n}`, { alt: `${d.author} ${k + 1} · ${c.rowNames[row.key]}`, sizes: "(max-width: 760px) 72px, 96px" })}</span>`).join("")}</div><figcaption>${esc(d.author)}</figcaption></figure>
       </div>
       <p class="dwhy" hidden>${esc(d.reveal[i])}</p>
     </fieldset>`;
@@ -347,6 +355,13 @@ function demoSection(ctx, slug) {
     answer: g.demo.rows.map((r) => r.answer), turns: g.demo.turns, last: !!g.demo.lastChance, colors: g.rows.map((r) => r.color),
     t: { pick: d.pick, ready: d.ready, turn: d.turn, hits: d.hits, win: d.win, lose: d.lose, last: d.last, lastMsg: d.lastMsg, winLast: d.winLast },
   };
+  // 2080: los rivales dicen su código en voz alta y el Autor contesta en privado.
+  if (g.demo.rivals) Object.assign(cfg, { rivals: g.demo.rivals, names: d.rivalNames }, { t: { ...cfg.t, you: d.you, secret: d.secret, theirs: d.theirs } });
+  // Cada partida nueva arma otra mesa: por fila, una carta correcta con sus cartas de Autor y cinco cartas al azar del mazo.
+  const url = (name) => { const m = MANIFEST[name]; if (!m) throw new Error(`Imagen sin optimizar: ${name}`); return rel(ctx.path, `assets/img/${name}-${m.widths[Math.min(1, m.widths.length - 1)]}.webp`); };
+  cfg.deck = g.demo.rows.map((_, i) => g.rows[i].cards.map((k) => [k, c.cardNames[k], url(`${g.art}-card-${k}`)]));
+  cfg.pool = g.demo.rows.map((r, i) => [{ c: r.cards[r.answer - 1], d: r.dreams.map((n) => url(`${g.art}-dream-${n}`)), w: d.reveal[i] }]
+    .concat((g.demo.pool?.[i] || []).map((p) => ({ c: p.card, d: p.dreams.map((n) => url(`${g.art}-dream-${n}`)) }))));
   if (MANIFEST[sobre]) {
     cfg.sobres = [0, 1, 2, 3, 4].map((n) => rel(ctx.path, `assets/img/${g.art}-sobre-${n}-${MANIFEST[sobre].widths.at(-1)}.webp`));
     cfg.sobreH = Math.round(160 * MANIFEST[sobre].ratio);
@@ -475,8 +490,8 @@ ${g.rows ? deckSection(ctx, slug) : ""}${g.dreams ? dreamsSection(ctx, slug) : "
   <div class="stack" style="gap:22px">
     <div class="glass panel-pad stack reveal" id="descargas">
       <h2 class="h3">${esc(t.downloads)}</h2>
-      <p class="muted">${esc(t.downloadsLead)}</p>
-      <div class="dl">${[...pdfs, ...vids].join("")}</div>
+      ${pdfs.length + vids.length ? `<p class="muted">${esc(t.downloadsLead)}</p>` : ""}
+      ${pdfs.length + vids.length ? `<div class="dl">${[...pdfs, ...vids].join("")}</div>` : `<p class="muted">${esc(t.soonDownloads)}</p>`}
     </div>
     <div class="glass panel-pad stack reveal">
       <h2 class="h3">${esc(t.credits)}</h2>
@@ -496,6 +511,7 @@ ${g.rows ? deckSection(ctx, slug) : ""}${g.dreams ? dreamsSection(ctx, slug) : "
     image: SITE.baseUrl + `assets/img/og-${slug}.jpg`, brand: { "@type": "Brand", name: "DS4Games" },
     offers: { "@type": "Offer", price: String(g.price), priceCurrency: "EUR", availability: "https://schema.org/InStock", url: SITE.baseUrl + pathOf(ctx.lang, `game:${slug}`) },
   };
+  if (g.soon) delete jsonld.offers;
   const preload = `<link rel="preload" as="image" href="${rel(ctx.path, `assets/img/${g.hero}-${MANIFEST[g.hero].widths[0]}.webp`)}" imagesrcset="${MANIFEST[g.hero].widths.map((x) => `${rel(ctx.path, `assets/img/${g.hero}-${x}.webp`)} ${x}w`).join(", ")}" imagesizes="100vw">`;
   return layout(ctx, { page: `game:${slug}`, title: c.title, description: c.description, body, bodyClass: `g-${slug}`, ogImage: slug, jsonld, preload });
 }

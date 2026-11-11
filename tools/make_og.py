@@ -50,7 +50,7 @@ place(home, load("eif-box"), 330, 880, 560)
 place(home, load("oly-box"), 470, 600, 590)
 home.save(os.path.join(IMG, "og-home.jpg"), quality=86)
 
-for slug, art, box, h in [("olympikos", "oly-marathon", "oly-box", 500), ("tour-eiffel", "eif-components-wood", "eif-box", 420), ("1812", "arg-art", "arg-box", 480)]:
+for slug, art, box, h in [("olympikos", "oly-marathon", "oly-box", 500), ("tour-eiffel", "eif-components-wood", "eif-box", 420), ("1812", "arg-art", "arg-box", 480), ("2080", "f80-hero", "f80-box", 460)]:
     c = cover(art)
     place(c, load(box), h, 860, 590)
     c.save(os.path.join(IMG, f"og-{slug}.jpg"), quality=86)

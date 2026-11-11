@@ -30,7 +30,7 @@ export const SITE = {
 // luck: suerte · logic: lógica · team: trabajo en equipo · strategy: estrategia · speed: rapidez · talk: conversación
 export const PROFILE_KEYS = ["luck", "logic", "team", "strategy", "speed", "talk"];
 
-export const GAME_ORDER = ["olympikos", "tour-eiffel", "1812"];
+export const GAME_ORDER = ["olympikos", "tour-eiffel", "1812", "2080"];
 
 export const GAMES = {
   olympikos: {
@@ -119,10 +119,17 @@ export const GAMES = {
       turns: 4,
       lastChance: true,
       rows: [
-        { dream: 7, cards: ["florera", "telefonista", "lumiere", "bailarina", "cireur", "policia"], answer: 5 },
-        { dream: 16, cards: ["cabaret", "cafe", "petanca", "flores", "bouquinistes", "circo"], answer: 1 },
-        { dream: 12, cards: ["luxemburgo", "orsay", "sacre-coeur", "invalides", "arco", "notre-dame"], answer: 6 },
-        { dream: 18, cards: ["caneles", "fondue", "cognac", "croissants", "baguette", "macarons"], answer: 3 },
+        { dreams: [7, 13, 3, 10], cards: ["florera", "telefonista", "lumiere", "bailarina", "cireur", "policia"], answer: 5 },
+        { dreams: [16, 4, 18, 10], cards: ["cabaret", "cafe", "petanca", "flores", "bouquinistes", "circo"], answer: 1 },
+        { dreams: [12, 16, 13, 3], cards: ["luxemburgo", "orsay", "sacre-coeur", "invalides", "arco", "notre-dame"], answer: 6 },
+        { dreams: [18, 7, 4, 12], cards: ["caneles", "fondue", "cognac", "croissants", "baguette", "macarons"], answer: 3 },
+      ],
+      // Otras mesas posibles: cada partida nueva elige una por fila (carta correcta y sus 4 cartas de Autor).
+      pool: [
+        [{ card: "deshollinador", dreams: [16, 12, 10, 3] }, { card: "policia", dreams: [3, 16, 13, 10] }],
+        [{ card: "magia", dreams: [10, 7, 3, 16] }, { card: "zoo", dreams: [4, 7, 16, 10] }],
+        [{ card: "catacumbas", dreams: [10, 18, 4, 12] }, { card: "pont-neuf", dreams: [13, 7, 3, 12] }, { card: "versalles", dreams: [3, 13, 12, 7] }],
+        [{ card: "quesos", dreams: [4, 7, 18, 3] }, { card: "champagne", dreams: [18, 7, 13, 16] }],
       ],
     },
     pdfs: [
@@ -169,10 +176,17 @@ export const GAMES = {
     demo: {
       turns: 4,
       rows: [
-        { dream: 8, cards: ["gaucho", "lavandera", "granadero", "cacique", "fraile", "dama"], answer: 2 },
-        { dream: 11, cards: ["llegada", "imprenta", "misa", "batalla", "manzana", "naipes"], answer: 4 },
-        { dream: 9, cards: ["rosario", "jujuy", "cabildo", "centro", "tucuman", "lujan"], answer: 3 },
-        { dream: 29, cards: ["locro", "empanadas", "mate", "carbonada", "vino", "asado"], answer: 1 },
+        { dreams: [8, 18, 46, 25], cards: ["gaucho", "lavandera", "granadero", "cacique", "fraile", "dama"], answer: 2 },
+        { dreams: [11, 27, 6, 52], cards: ["llegada", "imprenta", "misa", "batalla", "manzana", "naipes"], answer: 4 },
+        { dreams: [9, 44, 58, 39], cards: ["rosario", "jujuy", "cabildo", "centro", "tucuman", "lujan"], answer: 3 },
+        { dreams: [29, 57, 12, 2], cards: ["locro", "empanadas", "mate", "carbonada", "vino", "asado"], answer: 1 },
+      ],
+      // Otras mesas posibles: cada partida nueva elige una por fila (carta correcta y sus 4 cartas de Autor).
+      pool: [
+        [{ card: "gaucho", dreams: [5, 13, 15, 49] }, { card: "granadero", dreams: [11, 27, 52, 6] }, { card: "fraile", dreams: [17, 37, 41, 14] }],
+        [{ card: "naipes", dreams: [43, 36, 53, 28] }, { card: "misa", dreams: [41, 14, 17, 22] }, { card: "barco", dreams: [25, 59, 1, 21] }],
+        [{ card: "cataratas", dreams: [8, 25, 46, 11] }, { card: "mendoza", dreams: [39, 2, 5, 26] }, { card: "ruinas", dreams: [33, 38, 34, 31] }],
+        [{ card: "vino", dreams: [39, 14, 25, 2] }, { card: "mate", dreams: [12, 57, 30, 50] }, { card: "pollo", dreams: [51, 10, 22, 13] }, { card: "asado", dreams: [30, 60, 15, 51] }],
       ],
     },
     pdfs: [
@@ -184,5 +198,58 @@ export const GAMES = {
       { id: "K6c30lSuaHs", lang: "ES", kind: "rulesVideo" },
       { id: "Hwxbh_eW9pU", lang: "FR", kind: "rulesVideo" },
     ],
+  },
+  // 2080: el próximo Secret Stories (todavía sin imprimir). soon: sin precio ni compra, con "Avisame cuando salga".
+  // Igual que Les Secrets de la Tour Eiffel, salvo una regla: los Lectores dicen su código en voz alta, pero el Autor
+  // le contesta a cada uno en privado cuántas cifras acertó.
+  "2080": {
+    soon: true,
+    price: 19,
+    store: "",
+    links: { FR: "", INT: "", AR: "" },
+    box: "f80-box",
+    hero: "f80-hero",
+    tile: "f80-tile",
+    players: "3–5",
+    minutes: 25,
+    profile: { luck: 2, logic: 5, team: 2, strategy: 4, speed: 1, talk: 3 },
+    complexity: 2,
+    best: "4–5",
+    gallery: [
+      ["f80-box-1", "box1"], ["f80-box-2", "box2"], ["f80-back-personajes", "backP", "tall"], ["f80-back-situaciones", "backS"],
+      ["f80-back-lugares", "backL"], ["f80-back-inventos", "backI"],
+    ],
+    art: "f80",
+    // Cartas de Lector de "2080 juego futurista/Cartas para imprimir" (elegidas por Diego el 11/11/2026). Imagen: f80-card-<código>.
+    rows: [
+      { key: "p", color: "#3b82f6", tall: true, cards: ["p01", "p02", "p03", "p04", "p05", "p06", "p07", "p08", "p09", "p10", "p11", "p12", "p13", "p14", "p15", "p16", "p17", "p18", "p19", "p20", "p21", "p22", "p23", "p24", "p25", "p26", "p27", "p28", "p29", "p30", "p31", "p32", "p33", "p34", "p35", "p36", "p37", "p38", "p39", "p40", "p41", "p42", "p43", "p44", "p45", "p46", "p47", "p48", "p49", "p50", "p51"] },
+      { key: "s", color: "#ef4444", cards: ["s01", "s02", "s03", "s04", "s05", "s06", "s07", "s08", "s09", "s10", "s11", "s12", "s13", "s14", "s15", "s16", "s17", "s18", "s19", "s20", "s21", "s22", "s23", "s24", "s25", "s26", "s27", "s28", "s29", "s30", "s31", "s32", "s33", "s34", "s35", "s36"] },
+      { key: "l", color: "#facc15", cards: ["l01", "l02", "l03", "l04", "l05", "l06", "l07", "l08", "l09", "l10", "l11", "l12", "l13", "l14", "l15", "l16", "l17", "l18", "l19", "l20", "l21", "l22", "l23", "l24", "l25", "l26", "l27", "l28"] },
+      { key: "i", color: "#22c55e", cards: ["i01", "i02", "i03", "i04", "i05", "i06", "i07", "i08", "i09", "i10", "i11", "i12", "i13", "i14", "i15", "i16", "i17", "i18", "i19", "i20", "i21", "i22", "i23", "i24", "i25", "i26", "i27", "i28", "i29", "i30", "i31"] },
+    ],
+    // Cartas Visión que se muestran en la página. Imagen: f80-dream-<número de "Cartas para imprimir/5 Visión">.
+    dreams: [15, 18, 19, 33, 47, 57, 66, 70, 74, 85, 87, 94, 103, 106, 108, 111],
+    // Ronda de prueba (código 4 3 6 5). Dos Lectores rivales dicen su código en voz alta; sus aciertos son secretos.
+    demo: {
+      turns: 4,
+      lastChance: true,
+      rows: [
+        { dreams: [80, 100, 36, 63], cards: ["p01", "p02", "p04", "p36", "p05", "p06"], answer: 4 },
+        { dreams: [76, 101, 29, 46], cards: ["s01", "s02", "s03", "s04", "s05", "s06"], answer: 3 },
+        { dreams: [8, 11, 98, 21], cards: ["l03", "l04", "l05", "l06", "l08", "l09"], answer: 6 },
+        { dreams: [4, 5, 17, 14], cards: ["i10", "i02", "i09", "i07", "i11", "i08"], answer: 5 },
+      ],
+      // Otras mesas posibles: cada partida nueva elige una por fila (carta correcta y sus 4 cartas Visión).
+      pool: [
+        [{ card: "p30", dreams: [68, 54, 40, 97] }, { card: "p15", dreams: [75, 22, 106, 69] }, { card: "p26", dreams: [59, 99, 53, 30] }],
+        [{ card: "s16", dreams: [107, 36, 52, 97] }, { card: "s22", dreams: [34, 11, 64, 98] }, { card: "s32", dreams: [108, 9, 40, 12] }],
+        [{ card: "l11", dreams: [26, 1, 106, 31] }, { card: "l02", dreams: [81, 102, 27, 61] }, { card: "l24", dreams: [56, 42, 35, 47] }],
+        [{ card: "i09", dreams: [84, 69, 63, 40] }, { card: "i26", dreams: [25, 48, 97, 112] }, { card: "i07", dreams: [72, 111, 14, 20] }],
+      ],
+      // Dos Lectores rivales: sus códigos se inventan en cada partida (nunca aciertan los cuatro).
+      rivals: 2,
+    },
+    pdfs: [],
+    videos: [],
   },
 };
