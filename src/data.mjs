@@ -39,7 +39,7 @@ export const GAMES = {
     // Tienda de respaldo (Wix), por si falta un link de pago.
     store: "https://www.ds4games.com/product-page/olympikos",
     // Links de pago por país. En Argentina, Olympikos se compra en Toyco.
-    links: { FR: "", INT: "", AR: "https://toyco.com.ar/productos/olympikos/" },
+    links: { FR: "https://buy.stripe.com/6oU5kD5UL5uV2haedz0kE07", INT: "https://buy.stripe.com/6oUfZhdnd4qR3le1qN0kE08", AR: "https://toyco.com.ar/productos/olympikos/" },
     toycoAR: true,
     box: "oly-box",
     hero: "oly-marathon",
@@ -89,7 +89,7 @@ export const GAMES = {
   "tour-eiffel": {
     price: 19,
     store: "https://www.ds4games.com/product-page/copia-de-olympikos",
-    links: { FR: "", INT: "", AR: "" },
+    links: { FR: "https://buy.stripe.com/14A5kD1Ev9Lb6xq9Xj0kE09", INT: "https://buy.stripe.com/28E00j5UL3mN9JC8Tf0kE0a", AR: "https://buy.stripe.com/9B67sL2IzcXnbRK8Tf0kE0b" },
     box: "eif-box",
     hero: "eif-components-wood",
     tile: "eif-parchment",
@@ -138,7 +138,7 @@ export const GAMES = {
   "1812": {
     price: 19,
     store: "https://www.ds4games.com/product-page/1812",
-    links: { FR: "", INT: "", AR: "" },
+    links: { FR: "https://buy.stripe.com/7sY28rfvlcXndZSd9v0kE0c", INT: "https://buy.stripe.com/14A5kD6YP5uVdZSd9v0kE0d", AR: "https://buy.stripe.com/5kQ9AT1Evg9zaNG5H30kE0e" },
     box: "arg-box",
     hero: "arg-art",
     tile: "arg-open-photo",

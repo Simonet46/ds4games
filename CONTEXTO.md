@@ -34,17 +34,13 @@ Resumen de todo lo hablado y hecho hasta el 9 de noviembre de 2026, para seguir 
 
 ## Stripe
 
-- El conector solo da acceso al **modo prueba** de la cuenta DS4GAMES. Ya hay 8 links de prueba con productos a 19 €:
-  - Olympikos: Francia e internacional.
-  - Eiffel: Francia, internacional y Argentina, con un campo para elegir el idioma del reglamento.
-  - 1812: Francia, internacional y Argentina.
-- El envío va como una línea más del pedido, y cada link limita los países de envío.
-- Pendiente:
-  1. Acceso al modo real.
-  2. Que Diego diga si cobra IVA/TVA.
-  3. Recrear los links en modo real.
-  4. Cargarlos en `links` de cada juego en `src/data.mjs`.
-- Nunca poner links de prueba en la web.
+- Estado: **modo real activo**. El conector ya ve la cuenta DS4GAMES en modo real (acct_1IHDtgG4uwwQO8xT).
+- Los tres juegos cuestan **19 € con IVA incluido**. Productos de Stripe reutilizados: Olympikos `prod_PvjLWgSneiDNnJ`, Eiffel `prod_Pt7mLfyOaF0iP2`, 1812 `prod_Pt7QwwcphoO8g3`, con código fiscal "bienes tangibles" (txcd_99999999). Los precios de 19 € son nuevos; los viejos (16, 18 y 23 €) siguen activos.
+- El envío (10 € Francia, 12 € resto, 20 € Argentina) va como una línea más del pedido, con tres productos "Envío ...".
+- **Stripe Tax activo** (Diego cobra IVA): sede en Castelnau-le-Lez, registros de Francia (estándar) y OSS de la UE. Los links usan `automatic_tax`. Fuera de la UE no se cobra impuesto.
+- Links reales en `src/data.mjs` (`links` de cada juego): Olympikos FR/INT, Eiffel FR/INT/AR, 1812 FR/INT/AR. Olympikos en Argentina va a Toyco. Eiffel lleva un campo para elegir el idioma del reglamento.
+- Quedan 5 links viejos de 2024 en la cuenta, con precios viejos y sin envío. No se tocaron por si se usan en eventos.
+- Pendiente: hacer una compra de prueba real de un juego y reembolsarla, para verificar el IVA y el envío.
 
 ## Videos
 
@@ -105,8 +101,8 @@ Resumen de todo lo hablado y hecho hasta el 9 de noviembre de 2026, para seguir 
 3. La tapa de ese reglamento dice "3 à 5 en coopération / 2 à 10 en compétition", al revés de lo que decidió Diego.
 4. 1812: en la web, los niveles 2 y 3 quedaron iguales (6 columnas, bandera, 4 turnos). Confirmar con Diego.
 5. Página de privacidad y mentions légales (obligatorias en Francia). Hoy `/politicas-de-privacidad` redirige a Contacto.
-6. Stripe en modo real y la decisión sobre el IVA.
-7. Cambio de dominio.
+6. Compra de prueba real en Stripe (con reembolso).
+7. Cierre del cambio de dominio: renovación del dominio en Dattatec, correo y baja del plan de Wix.
 8. Higgsfield, si Diego lo aprueba.
 9. Diego quería armar una carpeta de materiales en la computadora de "Cykeros".
 
