@@ -50,7 +50,7 @@ export default {
       mechanics: "Mécaniques",
       compareEyebrow: "Comparez",
       compareTitle: "Trois styles de jeu",
-      compareLead: "Hasard, logique, travail d’équipe et stratégie de chaque jeu, en un coup d’œil.",
+      compareLead: "Hasard, logique, travail d’équipe, stratégie et rapidité de chaque jeu, en un coup d’œil.",
     },
     keyRules: "Les règles qui font la différence",
   },

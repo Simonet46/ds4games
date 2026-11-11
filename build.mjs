@@ -269,7 +269,7 @@ function home(ctx) {
 
 <section class="section tight"><div class="wrap">
   <div class="head reveal"><p class="eyebrow">${esc(ctx.L.t.profile.compareEyebrow)}</p><h2 class="h2 grad">${esc(ctx.L.t.profile.compareTitle)}</h2><p class="lead">${esc(ctx.L.t.profile.compareLead)}</p></div>
-  <div class="compare">${GAME_ORDER.map((slug) => `<a class="glass card reveal" href="${gp(slug)}#perfil" style="--accent:${ACCENT[slug]}"><h3 class="h3">${esc(games[slug].name)}</h3>${bars(ctx, slug, ["luck", "logic", "team", "strategy"])}<span class="link arrow">${esc(t.learnMore)}</span></a>`).join("")}</div>
+  <div class="compare">${GAME_ORDER.map((slug) => `<a class="glass card reveal" href="${gp(slug)}#perfil" style="--accent:${ACCENT[slug]}"><h3 class="h3">${esc(games[slug].name)}</h3>${bars(ctx, slug, ["luck", "logic", "team", "strategy", "speed"])}<span class="link arrow">${esc(t.learnMore)}</span></a>`).join("")}</div>
 </div></section>
 
 <section class="section tight"><div class="wrap">

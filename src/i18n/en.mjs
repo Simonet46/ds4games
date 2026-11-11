@@ -50,7 +50,7 @@ export default {
       mechanics: "Mechanics",
       compareEyebrow: "Compare",
       compareTitle: "Three styles of play",
-      compareLead: "Luck, logic, teamwork and strategy for each game, at a glance.",
+      compareLead: "Luck, logic, teamwork, strategy and speed for each game, at a glance.",
     },
     keyRules: "The rules that make it special",
   },
