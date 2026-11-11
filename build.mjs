@@ -1,4 +1,6 @@
 // Genera el sitio estático en docs/ a partir de src/. Uso: node build.mjs
+import { WHYS } from "./src/i18n/whys.mjs";
+const WHY_H = { es: "Lo que pensó el Autor", fr: "Ce que l’Auteur avait en tête", en: "What the Author was thinking" };
 import { readFileSync, writeFileSync, mkdirSync, rmSync, statSync, existsSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -337,6 +339,8 @@ function cluesSection(ctx, slug) {
 function demoSection(ctx, slug) {
   const g = GAMES[slug], c = ctx.L.games[slug], d = c.demo;
   // Cada fila tiene hasta cuatro cartas de Autor: se ve la primera y en cada ronda el Autor suma una más.
+  // Por qué el Autor eligió cada carta de Autor (src/i18n/whys.mjs).
+  const why = (card) => { const w = WHYS[ctx.lang]?.[slug]?.[card]; if (!w || w.length !== 4) throw new Error(`Faltan las explicaciones de ${slug}/${card} (${ctx.lang})`); return w; };
   const rows = g.demo.rows.map((r, i) => {
     const row = g.rows[i];
     const opts = r.cards.map((k, j) => `<label title="${esc(c.cardNames[k])}"><input type="radio" name="r${i}" value="${j + 1}"><span class="opt">${img(ctx, `${g.art}-card-${k}`, { alt: "", sizes: row.tall ? "(max-width: 760px) 28vw, 120px" : "(max-width: 760px) 28vw, 150px" })}<b aria-hidden="true">${j + 1}</b></span><span class="sr-only">${j + 1}. ${esc(c.cardNames[k])}</span></label>`).join("");
@@ -346,7 +350,7 @@ function demoSection(ctx, slug) {
         <div class="dopts${row.tall ? " tall" : ""}">${opts}</div>
         <figure class="ddream"><div class="dstack">${r.dreams.map((n, k) => `<span class="dcard"${k ? " hidden" : ""}>${img(ctx, `${g.art}-dream-${n}`, { alt: `${d.author} ${k + 1} · ${c.rowNames[row.key]}`, sizes: "(max-width: 760px) 72px, 96px" })}</span>`).join("")}</div><figcaption>${esc(d.author)}</figcaption></figure>
       </div>
-      <p class="dwhy" hidden>${esc(d.reveal[i])}</p>
+      <div class="dwhy" hidden><p class="dwhy-h">${esc(WHY_H[ctx.lang])}</p><ol>${r.dreams.map((n, k) => `<li>${img(ctx, `${g.art}-dream-${n}`, { alt: "", sizes: "48px" })}<span>${esc(why(r.cards[r.answer - 1])[k])}</span></li>`).join("")}</ol></div>
     </fieldset>`;
   }).join("");
   // 1812 contesta con sobres; en Les Secrets de la Tour Eiffel el Autor dice los aciertos en voz alta.
@@ -360,8 +364,8 @@ function demoSection(ctx, slug) {
   // Cada partida nueva arma otra mesa: por fila, una carta correcta con sus cartas de Autor y cinco cartas al azar del mazo.
   const url = (name) => { const m = MANIFEST[name]; if (!m) throw new Error(`Imagen sin optimizar: ${name}`); return rel(ctx.path, `assets/img/${name}-${m.widths[Math.min(1, m.widths.length - 1)]}.webp`); };
   cfg.deck = g.demo.rows.map((_, i) => g.rows[i].cards.map((k) => [k, c.cardNames[k], url(`${g.art}-card-${k}`)]));
-  cfg.pool = g.demo.rows.map((r, i) => [{ c: r.cards[r.answer - 1], d: r.dreams.map((n) => url(`${g.art}-dream-${n}`)), w: d.reveal[i] }]
-    .concat((g.demo.pool?.[i] || []).map((p) => ({ c: p.card, d: p.dreams.map((n) => url(`${g.art}-dream-${n}`)) }))));
+  cfg.pool = g.demo.rows.map((r, i) => [{ c: r.cards[r.answer - 1], d: r.dreams.map((n) => url(`${g.art}-dream-${n}`)), w: why(r.cards[r.answer - 1]) }]
+    .concat((g.demo.pool?.[i] || []).map((p) => ({ c: p.card, d: p.dreams.map((n) => url(`${g.art}-dream-${n}`)), w: why(p.card) }))));
   if (MANIFEST[sobre]) {
     cfg.sobres = [0, 1, 2, 3, 4].map((n) => rel(ctx.path, `assets/img/${g.art}-sobre-${n}-${MANIFEST[sobre].widths.at(-1)}.webp`));
     cfg.sobreH = Math.round(160 * MANIFEST[sobre].ratio);

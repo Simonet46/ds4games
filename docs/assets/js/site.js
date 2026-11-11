@@ -181,9 +181,12 @@
           lab.querySelector(".sr-only").textContent = (j + 1) + ". " + c[1];
         });
         row.querySelectorAll(".dcard img").forEach(function (im, k) { im.removeAttribute("srcset"); im.src = sc.d[k]; });
-        var why = row.querySelector(".dwhy");
-        why.textContent = sc.w || "";
-        why.setAttribute("data-has", sc.w ? "1" : "");
+        row.querySelectorAll(".dwhy li").forEach(function (li, k) {
+          var im = li.querySelector("img");
+          im.removeAttribute("srcset");
+          im.src = sc.d[k];
+          li.querySelector("span").textContent = sc.w[k];
+        });
       });
       // 2080: los rivales inventan sus códigos (nunca los cuatro correctos).
       if (D.rivals) {
@@ -225,7 +228,7 @@
         if (+inp.value === D.answer[+inp.name.slice(1)]) lab.classList.add("ok");
         else if (inp.checked) lab.classList.add("no");
       });
-      form.querySelectorAll(".dwhy").forEach(function (p) { p.hidden = p.getAttribute("data-has") === ""; });
+      form.querySelectorAll(".dwhy").forEach(function (p) { p.hidden = false; });
       // 2080: al final se ven los aciertos que el Autor les dijo en secreto a los rivales.
       log.querySelectorAll(".dlock").forEach(function (s) { s.textContent = D.t.hits[+s.getAttribute("data-h")]; s.classList.add("open"); });
       msg.innerHTML = (won ? (turn > D.turns ? D.t.winLast : D.t.win) : D.t.lose.replace("{code}", code(D.answer))) + (D.rivals ? " " + D.t.theirs : "");
