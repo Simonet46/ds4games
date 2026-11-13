@@ -30,7 +30,7 @@ const langBase = (lang) => (lang === "es" ? "" : `${lang}/`);
 function pathOf(lang, page) {
   const b = langBase(lang);
   if (page === "home") return b;
-  if (page === "about" || page === "contact") return `${b}${SITE.slugs[lang][page]}/`;
+  if (page === "about" || page === "contact" || page === "play") return `${b}${SITE.slugs[lang][page]}/`;
   if (page.startsWith("game:")) return `${b}${page.slice(5)}/`;
   if (page === "404") return "404.html";
   return b;
@@ -68,6 +68,7 @@ function nav(ctx, current) {
     link("about", t.about),
     link("contact", t.contact),
   ].join("");
+  const play = (cls) => `<li class="${cls}"><a href="${rel(ctx.path, pathOf(ctx.lang, "play"))}"${current === "play" ? ' aria-current="page"' : ""}><i aria-hidden="true">▶</i>${esc(ctx.L.play.nav)}</a></li>`;
   const langs = SITE.langs
     .map((l) => `<a href="${rel(ctx.path, pathOf(l, current === "404" ? "home" : current))}" hreflang="${l}" lang="${l}"${l === ctx.lang ? ' aria-current="true"' : ""}>${L[l].short}</a>`)
     .join("");
@@ -75,14 +76,14 @@ function nav(ctx, current) {
   return `<header class="nav">
   <div class="nav-bar glass">
     <a class="brand" href="${home}" aria-label="DS4Games">${img(ctx, "logo-ds4", { alt: "", sizes: "40px", eager: true })}<span>DS4Games</span></a>
-    <ul class="nav-links">${items}</ul>
+    <ul class="nav-links">${play("nav-play")}${items}</ul>
     <div class="nav-end">
       <nav class="langs" aria-label="Idioma / Langue / Language">${langs}</nav>
       <a class="btn btn-primary btn-sm" href="${home}#juegos">${esc(t.buy)}</a>
       <button class="menu-btn" type="button" aria-expanded="false" aria-controls="sheet" aria-label="${esc(t.menu)}"><span></span><span></span></button>
     </div>
   </div>
-  <div class="sheet glass" id="sheet"><ul>${items}</ul><nav class="langs" aria-label="Idioma / Langue / Language">${langs}</nav></div>
+  <div class="sheet glass" id="sheet"><ul>${play("nav-play")}${items}</ul><nav class="langs" aria-label="Idioma / Langue / Language">${langs}</nav></div>
 </header>`;
 }
 
@@ -336,7 +337,7 @@ function cluesSection(ctx, slug) {
   return stripSection(ctx, g.clues.map((n) => `${g.art}-clue-${n}`), c.cluesEyebrow, c.cluesH2, c.cluesLead);
 }
 
-function demoSection(ctx, slug) {
+function demoSection(ctx, slug, opts = {}) {
   const g = GAMES[slug], c = ctx.L.games[slug], d = c.demo;
   // Cada fila tiene hasta cuatro cartas de Autor: se ve la primera y en cada ronda el Autor suma una más.
   // Por qué el Autor eligió cada carta de Autor (src/i18n/whys.mjs).
@@ -366,13 +367,19 @@ function demoSection(ctx, slug) {
   cfg.deck = g.demo.rows.map((_, i) => g.rows[i].cards.map((k) => [k, c.cardNames[k], url(`${g.art}-card-${k}`)]));
   cfg.pool = g.demo.rows.map((r, i) => [{ c: r.cards[r.answer - 1], d: r.dreams.map((n) => url(`${g.art}-dream-${n}`)), w: why(r.cards[r.answer - 1]) }]
     .concat((g.demo.pool?.[i] || []).map((p) => ({ c: p.card, d: p.dreams.map((n) => url(`${g.art}-dream-${n}`)), w: why(p.card) }))));
+  // Página Jugar ahora: modo para dos Lectores. 1812 es cooperativo; en 2080 el Autor contesta en secreto.
+  if (opts.play) {
+    const P = ctx.L.play;
+    cfg.mode = slug === "1812" ? "coop" : g.demo.rivals ? "private" : "public";
+    cfg.p = { reader: P.reader, turnOf: P.turnOf, decides: P.decides, win: P.win, winLast: P.winLast, tie: P.tie, secretH: P.secretH, secretNote: P.secretNote, pass: P.pass, secretEnd: P.secretEnd };
+  }
   if (MANIFEST[sobre]) {
     cfg.sobres = [0, 1, 2, 3, 4].map((n) => rel(ctx.path, `assets/img/${g.art}-sobre-${n}-${MANIFEST[sobre].widths.at(-1)}.webp`));
     cfg.sobreH = Math.round(160 * MANIFEST[sobre].ratio);
   }
-  return `<section class="section tight" id="probar" style="scroll-margin-top:90px"><div class="wrap">
-  <div class="head reveal"><p class="eyebrow">${esc(d.eyebrow)}</p><h2 class="h2 grad">${esc(d.h2)}</h2><p class="lead">${esc(d.lead)}</p></div>
-  <form class="demo glass" data-demo="${esc(JSON.stringify(cfg))}">
+  return `<section class="section tight" id="${opts.id || "probar"}" style="scroll-margin-top:90px"><div class="wrap">
+  <div class="head reveal"><p class="eyebrow">${esc(opts.eyebrow || d.eyebrow)}</p><h2 class="h2 grad">${esc(d.h2)}</h2><p class="lead">${esc(opts.lead || d.lead)}</p></div>
+  <form class="demo glass" data-demo="${esc(JSON.stringify(cfg))}"${opts.play ? ' data-players="2"' : ""}>
     ${rows}
     <div class="dbar">
       <p class="dstatus" aria-live="polite"><strong class="dturn">${esc(d.turn.replace("{n}", 1).replace("{total}", g.demo.turns))}</strong><span class="dmsg muted">${esc(d.noJs)}</span></p>
@@ -386,19 +393,24 @@ function demoSection(ctx, slug) {
 
 /* Olympikos: una ronda contra el reloj. La web es el Entrenador y, como en la variante para dos,
    cada pocos segundos una delegación rival juega una carta en cada medalla. */
-function raceSection(ctx, slug) {
-  const g = GAMES[slug], c = ctx.L.games[slug], d = c.race, R = g.race;
+function raceSection(ctx, slug, opts = {}) {
+  const g = GAMES[slug], c = ctx.L.games[slug], d = c.race, R = g.race, P = ctx.L.play;
   const flagImg = (n) => `${g.art}-flag-${n}`;
+  // De a dos (página Jugar ahora), el Atleta 2 elige su delegación y tiene su propia fila de aros en cada medalla.
+  const home2 = R.nations.find((n) => n !== R.home[ctx.lang]);
+  const nations2 = opts.play ? `<fieldset class="onations p2"><legend>${esc(P.nation2.replace("{n}", 2))}</legend>${R.nations.map((n) => `<label><input type="radio" name="nation2" value="${n}"${n === home2 ? " checked" : ""}><span class="onat">${img(ctx, flagImg(n), { alt: "", sizes: "22px" })}${esc(d.nations[n])}</span></label>`).join("")}</fieldset>` : "";
   const nations = R.nations.map((n) => `<label><input type="radio" name="nation" value="${n}"${n === R.home[ctx.lang] ? " checked" : ""}><span class="onat">${img(ctx, flagImg(n), { alt: "", sizes: "22px" })}${esc(d.nations[n])}</span></label>`).join("");
   const rounds = R.rounds.map((r, ri) => {
     const sports = r.sports.map((s, i) => `<li style="--ring:${R.rings[i]}"><span class="oring" aria-hidden="true">${i + 1}</span>${img(ctx, `${g.art}-sport-${s}`, { alt: "", sizes: "(max-width: 760px) 30vw, 200px" })}<span class="oname"><span class="sr-only">${esc(d.ring.replace("{n}", i + 1))} · </span>${esc(c.sportNames[s])}</span></li>`).join("");
     const medals = r.medals.map(([clue, , vert], mi) => {
       const pts = mi + 2;
-      const btns = r.sports.map((s, i) => `<button type="button" class="obtn" data-ring="${i + 1}" style="--ring:${R.rings[i]}" disabled aria-label="${esc(d.ring.replace("{n}", i + 1))} · ${esc(c.sportNames[s])}">${i + 1}</button>`).join("");
+      const row = (p) => r.sports.map((s, i) => `<button type="button" class="obtn" data-p="${p}" data-ring="${i + 1}" style="--ring:${R.rings[i]}" disabled aria-label="${opts.play ? esc(P.athlete.replace("{n}", p + 1)) + " · " : ""}${esc(d.ring.replace("{n}", i + 1))} · ${esc(c.sportNames[s])}">${i + 1}</button>`).join("");
+      const btns = opts.play ? `<span class="otag">${esc(P.athlete.replace("{n}", 1))}</span>${row(0)}` : row(0);
+      const btns2 = opts.play ? `<div class="obtns p2" role="group" aria-label="${esc(P.athlete.replace("{n}", 2))} · ${esc(d.medals[mi])}"><span class="otag">${esc(P.athlete.replace("{n}", 2))}</span>${row(1)}</div>` : "";
       return `<li class="omedal">
         <div class="ohead">${img(ctx, `${g.art}-medal-${pts}`, { alt: "", sizes: "52px" })}<p><strong>${esc(d.medals[mi])}</strong><span class="muted">${esc(d.pts.replace("{p}", pts))}</span></p></div>
         <figure class="oclue${vert ? "" : " side"}"><div class="ocard">${img(ctx, `${g.art}-back`, { alt: "", cls: "oback", sizes: "150px" })}${img(ctx, `${g.art}-clue-${clue}`, { alt: c.clueNames[clue], cls: "ofront", sizes: "150px" })}</div><figcaption>${esc(vert ? d.vert : d.horiz)}</figcaption></figure>
-        <div class="obtns" role="group" aria-label="${esc(d.medals[mi])}">${btns}</div>
+        <div class="obtns" role="group" aria-label="${esc(d.medals[mi])}">${btns}</div>${btns2}
         <ol class="ostack" aria-hidden="true"></ol>
         <p class="ores" aria-live="polite"></p>
       </li>`;
@@ -413,10 +425,11 @@ function raceSection(ctx, slug) {
     names: d.nations,
     t: { ready: d.ready, pick: d.pick, rivals: d.rivals, time: d.time, first: d.first, late: d.late, wrong: d.wrong, total: d.total, round: d.round },
   };
-  return `<section class="section tight" id="probar" style="scroll-margin-top:90px"><div class="wrap">
-  <div class="head reveal"><p class="eyebrow">${esc(d.eyebrow)}</p><h2 class="h2 grad">${esc(d.h2)}</h2><p class="lead">${esc(d.lead)}</p></div>
-  <div class="race glass" data-race="${esc(JSON.stringify(cfg))}">
-    <fieldset class="onations"><legend>${esc(d.nation)}</legend>${nations}</fieldset>
+  if (opts.play) cfg.p = { athlete: P.athlete, medal: P.medal, totals: P.totals, win: P.raceWin, tie: P.raceTie };
+  return `<section class="section tight" id="${opts.id || "probar"}" style="scroll-margin-top:90px"><div class="wrap">
+  <div class="head reveal"><p class="eyebrow">${esc(opts.eyebrow || d.eyebrow)}</p><h2 class="h2 grad">${esc(d.h2)}</h2><p class="lead">${esc(opts.lead || d.lead)}</p></div>
+  <div class="race glass" data-race="${esc(JSON.stringify(cfg))}"${opts.play ? ' data-players="2"' : ""}>
+    <div class="onats"><fieldset class="onations"><legend>${esc(opts.play ? P.nation2.replace("{n}", 1) : d.nation)}</legend>${nations}</fieldset>${nations2}</div>
     ${rounds}
     <div class="dbar">
       <p class="dstatus" aria-live="polite"><strong><span class="olabel">${esc(d.round.replace("{n}", 1).replace("{total}", R.rounds.length))}</span> · <span class="otime">${esc(d.time.replace("{s}", 0))}</span></strong><span class="omsg muted">${esc(d.noJs)}</span></p>
@@ -520,6 +533,49 @@ ${g.rows ? deckSection(ctx, slug) : ""}${g.dreams ? dreamsSection(ctx, slug) : "
   return layout(ctx, { page: `game:${slug}`, title: c.title, description: c.description, body, bodyClass: `g-${slug}`, ogImage: slug, jsonld, preload });
 }
 
+/* Jugar ahora: las cuatro cajas giran en un carrusel 3D. Al elegir una se ve su perfil y su partida,
+   para uno o dos jugadores en la misma pantalla. */
+function playPage(ctx) {
+  const P = ctx.L.play, { t, games } = ctx.L;
+  const gp = (g) => rel(ctx.path, pathOf(ctx.lang, `game:${g}`));
+  const boxes = GAME_ORDER.map((slug, i) => `<button type="button" class="c3d-item" data-game="${slug}" style="--accent:${ACCENT[slug]}" aria-pressed="false"><span class="c3d-box">${img(ctx, GAMES[slug].box, { alt: "", sizes: "(max-width: 640px) 44vw, 300px", eager: i < 2 })}</span><span class="c3d-name">${esc(games[slug].name)}</span></button>`).join("");
+  const infos = GAME_ORDER.map((slug) => {
+    const g = GAMES[slug], c = games[slug], p = t.profile;
+    const dots = [1, 2, 3, 4, 5].map((n) => `<i${n <= g.complexity ? ' class="on"' : ""}></i>`).join("");
+    return `<article class="pinfo glass" data-info="${slug}" style="--accent:${ACCENT[slug]}">
+    <div class="stack">
+      <p class="eyebrow">${esc(c.kicker)}</p>
+      <h2 class="h2 grad">${esc(c.name)}</h2>
+      <p class="lead">${esc(c.tagline)}</p>
+      <ul class="chips"><li>${esc(P.playersIrl.replace("{n}", g.players))}</li><li>${esc(P.minutes.replace("{n}", g.minutes))}</li><li>${esc(p.complexity)}: ${esc(p.levels[g.complexity - 1])}</li></ul>
+      <div class="btns"><a class="btn btn-primary" href="#jugar-${slug}" data-go>${esc(P.go.replace("{game}", c.name))}</a><a class="btn btn-glass" href="${gp(slug)}">${esc(P.more)}</a></div>
+    </div>
+    <div><p class="subhead">${esc(p.title)}</p>${bars(ctx, slug)}<div class="cx" style="margin-top:14px"><span class="dots5" aria-hidden="true">${dots}</span><strong>${esc(p.complexity)} · ${esc(p.levels[g.complexity - 1])}</strong></div></div>
+  </article>`;
+  }).join("");
+  const games2 = GAME_ORDER.map((slug) => {
+    const g = GAMES[slug], o = { play: true, id: `jugar-${slug}`, eyebrow: games[slug].name, lead: P.leads[slug] };
+    return `<div class="pgame" data-game="${slug}">${g.race ? raceSection(ctx, slug, o) : demoSection(ctx, slug, o)}</div>`;
+  }).join("");
+  const body = `
+<section class="hero play-hero"><div class="wrap center stack">
+  <p class="eyebrow">${esc(P.eyebrow)}</p>
+  <h1 class="display grad">${esc(P.h1)}</h1>
+  <p class="lead">${esc(P.lead)}</p>
+</div>
+<div class="c3d" data-carousel>
+  <div class="c3d-ring">${boxes}</div>
+  <div class="c3d-ctrl"><button type="button" class="c3d-arrow" data-dir="-1" aria-label="${esc(P.prev)}">‹</button><p class="c3d-hint muted" aria-live="polite">${esc(P.hint)}</p><button type="button" class="c3d-arrow" data-dir="1" aria-label="${esc(P.next)}">›</button></div>
+</div></section>
+
+<section class="section tight" id="elegido" style="scroll-margin-top:90px"><div class="wrap">
+  ${infos}
+  <fieldset class="pcount glass"><legend>${esc(P.count)}</legend><label><input type="radio" name="players" value="1"><span>${esc(P.one)}</span></label><label><input type="radio" name="players" value="2" checked><span>${esc(P.two)}</span></label></fieldset>
+</div></section>
+<div class="pgames">${games2}</div>`;
+  return layout(ctx, { page: "play", title: P.title, description: P.description, body, bodyClass: "play", ogImage: "home" });
+}
+
 /* Nosotros */
 function about(ctx) {
   const a = ctx.L.about;
@@ -591,7 +647,7 @@ function write(path, html) {
   writeFileSync(file, html);
 }
 
-for (const dir of ["fr", "en", ...GAME_ORDER, "nosotros", "contacto", "product-page", "category"]) {
+for (const dir of ["fr", "en", ...GAME_ORDER, "nosotros", "contacto", "jugar", "product-page", "category"]) {
   const p = join(OUT, dir);
   if (existsSync(p)) rmSync(p, { recursive: true });
 }
@@ -607,7 +663,8 @@ for (const lang of SITE.langs) {
   }
   write(pathOf(lang, "about"), about(mk("about")));
   write(pathOf(lang, "contact"), contact(mk("contact")));
-  urls.push(pathOf(lang, "about"), pathOf(lang, "contact"));
+  write(pathOf(lang, "play"), playPage(mk("play")));
+  urls.push(pathOf(lang, "about"), pathOf(lang, "contact"), pathOf(lang, "play"));
 }
 write("404.html", notFound({ lang: "es", L: es, path: "404.html" }));
 

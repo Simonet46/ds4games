@@ -20,9 +20,9 @@ export const SITE = {
   ship: { FR: 10, INT: 12, AR: 20 },
   langs: ["es", "fr", "en"],
   slugs: {
-    es: { about: "nosotros", contact: "contacto" },
-    fr: { about: "a-propos", contact: "contact" },
-    en: { about: "about", contact: "contact" },
+    es: { about: "nosotros", contact: "contacto", play: "jugar" },
+    fr: { about: "a-propos", contact: "contact", play: "jouer" },
+    en: { about: "about", contact: "contact", play: "play" },
   },
 };
 

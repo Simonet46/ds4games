@@ -157,6 +157,11 @@
     var turnEl = form.querySelector(".dturn"), msg = form.querySelector(".dmsg"), log = form.querySelector(".dlog");
     var inputs = [].slice.call(form.querySelectorAll("input[type=radio]"));
     var turn = 1, over = false, last = [];
+    // Página Jugar ahora: con data-players="2" juegan dos Lectores en la misma pantalla.
+    var P = D.p || {}, cur = 0, winners = [], secret = null;
+    function duo() { return !!D.p && form.getAttribute("data-players") === "2"; }
+    function who(i) { return (P.reader || "").replace("{n}", i + 1); }
+    function fill(s, o) { return s.replace(/\{(\w+)\}/g, function (_, k) { return o[k]; }); }
     function rnd(n) { return Math.floor(Math.random() * n); }
     // Mesa nueva: por fila, una carta correcta (con sus cartas de Autor) y cinco cartas al azar del mazo.
     function deal() {
@@ -215,6 +220,7 @@
     }
     function status(keepMsg) {
       turnEl.textContent = turn > D.turns ? D.t.last : D.t.turn.replace("{n}", turn).replace("{total}", D.turns);
+      if (duo()) turnEl.textContent += " · " + fill(D.mode === "coop" ? P.decides : P.turnOf, { name: who(cur) });
       var ready = picks().every(Boolean);
       say.disabled = !ready;
       if (!keepMsg) msg.textContent = ready ? D.t.ready : D.t.pick;
@@ -231,7 +237,12 @@
       form.querySelectorAll(".dwhy").forEach(function (p) { p.hidden = false; });
       // 2080: al final se ven los aciertos que el Autor les dijo en secreto a los rivales.
       log.querySelectorAll(".dlock").forEach(function (s) { s.textContent = D.t.hits[+s.getAttribute("data-h")]; s.classList.add("open"); });
-      msg.innerHTML = (won ? (turn > D.turns ? D.t.winLast : D.t.win) : D.t.lose.replace("{code}", code(D.answer))) + (D.rivals ? " " + D.t.theirs : "");
+      if (duo() && D.mode !== "coop") {
+        var lastT = turn > D.turns;
+        msg.innerHTML = !won ? D.t.lose.replace("{code}", code(D.answer))
+          : winners.length > 1 ? P.tie : fill(lastT ? P.winLast : P.win, { name: who(winners[0]) });
+        if (D.mode === "private") msg.innerHTML += " " + P.secretEnd;
+      } else msg.innerHTML = (won ? (turn > D.turns ? D.t.winLast : D.t.win) : D.t.lose.replace("{code}", code(D.answer))) + (D.rivals && !duo() ? " " + D.t.theirs : "");
       say.hidden = true;
       again.hidden = false;
       again.focus();
@@ -247,6 +258,7 @@
       var answer = D.sobres ? '<img src="' + D.sobres[hits] + '" width="160" height="' + D.sobreH + '" alt="">'
         : '<span class="dhits" aria-hidden="true">' + [0, 1, 2, 3].map(function (i) { return i < hits ? '<i class="on"></i>' : "<i></i>"; }).join("") + "</span>";
       li.innerHTML = code(p) + answer + "<span>" + D.t.hits[hits] + "</span>";
+      if (duo()) return duoTurn(li, p, hits);
       if (D.rivals) {
         // Todos dicen su código en voz alta, pero el Autor contesta a cada uno en privado.
         li.insertAdjacentHTML("afterbegin", '<span class="dwho">' + D.t.you + "</span>");
@@ -272,9 +284,72 @@
       status(true);
       msg.textContent = D.t.hits[hits] + ". " + (turn > D.turns ? D.t.lastMsg : D.t.pick.replace(/\.$/, "") + ".");
     });
-    again.addEventListener("click", function () {
+    // Dos Lectores: en 1812 deciden juntos (se turnan para decidir); en Tour Eiffel y 2080 cada uno dice su código.
+    function nextRound(hits) {
+      turn++;
+      form.querySelectorAll(".dstack").forEach(function (st) {
+        var c = st.querySelectorAll(".dcard")[turn - 1];
+        if (c) { c.hidden = false; c.classList.add("new"); }
+      });
+      status(true);
+      msg.textContent = (hits === null ? "" : D.t.hits[hits] + ". ") + (turn > D.turns ? D.t.lastMsg : D.t.pick);
+    }
+    function clearPicks() { inputs.forEach(function (inp) { inp.checked = false; }); }
+    function duoTurn(li, p, hits) {
+      li.insertAdjacentHTML("afterbegin", '<span class="dwho">' + who(cur) + "</span>");
+      if (D.mode === "private") {
+        li.innerHTML = '<span class="dwho">' + who(cur) + "</span>" + code(p) + '<span class="dlock" data-h="' + hits + '">🔒</span>';
+      }
+      log.appendChild(li);
+      if (D.mode === "coop") {
+        if (hits === 4) return end(true);
+        if (turn >= maxTurns) return end(false);
+        cur = 1 - cur;
+        clearPicks();
+        return nextRound(hits);
+      }
+      if (hits === 4) winners.push(cur);
+      var me = cur;
+      if (cur === 0) {
+        cur = 1;
+        clearPicks();
+        status(true);
+        var next = fill(P.turnOf, { name: who(1) });
+        msg.textContent = D.mode === "private" ? D.t.pick : D.t.hits[hits] + ". " + next.charAt(0).toUpperCase() + next.slice(1) + ".";
+        if (D.mode === "private") showSecret(me, hits);
+        return;
+      }
+      cur = 0;
+      if (winners.length) return end(true);
+      if (turn >= maxTurns) return end(false);
+      clearPicks();
+      nextRound(D.mode === "private" ? null : hits);
+      if (D.mode === "private") showSecret(me, hits);
+    }
+    // 2080: el Autor le contesta en secreto a cada Lector. La pantalla tapa la mesa hasta que el otro tome el turno.
+    function showSecret(me, hits) {
+      if (!secret) {
+        secret = doc.createElement("div");
+        secret.className = "dsecret";
+        secret.setAttribute("role", "dialog");
+        secret.setAttribute("aria-modal", "true");
+        secret.innerHTML = '<div class="dsecret-in glass"><p class="eyebrow"></p><p class="dsecret-n"></p><p class="muted"></p><button type="button" class="btn btn-primary"></button></div>';
+        form.appendChild(secret);
+        secret.querySelector("button").addEventListener("click", function () { secret.hidden = true; doc.body.classList.remove("lock"); say.focus(); });
+      }
+      var other = who(1 - me);
+      secret.querySelector(".eyebrow").textContent = fill(P.secretH, { name: who(me) });
+      secret.querySelector(".dsecret-n").textContent = D.t.hits[hits];
+      secret.querySelector(".muted").textContent = fill(P.secretNote, { name: other });
+      secret.querySelector("button").textContent = fill(P.pass, { name: other });
+      secret.hidden = false;
+      doc.body.classList.add("lock");
+      secret.querySelector("button").focus();
+    }
+    function restart() {
       over = false;
-      turn = 1;
+      turn = 1; cur = 0; winners = [];
+      if (secret) { secret.hidden = true; doc.body.classList.remove("lock"); }
       form.classList.remove("done");
       inputs.forEach(function (inp) { inp.disabled = false; inp.checked = false; inp.closest("label").classList.remove("ok", "no"); });
       form.querySelectorAll(".dwhy").forEach(function (p) { p.hidden = true; });
@@ -284,8 +359,12 @@
       again.hidden = true;
       deal();
       status();
+    }
+    again.addEventListener("click", function () {
+      restart();
       form.scrollIntoView({ behavior: reduce ? "auto" : "smooth", block: "start" });
     });
+    form.addEventListener("ds4:players", restart);
     deal();
     status();
   });
@@ -298,14 +377,20 @@
     var label = box.querySelector(".olabel"), timeEl = box.querySelector(".otime"), msg = box.querySelector(".omsg");
     var rounds = [].slice.call(box.querySelectorAll(".oround"));
     var picks = [].slice.call(box.querySelectorAll('input[name="nation"]'));
-    var ri = 0, timer = null, t0 = 0, ticks = 0, stacks = [], placed = 0, me = "", pools = [];
+    var ri = 0, timer = null, t0 = 0, ticks = 0, stacks = [], placed = 0, me = [], pools = [];
+    // Página Jugar ahora: con data-players="2" juegan dos Atletas, cada uno con sus aros.
+    var P = D.p || {};
+    function duo() { return !!D.p && box.getAttribute("data-players") === "2"; }
+    function who(i) { return (P.athlete || "").replace("{n}", i + 1); }
+    var picks2 = [].slice.call(box.querySelectorAll('input[name="nation2"]'));
     function fmt(s, o) { return s.replace(/\{(\w+)\}/g, function (_, k) { return o[k]; }); }
     function medals() { return [].slice.call(rounds[ri].querySelectorAll(".omedal")); }
     function shuffle(a) { for (var i = a.length - 1; i > 0; i--) { var j = Math.floor(Math.random() * (i + 1)), x = a[i]; a[i] = a[j]; a[j] = x; } return a; }
     function push(m, n, ring, mine) {
+      // mine: -1 delegación rival, 0 Atleta 1, 1 Atleta 2.
       stacks[m].push({ n: n, ring: ring, mine: mine });
       var li = doc.createElement("li");
-      if (mine) li.className = "me";
+      if (mine >= 0) li.className = mine ? "me me2" : "me";
       li.innerHTML = '<img src="' + D.flags[n] + '" width="64" height="' + D.flagH + '" alt=""><i style="--ring:' + D.rings[ring - 1] + '">' + ring + "</i>";
       medals()[m].querySelector(".ostack").appendChild(li);
     }
@@ -320,7 +405,8 @@
       });
       rounds[ri].querySelectorAll(".osports li").forEach(function (li) { li.classList.remove("ok"); });
       stacks = [[], [], []]; placed = 0; ticks = 0;
-      picks.forEach(function (p) { p.disabled = false; });
+      picks.concat(picks2).forEach(function (p) { p.disabled = false; });
+      box.classList.toggle("two-p", duo());
       label.textContent = fmt(D.t.round, { n: ri + 1, total: rounds.length });
       timeEl.textContent = fmt(D.t.time, { s: 0 });
       msg.textContent = D.t.ready;
@@ -328,13 +414,24 @@
     }
     function finish() {
       clearInterval(timer);
-      var R = D.rounds[ri], total = 0;
+      var R = D.rounds[ri], total = 0, sums = [0, 0];
       rounds[ri].classList.remove("live");
       rounds[ri].classList.add("done");
       medals().forEach(function (el, m) {
         var st = stacks[m], right = R.answers[m], first = -1, mine = -1, pts = 0, text;
-        st.forEach(function (c, i) { if (c.ring === right && first < 0) first = i; if (c.mine) mine = i; });
-        if (st[mine].ring !== right) text = fmt(D.t.wrong, { sport: R.sports[right - 1] });
+        st.forEach(function (c, i) { if (c.ring === right && first < 0) first = i; if (c.mine === 0) mine = i; });
+        if (duo()) {
+          // Cada Atleta: el primero que acierta suma la medalla; los demás que aciertan, 1.
+          var parts = [0, 1].map(function (pl) {
+            var k = -1;
+            st.forEach(function (c, i) { if (c.mine === pl) k = i; });
+            var v = st[k].ring !== right ? 0 : first === k ? m + 2 : 1;
+            sums[pl] += v;
+            pts = Math.max(pts, v);
+            return fmt(P.medal, { name: who(pl), p: v });
+          });
+          text = pts ? parts.join(" · ") : fmt(D.t.wrong, { sport: R.sports[right - 1] });
+        } else if (st[mine].ring !== right) text = fmt(D.t.wrong, { sport: R.sports[right - 1] });
         else if (first === mine) { pts = m + 2; text = fmt(D.t.first, { p: pts }); }
         else { pts = 1; text = fmt(D.t.late, { nation: D.names[st[first].n] }); }
         total += pts;
@@ -350,18 +447,26 @@
         res.classList.add(pts > 1 ? "win" : pts ? "ok" : "no");
         rounds[ri].querySelectorAll(".osports li")[right - 1].classList.add("ok");
       });
-      msg.textContent = fmt(D.t.total, { p: total });
+      msg.textContent = duo()
+        ? fmt(P.totals, { a: who(0), p: sums[0], b: who(1), q: sums[1] }) + " " + (sums[0] === sums[1] ? P.tie : fmt(P.win, { name: who(sums[0] > sums[1] ? 0 : 1) }))
+        : fmt(D.t.total, { p: total });
       next.hidden = false;
       next.focus();
     }
     function go() {
       var c = box.querySelector('input[name="nation"]:checked');
-      me = c ? c.value : picks[0].value;
-      picks.forEach(function (p) { p.disabled = true; });
-      var rivals = Object.keys(D.flags).filter(function (n) { return n !== me; });
+      me = [c ? c.value : picks[0].value];
+      if (duo()) {
+        var c2 = box.querySelector('input[name="nation2"]:checked');
+        var n2 = c2 && c2.value !== me[0] ? c2.value : Object.keys(D.flags).filter(function (n) { return n !== me[0]; })[0];
+        me.push(n2);
+        picks2.forEach(function (p) { p.checked = p.value === n2; });
+      }
+      picks.concat(picks2).forEach(function (p) { p.disabled = true; });
+      var rivals = Object.keys(D.flags).filter(function (n) { return me.indexOf(n) < 0; });
       pools = [0, 1, 2].map(function () { return shuffle(rivals.slice()); });
       rounds[ri].classList.add("live");
-      medals().forEach(function (el) { el.querySelectorAll(".obtn").forEach(function (b) { b.disabled = false; }); });
+      medals().forEach(function (el) { el.querySelectorAll(duo() ? ".obtn" : '.obtn[data-p="0"]').forEach(function (b) { b.disabled = false; }); });
       start.hidden = true;
       msg.textContent = D.t.pick;
       t0 = Date.now();
@@ -371,7 +476,7 @@
         var due = Math.min(Math.floor(s / D.every), rivals.length);
         while (ticks < due) {
           ticks++;
-          [0, 1, 2].forEach(function (m) { push(m, pools[m].pop(), 1 + Math.floor(Math.random() * 5), false); });
+          [0, 1, 2].forEach(function (m) { push(m, pools[m].pop(), 1 + Math.floor(Math.random() * 5), -1); });
           msg.textContent = fmt(D.t.rivals, { n: ticks });
         }
       }, 250);
@@ -381,18 +486,19 @@
     box.addEventListener("click", function (e) {
       var b = e.target.closest(".obtn");
       if (!b || b.disabled || !timer) return;
-      var el = b.closest(".omedal"), m = medals().indexOf(el);
+      var el = b.closest(".omedal"), m = medals().indexOf(el), pl = +(b.getAttribute("data-p") || 0);
       b.classList.add("on");
       b.setAttribute("aria-pressed", "true");
-      el.querySelectorAll(".obtn").forEach(function (x) { x.disabled = true; });
-      push(m, me, +b.getAttribute("data-ring"), true);
-      if (++placed === 3) { timer = clearInterval(timer); finish(); }
+      el.querySelectorAll('.obtn[data-p="' + pl + '"]').forEach(function (x) { x.disabled = true; });
+      push(m, me[pl], +b.getAttribute("data-ring"), pl);
+      if (++placed === 3 * me.length) { timer = clearInterval(timer); finish(); }
       else {
-        var nextBtn = medals()[m + 1] && medals()[m + 1].querySelector(".obtn:not(:disabled)");
+        var nextBtn = medals()[m + 1] && medals()[m + 1].querySelector('.obtn[data-p="' + pl + '"]:not(:disabled)');
         if (nextBtn) nextBtn.focus();
       }
     });
     start.addEventListener("click", go);
+    box.addEventListener("ds4:players", reset);
     next.addEventListener("click", function () {
       ri = (ri + 1) % rounds.length;
       reset();
@@ -400,6 +506,99 @@
     });
     reset();
   });
+
+  /* Jugar ahora: carrusel 3D de cajas. Gira solo hasta que se elige un juego; al elegir, se ven su perfil
+     y su partida. La cantidad de jugadores vale para las cuatro partidas. */
+  var car = doc.querySelector("[data-carousel]");
+  if (car) {
+    var ring = car.querySelector(".c3d-ring"), its = [].slice.call(car.querySelectorAll(".c3d-item"));
+    var hint = car.querySelector(".c3d-hint"), n = its.length;
+    var angle = 0, target = null, spin = !reduce, chosen = "", raf = 0, lastT = 0, held = false;
+    var infos = [].slice.call(doc.querySelectorAll("[data-info]")), boards = [].slice.call(doc.querySelectorAll(".pgame"));
+    function layoutRing() {
+      var w = ring.clientWidth, R = Math.min(w * 0.36, 380);
+      its.forEach(function (it, i) {
+        var a = (i * 360 / n - angle) * Math.PI / 180, x = Math.sin(a) * R, z = Math.cos(a) * R;
+        var depth = (z / R + 1) / 2; // 0 atrás, 1 adelante
+        it.style.transform = "translate(-50%, -50%) translate3d(" + x.toFixed(1) + "px, " + (-(depth * 18)).toFixed(1) + "px, " + z.toFixed(1) + "px) rotateY(" + (-Math.sin(a) * 28).toFixed(1) + "deg) scale(" + (0.62 + depth * 0.38).toFixed(3) + ")";
+        it.style.zIndex = Math.round(depth * 100);
+        it.style.opacity = (0.45 + depth * 0.55).toFixed(2);
+        it.classList.toggle("front", depth > 0.97);
+      });
+    }
+    function tick(t) {
+      var dt = lastT ? Math.min(t - lastT, 50) : 16;
+      lastT = t;
+      if (target !== null) {
+        var d = ((target - angle) % 360 + 540) % 360 - 180;
+        if (Math.abs(d) < 0.3) { angle = target; target = null; } else angle += d * Math.min(1, dt / 140);
+      } else if (spin && !held) angle += dt * 0.012;
+      layoutRing();
+      raf = requestAnimationFrame(tick);
+    }
+    function frontIndex() { return ((Math.round(angle / (360 / n)) % n) + n) % n; }
+    function choose(slug, scroll) {
+      var i = its.map(function (it) { return it.getAttribute("data-game"); }).indexOf(slug);
+      if (i < 0) return;
+      chosen = slug;
+      spin = false;
+      target = i * 360 / n;
+      if (reduce) { angle = target; target = null; layoutRing(); }
+      its.forEach(function (it, k) { it.setAttribute("aria-pressed", k === i ? "true" : "false"); it.classList.toggle("on", k === i); });
+      infos.forEach(function (el) { el.classList.toggle("on", el.getAttribute("data-info") === slug); });
+      boards.forEach(function (el) { el.classList.toggle("on", el.getAttribute("data-game") === slug); });
+      doc.body.classList.add("chosen");
+      if (hint) hint.textContent = (its[i].querySelector(".c3d-name") || {}).textContent || "";
+      try { history.replaceState(null, "", "#" + slug); } catch (e) {}
+      if (scroll) doc.getElementById("elegido").scrollIntoView({ behavior: reduce ? "auto" : "smooth", block: "start" });
+    }
+    its.forEach(function (it) { it.addEventListener("click", function () { choose(it.getAttribute("data-game"), true); }); });
+    car.querySelectorAll(".c3d-arrow").forEach(function (b) {
+      b.addEventListener("click", function () {
+        var i = (frontIndex() + +b.getAttribute("data-dir") + n) % n;
+        choose(its[i].getAttribute("data-game"), false);
+      });
+    });
+    car.addEventListener("pointerenter", function (e) { if (e.pointerType === "mouse") held = true; });
+    car.addEventListener("pointerleave", function () { held = false; });
+    // Deslizar con el dedo o el mouse gira el carrusel.
+    var dragX = null, dragA = 0, moved = false;
+    ring.addEventListener("pointerdown", function (e) { dragX = e.clientX; dragA = angle; moved = false; });
+    window.addEventListener("pointermove", function (e) {
+      if (dragX === null) return;
+      var dx = e.clientX - dragX;
+      if (Math.abs(dx) > 6) { moved = true; spin = false; target = null; angle = dragA - dx * 0.35; }
+    });
+    window.addEventListener("pointerup", function () {
+      if (dragX === null) return;
+      dragX = null;
+      if (moved) choose(its[frontIndex()].getAttribute("data-game"), false);
+    });
+    ring.addEventListener("click", function (e) { if (moved) { e.stopPropagation(); e.preventDefault(); moved = false; } }, true);
+    window.addEventListener("resize", layoutRing);
+    layoutRing();
+    raf = requestAnimationFrame(tick);
+    var start = (location.hash || "").slice(1);
+    if (start) choose(start, false);
+    // Cantidad de jugadores: reinicia la partida de cada juego (también al cargar, por si el navegador recordó otra opción).
+    function setPlayers(v) {
+      doc.querySelectorAll(".pgame [data-demo], .pgame [data-race]").forEach(function (g) {
+        if (g.getAttribute("data-players") === v) return;
+        g.setAttribute("data-players", v);
+        g.dispatchEvent(new CustomEvent("ds4:players"));
+      });
+    }
+    doc.querySelectorAll('input[name="players"]').forEach(function (r) {
+      r.addEventListener("change", function () { setPlayers(r.value); });
+      if (r.checked) setPlayers(r.value);
+    });
+    doc.querySelectorAll("[data-go]").forEach(function (a) {
+      a.addEventListener("click", function (e) {
+        var el = doc.getElementById(a.getAttribute("href").slice(1));
+        if (el) { e.preventDefault(); el.scrollIntoView({ behavior: reduce ? "auto" : "smooth", block: "start" }); }
+      });
+    });
+  }
 
   /* Formulario de contacto: abre el correo con el mensaje armado */
   var form = doc.querySelector("[data-contact]");
