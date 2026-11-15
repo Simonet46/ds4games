@@ -571,3 +571,14 @@ html:not(.js) .c3d-item { position: static; } html:not(.js) .c3d-name { opacity:
 .dsecret-in { max-width: 420px; width: 100%; padding: 28px; text-align: center; display: grid; gap: 12px; justify-items: center; }
 .dsecret-n { margin: 0; font-size: clamp(2rem, 8vw, 2.8rem); font-weight: 800; }
 body.lock { overflow: hidden; }
+
+/* Cartas de Autor más grandes que las de Lector: arriba de las opciones, ~15 % más anchas */
+.drow-in { grid-template-columns: 1fr; }
+.ddream { grid-row: 1; width: 100%; justify-items: start; gap: 8px; }
+.ddream figcaption { grid-row: 1; text-align: left; }
+.dstack { width: 100%; flex-wrap: wrap; gap: 10px; }
+.dcard { flex: none; width: calc((100% - 50px) / 6 * 1.15); }
+@media (max-width: 760px) {
+  .ddream { grid-template-columns: 1fr; }
+  .dcard { width: calc((100% - 20px) / 3 * 1.1); }
+}

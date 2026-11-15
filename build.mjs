@@ -349,7 +349,7 @@ function demoSection(ctx, slug, opts = {}) {
       <legend><i aria-hidden="true"></i><strong>${esc(c.rowQs[row.key])}</strong><span class="muted">${esc(c.rowNames[row.key])}</span></legend>
       <div class="drow-in">
         <div class="dopts${row.tall ? " tall" : ""}">${opts}</div>
-        <figure class="ddream"><div class="dstack">${r.dreams.map((n, k) => `<span class="dcard"${k ? " hidden" : ""}>${img(ctx, `${g.art}-dream-${n}`, { alt: `${d.author} ${k + 1} · ${c.rowNames[row.key]}`, sizes: "(max-width: 760px) 72px, 96px" })}</span>`).join("")}</div><figcaption>${esc(d.author)}</figcaption></figure>
+        <figure class="ddream"><div class="dstack">${r.dreams.map((n, k) => `<span class="dcard"${k ? " hidden" : ""}>${img(ctx, `${g.art}-dream-${n}`, { alt: `${d.author} ${k + 1} · ${c.rowNames[row.key]}`, sizes: "(max-width: 760px) 40vw, 200px" })}</span>`).join("")}</div><figcaption>${esc(d.author)}</figcaption></figure>
       </div>
       <div class="dwhy" hidden><p class="dwhy-h">${esc(WHY_H[ctx.lang])}</p><ol>${r.dreams.map((n, k) => `<li>${img(ctx, `${g.art}-dream-${n}`, { alt: "", sizes: "48px" })}<span>${esc(why(r.cards[r.answer - 1])[k])}</span></li>`).join("")}</ol></div>
     </fieldset>`;
