@@ -582,3 +582,15 @@ body.lock { overflow: hidden; }
   .ddream { grid-template-columns: 1fr; }
   .dcard { width: calc((100% - 20px) / 3 * 1.1); }
 }
+.dwhy-n { margin: 0 0 10px; font-size: 13px; color: var(--ink-3); }
+
+/* Jugar ahora · en línea */
+.pnet { margin: 12px 0 0; padding: 18px; display: grid; gap: 12px; }
+.pnet[hidden] { display: none; }
+.pnet-lead { margin: 0; color: var(--ink-2); }
+.pnet-share { display: grid; gap: 10px; }
+.pnet-share[hidden], .pnet .btn[hidden] { display: none; }
+.pnet-link { width: 100%; min-height: 44px; padding: 0 14px; border-radius: 12px; border: 1px solid var(--stroke-2); background: rgba(255, 255, 255, .06); color: inherit; font: inherit; font-size: 15px; }
+.pnet-state { margin: 0; font-weight: 600; }
+.pnet-state:empty { display: none; }
+.pnet.live .pnet-state { color: var(--c-green); }

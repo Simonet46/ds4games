@@ -150,6 +150,17 @@
     });
   });
 
+  // Azar con semilla: en línea, las dos pantallas arman la misma mesa y los mismos rivales.
+  function seeded(a) {
+    return function () {
+      a |= 0; a = a + 0x6D2B79F5 | 0;
+      var t = Math.imul(a ^ a >>> 15, 1 | a);
+      t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t;
+      return ((t ^ t >>> 14) >>> 0) / 4294967296;
+    };
+  }
+  function newSeed() { return Math.floor(Math.random() * 2147483647); }
+
   /* Ronda de prueba: el visitante juega como Lector y recibe un sobre con los aciertos */
   doc.querySelectorAll("[data-demo]").forEach(function (form) {
     var D = JSON.parse(form.getAttribute("data-demo"));
@@ -160,15 +171,23 @@
     // Página Jugar ahora: con data-players="2" juegan dos Lectores en la misma pantalla.
     var P = D.p || {}, cur = 0, winners = [], secret = null;
     function duo() { return !!D.p && form.getAttribute("data-players") === "2"; }
-    function who(i) { return (P.reader || "").replace("{n}", i + 1); }
+    // En línea (Jugar ahora): data-me dice qué Lector es esta pantalla; cada acción se manda a la otra pantalla
+    // y las dos arman la misma mesa con la misma semilla.
+    function net() { return duo() && form.hasAttribute("data-me"); }
+    function meIdx() { return +form.getAttribute("data-me"); }
+    function emit(a) { if (net()) form.dispatchEvent(new CustomEvent("ds4:act", { detail: a })); }
+    function who(i) { return (P.reader || "").replace("{n}", i + 1) + (net() && i === meIdx() ? " (" + P.you + ")" : ""); }
     function fill(s, o) { return s.replace(/\{(\w+)\}/g, function (_, k) { return o[k]; }); }
-    function rnd(n) { return Math.floor(Math.random() * n); }
+    var rng = Math.random;
+    function rnd(n) { return Math.floor(rng() * n); }
     // Mesa nueva: por fila, una carta correcta (con sus cartas de Autor) y cinco cartas al azar del mazo.
+    function shuffle(a) { for (var k = a.length - 1; k > 0; k--) { var x = rnd(k + 1), y = a[k]; a[k] = a[x]; a[x] = y; } return a; }
     function deal() {
       if (!D.pool) return;
+      var scs = [];
       D.pool.forEach(function (opts, i) {
         var s = rnd(opts.length);
-        if (opts.length > 1 && s === last[i]) s = (s + 1 + rnd(opts.length - 1)) % opts.length;
+        if (rng === Math.random && opts.length > 1 && s === last[i]) s = (s + 1 + rnd(opts.length - 1)) % opts.length;
         last[i] = s;
         var sc = opts[s];
         var rest = D.deck[i].filter(function (c) { return c[0] !== sc.c; });
@@ -185,12 +204,50 @@
           im.src = c[2];
           lab.querySelector(".sr-only").textContent = (j + 1) + ". " + c[1];
         });
-        row.querySelectorAll(".dcard img").forEach(function (im, k) { im.removeAttribute("srcset"); im.src = sc.d[k]; });
+        scs[i] = sc;
+      });
+      // El Autor saca 7 cartas de Autor al azar. En cada ronda juega, para cada fila, la que más evoca la carta
+      // correcta, descarta esas y vuelve a llenar la mano.
+      var pile = shuffle(D.dd.slice()), used = [], hand = [], plan = scs.map(function () { return []; });
+      function draw() {
+        while (hand.length < 7) {
+          if (!pile.length) { pile = shuffle(used); used = []; }
+          if (!pile.length) break;
+          hand.push(pile.pop());
+        }
+      }
+      for (var t = 0; t < D.turns; t++) {
+        draw();
+        // Prueba todas las formas de repartir la mano entre las filas: primero que ninguna fila quede sin pista,
+        // después que las pistas sean lo más fuertes posible.
+        var best = null;
+        (function pick(i, takenH, acc, val) {
+          if (i === scs.length) { if (!best || val > best.val) best = { val: val, acc: acc.slice() }; return; }
+          hand.forEach(function (c, h) {
+            if (takenH.indexOf(h) >= 0 || plan[i].some(function (p) { return p.n === c[0]; })) return;
+            var L = scs[i].l[c[0]], v = (L ? 10 + L[0] : 0) + rng() * 0.5;
+            acc.push({ h: h, L: L }); takenH.push(h);
+            pick(i + 1, takenH, acc, val + v);
+            acc.pop(); takenH.pop();
+          });
+        })(0, [], [], 0);
+        if (!best) break;
+        best.acc.forEach(function (x, i) {
+          var card = hand[x.h];
+          used.push(card);
+          plan[i].push({ n: card[0], u: card[1], w: x.L ? x.L[1] : D.none });
+        });
+        hand = hand.filter(function (_, h) { return !best.acc.some(function (x) { return x.h === h; }); });
+      }
+      scs.forEach(function (_, i) {
+        var row = form.querySelectorAll(".drow")[i];
+        row.querySelectorAll(".dcard img").forEach(function (im, k) { if (plan[i][k]) { im.removeAttribute("srcset"); im.src = plan[i][k].u; } });
         row.querySelectorAll(".dwhy li").forEach(function (li, k) {
           var im = li.querySelector("img");
+          if (!plan[i][k]) return;
           im.removeAttribute("srcset");
-          im.src = sc.d[k];
-          li.querySelector("span").textContent = sc.w[k];
+          im.src = plan[i][k].u;
+          li.querySelector("span").textContent = plan[i][k].w;
         });
       });
       // 2080: los rivales inventan sus códigos (nunca los cuatro correctos).
@@ -221,8 +278,9 @@
     function status(keepMsg) {
       turnEl.textContent = turn > D.turns ? D.t.last : D.t.turn.replace("{n}", turn).replace("{total}", D.turns);
       if (duo()) turnEl.textContent += " · " + fill(D.mode === "coop" ? P.decides : P.turnOf, { name: who(cur) });
-      var ready = picks().every(Boolean);
-      say.disabled = !ready;
+      var ready = picks().every(Boolean), mine = !net() || cur === meIdx();
+      if (net()) inputs.forEach(function (inp) { inp.disabled = over || !mine; });
+      say.disabled = !ready || !mine;
       if (!keepMsg) msg.textContent = ready ? D.t.ready : D.t.pick;
     }
     function end(won) {
@@ -247,9 +305,18 @@
       again.hidden = false;
       again.focus();
     }
-    form.addEventListener("change", function () { if (!over) status(); });
+    form.addEventListener("change", function (e) {
+      if (over) return;
+      if (e.target.type === "radio" && e.isTrusted) emit({ k: "pick", n: e.target.name, v: e.target.value });
+      status();
+    });
     form.addEventListener("submit", function (e) {
       e.preventDefault();
+      if (net() && cur !== meIdx()) return;
+      emit({ k: "say", p: picks() });
+      play();
+    });
+    function play() {
       var p = picks();
       if (over || !p.every(Boolean)) return;
       var hits = p.filter(function (n, i) { return n === D.answer[i]; }).length;
@@ -283,7 +350,7 @@
       });
       status(true);
       msg.textContent = D.t.hits[hits] + ". " + (turn > D.turns ? D.t.lastMsg : D.t.pick.replace(/\.$/, "") + ".");
-    });
+    }
     // Dos Lectores: en 1812 deciden juntos (se turnan para decidir); en Tour Eiffel y 2080 cada uno dice su código.
     function nextRound(hits) {
       turn++;
@@ -328,6 +395,7 @@
     }
     // 2080: el Autor le contesta en secreto a cada Lector. La pantalla tapa la mesa hasta que el otro tome el turno.
     function showSecret(me, hits) {
+      if (net() && me !== meIdx()) { msg.textContent = fill(P.gotSecret, { name: who(me) }); return; }
       if (!secret) {
         secret = doc.createElement("div");
         secret.className = "dsecret";
@@ -340,13 +408,14 @@
       var other = who(1 - me);
       secret.querySelector(".eyebrow").textContent = fill(P.secretH, { name: who(me) });
       secret.querySelector(".dsecret-n").textContent = D.t.hits[hits];
-      secret.querySelector(".muted").textContent = fill(P.secretNote, { name: other });
-      secret.querySelector("button").textContent = fill(P.pass, { name: other });
+      secret.querySelector(".muted").textContent = fill(net() ? P.secretOnline : P.secretNote, { name: other });
+      secret.querySelector("button").textContent = net() ? P.ok : fill(P.pass, { name: other });
       secret.hidden = false;
       doc.body.classList.add("lock");
       secret.querySelector("button").focus();
     }
-    function restart() {
+    function restart(seed) {
+      rng = seed == null ? Math.random : seeded(seed);
       over = false;
       turn = 1; cur = 0; winners = [];
       if (secret) { secret.hidden = true; doc.body.classList.remove("lock"); }
@@ -361,10 +430,21 @@
       status();
     }
     again.addEventListener("click", function () {
-      restart();
+      var sd = newSeed();
+      emit({ k: "again", s: sd });
+      restart(sd);
       form.scrollIntoView({ behavior: reduce ? "auto" : "smooth", block: "start" });
     });
-    form.addEventListener("ds4:players", restart);
+    form.addEventListener("ds4:players", function () { restart(); });
+    // Lo que llega de la otra pantalla.
+    form._ds4 = {
+      restart: restart,
+      apply: function (a) {
+        if (a.k === "again") restart(a.s);
+        else if (a.k === "pick") { var r = form.querySelector('input[name="' + a.n + '"][value="' + a.v + '"]'); if (r) { r.checked = true; status(); } }
+        else if (a.k === "say") { clearPicks(); a.p.forEach(function (v, i) { var r = form.querySelector('input[name="r' + i + '"][value="' + v + '"]'); if (r) r.checked = true; }); play(); }
+      },
+    };
     deal();
     status();
   });
@@ -381,11 +461,17 @@
     // Página Jugar ahora: con data-players="2" juegan dos Atletas, cada uno con sus aros.
     var P = D.p || {};
     function duo() { return !!D.p && box.getAttribute("data-players") === "2"; }
-    function who(i) { return (P.athlete || "").replace("{n}", i + 1); }
+    // En línea: la pantalla del Atleta 1 manda (rivales, orden de los aros y resultado); la otra pide y muestra.
+    function net() { return duo() && box.hasAttribute("data-me"); }
+    function meIdx() { return +box.getAttribute("data-me"); }
+    function host() { return !net() || meIdx() === 0; }
+    function emit(a) { if (net()) box.dispatchEvent(new CustomEvent("ds4:act", { detail: a })); }
+    var rng = Math.random;
+    function who(i) { return (P.athlete || "").replace("{n}", i + 1) + (net() && i === meIdx() ? " (" + P.you + ")" : ""); }
     var picks2 = [].slice.call(box.querySelectorAll('input[name="nation2"]'));
     function fmt(s, o) { return s.replace(/\{(\w+)\}/g, function (_, k) { return o[k]; }); }
     function medals() { return [].slice.call(rounds[ri].querySelectorAll(".omedal")); }
-    function shuffle(a) { for (var i = a.length - 1; i > 0; i--) { var j = Math.floor(Math.random() * (i + 1)), x = a[i]; a[i] = a[j]; a[j] = x; } return a; }
+    function shuffle(a) { for (var i = a.length - 1; i > 0; i--) { var j = Math.floor(rng() * (i + 1)), x = a[i]; a[i] = a[j]; a[j] = x; } return a; }
     function push(m, n, ring, mine) {
       // mine: -1 delegación rival, 0 Atleta 1, 1 Atleta 2.
       stacks[m].push({ n: n, ring: ring, mine: mine });
@@ -405,7 +491,8 @@
       });
       rounds[ri].querySelectorAll(".osports li").forEach(function (li) { li.classList.remove("ok"); });
       stacks = [[], [], []]; placed = 0; ticks = 0;
-      picks.concat(picks2).forEach(function (p) { p.disabled = false; });
+      picks.forEach(function (p) { p.disabled = net() && meIdx() !== 0; });
+      picks2.forEach(function (p) { p.disabled = net() && meIdx() !== 1; });
       box.classList.toggle("two-p", duo());
       label.textContent = fmt(D.t.round, { n: ri + 1, total: rounds.length });
       timeEl.textContent = fmt(D.t.time, { s: 0 });
@@ -452,8 +539,10 @@
         : fmt(D.t.total, { p: total });
       next.hidden = false;
       next.focus();
+      emit({ k: "fin" });
     }
-    function go() {
+    function go(seed) {
+      rng = seed == null ? Math.random : seeded(seed);
       var c = box.querySelector('input[name="nation"]:checked');
       me = [c ? c.value : picks[0].value];
       if (duo()) {
@@ -466,7 +555,7 @@
       var rivals = Object.keys(D.flags).filter(function (n) { return me.indexOf(n) < 0; });
       pools = [0, 1, 2].map(function () { return shuffle(rivals.slice()); });
       rounds[ri].classList.add("live");
-      medals().forEach(function (el) { el.querySelectorAll(duo() ? ".obtn" : '.obtn[data-p="0"]').forEach(function (b) { b.disabled = false; }); });
+      medals().forEach(function (el) { el.querySelectorAll(net() ? '.obtn[data-p="' + meIdx() + '"]' : duo() ? ".obtn" : '.obtn[data-p="0"]').forEach(function (b) { b.disabled = false; }); });
       start.hidden = true;
       msg.textContent = D.t.pick;
       t0 = Date.now();
@@ -474,10 +563,11 @@
         var s = Math.floor((Date.now() - t0) / 1000);
         timeEl.textContent = fmt(D.t.time, { s: s });
         var due = Math.min(Math.floor(s / D.every), rivals.length);
-        while (ticks < due) {
+        while (host() && ticks < due) {
           ticks++;
-          [0, 1, 2].forEach(function (m) { push(m, pools[m].pop(), 1 + Math.floor(Math.random() * 5), -1); });
+          [0, 1, 2].forEach(function (m) { var n = pools[m].pop(), r = 1 + Math.floor(rng() * 5); push(m, n, r, -1); emit({ k: "push", m: m, n: n, r: r, p: -1 }); });
           msg.textContent = fmt(D.t.rivals, { n: ticks });
+          emit({ k: "msg", t: msg.textContent });
         }
       }, 250);
       var b = rounds[ri].querySelector(".obtn");
@@ -490,17 +580,43 @@
       b.classList.add("on");
       b.setAttribute("aria-pressed", "true");
       el.querySelectorAll('.obtn[data-p="' + pl + '"]').forEach(function (x) { x.disabled = true; });
-      push(m, me[pl], +b.getAttribute("data-ring"), pl);
-      if (++placed === 3 * me.length) { timer = clearInterval(timer); finish(); }
-      else {
+      if (!host()) emit({ k: "ring", m: m, r: +b.getAttribute("data-ring") });
+      else place(m, pl, +b.getAttribute("data-ring"));
+      {
         var nextBtn = medals()[m + 1] && medals()[m + 1].querySelector('.obtn[data-p="' + pl + '"]:not(:disabled)');
         if (nextBtn) nextBtn.focus();
       }
     });
-    start.addEventListener("click", go);
+    function place(m, pl, r) {
+      push(m, me[pl], r, pl);
+      emit({ k: "push", m: m, n: me[pl], r: r, p: pl });
+      if (++placed === 3 * me.length) { timer = clearInterval(timer); finish(); }
+    }
+    start.addEventListener("click", function () { var sd = newSeed(); emit({ k: "go", s: sd }); go(sd); });
+    box.addEventListener("change", function (e) {
+      if (e.isTrusted && /^nation2?$/.test(e.target.name)) emit({ k: "nat", n: e.target.name, v: e.target.value });
+    });
+    box._ds4 = {
+      restart: function () { reset(); },
+      apply: function (a) {
+        if (a.k === "nat") { var r = box.querySelector('input[name="' + a.n + '"][value="' + a.v + '"]'); if (r) r.checked = true; }
+        else if (a.k === "go") go(a.s);
+        else if (a.k === "ring" && host() && timer) {
+          var el = medals()[a.m], b = el.querySelector('.obtn[data-p="1"][data-ring="' + a.r + '"]');
+          if (b) { b.classList.add("on"); b.setAttribute("aria-pressed", "true"); }
+          place(a.m, 1, a.r);
+        } else if (a.k === "push" && !host()) {
+          push(a.m, a.n, a.r, a.p);
+          if (a.p === 0) { var b0 = medals()[a.m].querySelector('.obtn[data-p="0"][data-ring="' + a.r + '"]'); if (b0) b0.classList.add("on"); }
+        } else if (a.k === "msg" && !host()) msg.textContent = a.t;
+        else if (a.k === "fin" && !host()) { timer = clearInterval(timer); finish(); }
+        else if (a.k === "next") { ri = a.ri; reset(); }
+      },
+    };
     box.addEventListener("ds4:players", reset);
     next.addEventListener("click", function () {
       ri = (ri + 1) % rounds.length;
+      emit({ k: "next", ri: ri });
       reset();
       box.scrollIntoView({ behavior: reduce ? "auto" : "smooth", block: "start" });
     });
@@ -537,9 +653,13 @@
       raf = requestAnimationFrame(tick);
     }
     function frontIndex() { return ((Math.round(angle / (360 / n)) % n) + n) % n; }
+    var fromNet = false;
+    doc.ds4Choose = function (slug) { fromNet = true; choose(slug, false); fromNet = false; };
     function choose(slug, scroll) {
       var i = its.map(function (it) { return it.getAttribute("data-game"); }).indexOf(slug);
       if (i < 0) return;
+      // En línea: el juego elegido se elige también en la otra pantalla.
+      if (chosen !== slug && !fromNet) doc.dispatchEvent(new CustomEvent("ds4:chose", { detail: slug }));
       chosen = slug;
       spin = false;
       target = i * 360 / n;
@@ -582,6 +702,7 @@
     if (start) choose(start, false);
     // Cantidad de jugadores: reinicia la partida de cada juego (también al cargar, por si el navegador recordó otra opción).
     function setPlayers(v) {
+      if (v === "online") v = "2";
       doc.querySelectorAll(".pgame [data-demo], .pgame [data-race]").forEach(function (g) {
         if (g.getAttribute("data-players") === v) return;
         g.setAttribute("data-players", v);

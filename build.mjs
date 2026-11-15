@@ -1,5 +1,8 @@
 // Genera el sitio estático en docs/ a partir de src/. Uso: node build.mjs
 import { WHYS } from "./src/i18n/whys.mjs";
+import { LINKS } from "./src/links.mjs";
+const WHY_NONE = { es: "Ninguna de sus 7 cartas se parecía mucho: jugó la que menos despistaba.", fr: "Aucune de ses 7 cartes ne collait vraiment : l’Auteur a joué la moins trompeuse.", en: "None of the 7 cards in hand really fit: the Author played the least misleading one." };
+const HAND_NOTE = { es: "El Autor tiene 7 cartas de Autor sacadas al azar. En cada ronda juega, para cada fila, la que más se acerca a la carta correcta y vuelve a llenar la mano.", fr: "L’Auteur a 7 cartes Auteur tirées au hasard. À chaque manche, il joue pour chaque rangée celle qui évoque le mieux la bonne carte, puis complète sa main.", en: "The Author holds 7 Author cards drawn at random. Each round, for each row, they play the one closest to the correct card, then draw back up to 7." };
 const WHY_H = { es: "Lo que pensó el Autor", fr: "Ce que l’Auteur avait en tête", en: "What the Author was thinking" };
 import { readFileSync, writeFileSync, mkdirSync, rmSync, statSync, existsSync } from "node:fs";
 import { dirname, join } from "node:path";
@@ -351,7 +354,7 @@ function demoSection(ctx, slug, opts = {}) {
         <div class="dopts${row.tall ? " tall" : ""}">${opts}</div>
         <figure class="ddream"><div class="dstack">${r.dreams.map((n, k) => `<span class="dcard"${k ? " hidden" : ""}>${img(ctx, `${g.art}-dream-${n}`, { alt: `${d.author} ${k + 1} · ${c.rowNames[row.key]}`, sizes: "(max-width: 760px) 40vw, 200px" })}</span>`).join("")}</div><figcaption>${esc(d.author)}</figcaption></figure>
       </div>
-      <div class="dwhy" hidden><p class="dwhy-h">${esc(WHY_H[ctx.lang])}</p><ol>${r.dreams.map((n, k) => `<li>${img(ctx, `${g.art}-dream-${n}`, { alt: "", sizes: "48px" })}<span>${esc(why(r.cards[r.answer - 1])[k])}</span></li>`).join("")}</ol></div>
+      <div class="dwhy" hidden><p class="dwhy-h">${esc(WHY_H[ctx.lang])}</p><p class="dwhy-n">${esc(HAND_NOTE[ctx.lang])}</p><ol>${r.dreams.map((n, k) => `<li>${img(ctx, `${g.art}-dream-${n}`, { alt: "", sizes: "48px" })}<span>${esc(why(r.cards[r.answer - 1])[k])}</span></li>`).join("")}</ol></div>
     </fieldset>`;
   }).join("");
   // 1812 contesta con sobres; en Les Secrets de la Tour Eiffel el Autor dice los aciertos en voz alta.
@@ -365,13 +368,23 @@ function demoSection(ctx, slug, opts = {}) {
   // Cada partida nueva arma otra mesa: por fila, una carta correcta con sus cartas de Autor y cinco cartas al azar del mazo.
   const url = (name) => { const m = MANIFEST[name]; if (!m) throw new Error(`Imagen sin optimizar: ${name}`); return rel(ctx.path, `assets/img/${name}-${m.widths[Math.min(1, m.widths.length - 1)]}.webp`); };
   cfg.deck = g.demo.rows.map((_, i) => g.rows[i].cards.map((k) => [k, c.cardNames[k], url(`${g.art}-card-${k}`)]));
-  cfg.pool = g.demo.rows.map((r, i) => [{ c: r.cards[r.answer - 1], d: r.dreams.map((n) => url(`${g.art}-dream-${n}`)), w: why(r.cards[r.answer - 1]) }]
-    .concat((g.demo.pool?.[i] || []).map((p) => ({ c: p.card, d: p.dreams.map((n) => url(`${g.art}-dream-${n}`)), w: why(p.card) }))));
+  // Mazo de cartas de Autor: el Autor saca 7 al azar y en cada ronda juega, por fila, la que más evoca la carta correcta.
+  const dreamNums = Object.keys(MANIFEST).map((k) => k.match(new RegExp(`^${g.art}-dream-(\\d+)$`))?.[1]).filter(Boolean).map(Number).sort((a, b) => a - b);
+  cfg.dd = dreamNums.map((n) => [n, url(`${g.art}-dream-${n}`)]);
+  cfg.none = WHY_NONE[ctx.lang];
+  const links = (card, dreams) => {
+    const extra = LINKS[slug]?.[card] || {}, l = {};
+    dreams.forEach((n, k) => { l[n] = [extra[n]?.s || 3, why(card)[k]]; });
+    Object.entries(extra).forEach(([n, e]) => { if (!l[n] && e[ctx.lang] && dreamNums.includes(+n)) l[n] = [e.s, e[ctx.lang]]; });
+    return l;
+  };
+  cfg.pool = g.demo.rows.map((r, i) => [{ c: r.cards[r.answer - 1], l: links(r.cards[r.answer - 1], r.dreams) }]
+    .concat((g.demo.pool?.[i] || []).map((p) => ({ c: p.card, l: links(p.card, p.dreams) }))));
   // Página Jugar ahora: modo para dos Lectores. 1812 es cooperativo; en 2080 el Autor contesta en secreto.
   if (opts.play) {
     const P = ctx.L.play;
     cfg.mode = slug === "1812" ? "coop" : g.demo.rivals ? "private" : "public";
-    cfg.p = { reader: P.reader, turnOf: P.turnOf, decides: P.decides, win: P.win, winLast: P.winLast, tie: P.tie, secretH: P.secretH, secretNote: P.secretNote, pass: P.pass, secretEnd: P.secretEnd };
+    cfg.p = { reader: P.reader, turnOf: P.turnOf, decides: P.decides, win: P.win, winLast: P.winLast, tie: P.tie, secretH: P.secretH, secretNote: P.secretNote, pass: P.pass, secretEnd: P.secretEnd, you: P.net.you, gotSecret: P.net.gotSecret, secretOnline: P.net.secretOnline, ok: P.net.ok };
   }
   if (MANIFEST[sobre]) {
     cfg.sobres = [0, 1, 2, 3, 4].map((n) => rel(ctx.path, `assets/img/${g.art}-sobre-${n}-${MANIFEST[sobre].widths.at(-1)}.webp`));
@@ -425,7 +438,7 @@ function raceSection(ctx, slug, opts = {}) {
     names: d.nations,
     t: { ready: d.ready, pick: d.pick, rivals: d.rivals, time: d.time, first: d.first, late: d.late, wrong: d.wrong, total: d.total, round: d.round },
   };
-  if (opts.play) cfg.p = { athlete: P.athlete, medal: P.medal, totals: P.totals, win: P.raceWin, tie: P.raceTie };
+  if (opts.play) cfg.p = { athlete: P.athlete, medal: P.medal, totals: P.totals, win: P.raceWin, tie: P.raceTie, you: P.net.you };
   return `<section class="section tight" id="${opts.id || "probar"}" style="scroll-margin-top:90px"><div class="wrap">
   <div class="head reveal"><p class="eyebrow">${esc(opts.eyebrow || d.eyebrow)}</p><h2 class="h2 grad">${esc(d.h2)}</h2><p class="lead">${esc(opts.lead || d.lead)}</p></div>
   <div class="race glass" data-race="${esc(JSON.stringify(cfg))}"${opts.play ? ' data-players="2"' : ""}>
@@ -570,10 +583,16 @@ function playPage(ctx) {
 
 <section class="section tight" id="elegido" style="scroll-margin-top:90px"><div class="wrap">
   ${infos}
-  <fieldset class="pcount glass"><legend>${esc(P.count)}</legend><label><input type="radio" name="players" value="1"><span>${esc(P.one)}</span></label><label><input type="radio" name="players" value="2" checked><span>${esc(P.two)}</span></label></fieldset>
+  <fieldset class="pcount glass"><legend>${esc(P.count)}</legend><label><input type="radio" name="players" value="1"><span>${esc(P.one)}</span></label><label><input type="radio" name="players" value="2" checked><span>${esc(P.two)}</span></label><label><input type="radio" name="players" value="online"><span>${esc(P.net.option)}</span></label></fieldset>
+  <div class="pnet glass" hidden data-net="${esc(JSON.stringify(P.net))}">
+    <p class="pnet-lead">${esc(P.net.lead)}</p>
+    <div class="btns"><button type="button" class="btn btn-primary pnet-create">${esc(P.net.create)}</button></div>
+    <div class="pnet-share" hidden><input class="pnet-link" readonly aria-label="${esc(P.net.linkLabel)}"><div class="btns"><button type="button" class="btn btn-glass pnet-copy">${esc(P.net.copy)}</button><a class="btn btn-glass pnet-wa" target="_blank" rel="noopener">${esc(P.net.whatsapp)}</a></div></div>
+    <p class="pnet-state" aria-live="polite"></p>
+  </div>
 </div></section>
 <div class="pgames">${games2}</div>`;
-  return layout(ctx, { page: "play", title: P.title, description: P.description, body, bodyClass: "play", ogImage: "home" });
+  return layout(ctx, { page: "play", title: P.title, description: P.description, body: body + `<script src="${rel(ctx.path, "assets/js/online.js")}" defer></script>`, bodyClass: "play", ogImage: "home" });
 }
 
 /* Nosotros */
