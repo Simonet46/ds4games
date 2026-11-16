@@ -272,7 +272,7 @@
     function simul() { return net(); }
     function roundName() { return turn > D.turns ? D.t.last : D.t.turn.replace("{n}", turn).replace("{total}", D.turns); }
     function emit(a) { if (net()) form.dispatchEvent(new CustomEvent("ds4:act", { detail: a })); }
-    function who(i) { return (P.reader || "").replace("{n}", i + 1) + (net() && i === meIdx() ? " (" + P.you + ")" : ""); }
+    function who(i) { return (net() && doc.ds4Names && doc.ds4Names[i] || (P.reader || "").replace("{n}", i + 1)) + (net() && i === meIdx() ? " (" + P.you + ")" : ""); }
     function fill(s, o) { return s.replace(/\{(\w+)\}/g, function (_, k) { return o[k]; }); }
     var rng = Math.random;
     function rnd(n) { return Math.floor(rng() * n); }
@@ -584,6 +584,7 @@
       form.scrollIntoView({ behavior: reduce ? "auto" : "smooth", block: "start" });
     });
     form.addEventListener("ds4:players", function () { restart(); });
+    form.addEventListener("ds4:names", function () { if (!over) status(true); });
     // Lo que llega de la otra pantalla.
     form._ds4 = {
       restart: restart,
@@ -617,7 +618,7 @@
     function host() { return !net() || meIdx() === 0; }
     function emit(a) { if (net()) box.dispatchEvent(new CustomEvent("ds4:act", { detail: a })); }
     var rng = Math.random;
-    function who(i) { return (P.athlete || "").replace("{n}", i + 1) + (net() && i === meIdx() ? " (" + P.you + ")" : ""); }
+    function who(i) { return (net() && doc.ds4Names && doc.ds4Names[i] || (P.athlete || "").replace("{n}", i + 1)) + (net() && i === meIdx() ? " (" + P.you + ")" : ""); }
     var picks2 = [].slice.call(box.querySelectorAll('input[name="nation2"]'));
     function fmt(s, o) { return s.replace(/\{(\w+)\}/g, function (_, k) { return o[k]; }); }
     function medals() { return [].slice.call(rounds[ri].querySelectorAll(".omedal")); }
@@ -770,6 +771,14 @@
       },
     };
     box.addEventListener("ds4:players", reset);
+    // En línea, las etiquetas «Atleta 1 / Atleta 2» muestran los nombres.
+    box.addEventListener("ds4:names", function () {
+      box.querySelectorAll(".otag").forEach(function (t) {
+        var pl = t.closest(".p2") ? 1 : 0;
+        if (!t.hasAttribute("data-def")) t.setAttribute("data-def", t.textContent);
+        t.textContent = net() && doc.ds4Names && doc.ds4Names[pl] || t.getAttribute("data-def");
+      });
+    });
     next.addEventListener("click", function () {
       ri = (ri + 1) % rounds.length;
       emit({ k: "next", ri: ri });

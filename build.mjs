@@ -589,6 +589,7 @@ function playPage(ctx) {
   <fieldset class="pcount glass"><legend>${esc(P.count)}</legend><label><input type="radio" name="players" value="1"><span>${esc(P.one)}</span></label><label><input type="radio" name="players" value="2" checked><span>${esc(P.two)}</span></label><label><input type="radio" name="players" value="online"><span>${esc(P.net.option)}</span></label></fieldset>
   <div class="pnet glass" hidden data-net="${esc(JSON.stringify(P.net))}">
     <p class="pnet-lead">${esc(P.net.lead)}</p>
+    <label class="pnet-name"><span>${esc(P.net.nameLabel)}</span><input type="text" maxlength="20" autocomplete="given-name" placeholder="${esc(P.net.namePh)}"></label>
     <div class="btns"><button type="button" class="btn btn-primary pnet-create">${esc(P.net.create)}</button></div>
     <div class="pnet-share" hidden><input class="pnet-link" readonly aria-label="${esc(P.net.linkLabel)}"><div class="btns"><button type="button" class="btn btn-glass pnet-copy">${esc(P.net.copy)}</button><a class="btn btn-glass pnet-wa" target="_blank" rel="noopener">${esc(P.net.whatsapp)}</a></div></div>
     <p class="pnet-state" aria-live="polite"></p>

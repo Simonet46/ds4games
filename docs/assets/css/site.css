@@ -656,3 +656,7 @@ body.net-wait .pgame [data-demo], body.net-wait .pgame [data-race] { pointer-eve
 .pchat-f input { flex: 1; min-width: 0; padding: 9px 12px; border-radius: 999px; border: 1px solid var(--stroke-2); background: rgba(255, 255, 255, .06); color: inherit; font: inherit; font-size: 16px; }
 .pchat-f .btn { padding: 9px 14px; }
 @media (max-width: 560px) { .pnet-pill { left: 16px; transform: none; max-width: calc(100vw - 150px); overflow: hidden; text-overflow: ellipsis; } }
+
+/* Nombre del jugador en línea */
+.pnet-name { display: grid; gap: 6px; max-width: 320px; font-weight: 700; font-size: 14px; }
+.pnet-name input { padding: 10px 14px; border-radius: 999px; border: 1px solid var(--stroke-2); background: rgba(255, 255, 255, .06); color: inherit; font: inherit; font-size: 16px; font-weight: 400; }

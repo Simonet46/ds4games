@@ -44,7 +44,7 @@
     var li = doc.createElement("li");
     li.className = mine ? "me" : "";
     var who = doc.createElement("span");
-    who.textContent = mine ? T.you.charAt(0).toUpperCase() + T.you.slice(1) : fill(T.player, { n: (mine ? me : 1 - me) + 1 });
+    who.textContent = mine ? T.you.charAt(0).toUpperCase() + T.you.slice(1) : nameOf(mine ? me : 1 - me);
     var p = doc.createElement("p");
     p.textContent = text;
     li.appendChild(who); li.appendChild(p);
@@ -65,6 +65,24 @@
   var client = null, room = "", me = -1, linked = false, chosen = "", lastSeen = 0, beat = 0, gen = 0;
   var broker = 0, partner = "", seq = 0, lastN = 0;
   var myId = Math.random().toString(36).slice(2, 10);
+  // Nombres: cada uno escribe el suyo y se lo manda a la otra pantalla. Los juegos los leen de doc.ds4Names.
+  var nameIn = box.querySelector(".pnet-name input"), names = ["", ""];
+  function clean(v) { return String(v || "").replace(/[<>&"'\u0000-\u001f]/g, "").trim().slice(0, 20); }
+  try { nameIn.value = clean(localStorage.getItem("ds4-name")); } catch (e) {}
+  function nameOf(i) { return names[i] || fill(T.player, { n: i + 1 }); }
+  function setNames() {
+    doc.ds4Names = linked ? names.slice() : null;
+    games.forEach(function (g) { g.dispatchEvent(new CustomEvent("ds4:names")); });
+    if (linked && !pill.classList.contains("off")) live();
+  }
+  function sendName() {
+    var v = clean(nameIn.value);
+    try { localStorage.setItem("ds4-name", v); } catch (e) {}
+    if (me < 0) return;
+    names[me] = v;
+    if (linked) { send({ t: "name", v: v }); setNames(); }
+  }
+  nameIn.addEventListener("change", sendName);
 
   function fill(s, o) { return s.replace(/\{(\w+)\}/g, function (_, k) { return o[k]; }); }
   function say(t) { state.textContent = t; }
@@ -107,6 +125,7 @@
     gen++;
     if (client) { try { client.end(true); } catch (e) {} }
     client = null; linked = false; me = -1; room = ""; partner = ""; seq = 0; lastN = 0;
+    names = ["", ""]; doc.ds4Names = null;
     clearInterval(beat);
     games.forEach(function (g) {
       if (!g.hasAttribute("data-me")) return;
@@ -142,25 +161,28 @@
     if (m.n <= lastN) return;
     lastN = m.n;
     var d = m.d;
+    if (d.t === "name") { names[1 - me] = clean(d.v); return setNames(); }
     if (d.t === "chat") { if (typeof d.x === "string") addMsg(d.x.slice(0, 300), false); return; }
     if (d.t === "game") { chosen = d.slug; if (doc.ds4Choose) doc.ds4Choose(d.slug); return; }
     var sec = d.g && doc.getElementById(d.g), g = sec && sec.querySelector("[data-demo], [data-race]");
     if (g && g._ds4) g._ds4.apply(d.a);
   }
   function live() {
-    pill.textContent = fill(T.pill, { name: fill(T.player, { n: me + 1 }) });
+    pill.textContent = fill(T.pill, { name: nameOf(me) });
     pill.classList.remove("off");
     pill.hidden = false;
     chat.hidden = false;
     box.classList.add("live");
-    say(fill(T.connected, { name: fill(T.player, { n: me + 1 }) }));
+    say(fill(T.connected, { name: nameOf(me) }));
   }
   // Quedaron conectados: las dos pantallas juegan; Jugador 1 reparte la misma mesa para las dos.
   function link() {
     linked = true;
     games.forEach(function (g) { g.setAttribute("data-me", String(me)); g.setAttribute("data-players", "2"); });
     share.hidden = me !== 0;
-    live();
+    names[me] = clean(nameIn.value);
+    send({ t: "name", v: names[me] });
+    setNames();
     wait();
     if (me === 0) {
       games.forEach(function (g) {
