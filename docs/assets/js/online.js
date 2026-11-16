@@ -19,6 +19,49 @@
   pill.hidden = true;
   pill.setAttribute("aria-live", "polite");
   doc.body.appendChild(pill);
+  // Chat entre las dos pantallas: un botón abajo a la derecha abre la charla.
+  var chat = doc.createElement("div");
+  chat.className = "pchat";
+  chat.hidden = true;
+  chat.innerHTML = '<button type="button" class="pchat-btn" aria-expanded="false"><span aria-hidden="true">💬</span> <span class="pchat-l"></span><b class="pchat-n" hidden></b></button>' +
+    '<div class="pchat-box glass" hidden><div class="pchat-top"><strong class="pchat-h"></strong><button type="button" class="pchat-x">×</button></div>' +
+    '<ol class="pchat-log" aria-live="polite"></ol><form class="pchat-f"><input type="text" maxlength="300" autocomplete="off"><button type="submit" class="btn btn-primary"></button></form></div>';
+  doc.body.appendChild(chat);
+  var cBtn = chat.querySelector(".pchat-btn"), cBox = chat.querySelector(".pchat-box"), cLog = chat.querySelector(".pchat-log");
+  var cIn = chat.querySelector("input"), cN = chat.querySelector(".pchat-n"), unread = 0;
+  chat.querySelector(".pchat-l").textContent = T.chat;
+  chat.querySelector(".pchat-h").textContent = T.chat;
+  chat.querySelector(".pchat-x").setAttribute("aria-label", T.chatClose);
+  chat.querySelector(".pchat-f button").textContent = T.chatSend;
+  cIn.placeholder = T.chatPh;
+  cLog.setAttribute("data-empty", T.chatEmpty);
+  function openChat(on) {
+    cBox.hidden = !on;
+    cBtn.setAttribute("aria-expanded", String(on));
+    if (on) { unread = 0; cN.hidden = true; cLog.scrollTop = cLog.scrollHeight; cIn.focus(); }
+  }
+  function addMsg(text, mine) {
+    var li = doc.createElement("li");
+    li.className = mine ? "me" : "";
+    var who = doc.createElement("span");
+    who.textContent = mine ? T.you.charAt(0).toUpperCase() + T.you.slice(1) : fill(T.player, { n: (mine ? me : 1 - me) + 1 });
+    var p = doc.createElement("p");
+    p.textContent = text;
+    li.appendChild(who); li.appendChild(p);
+    cLog.appendChild(li);
+    cLog.scrollTop = cLog.scrollHeight;
+    if (!mine && cBox.hidden) { unread++; cN.textContent = unread; cN.hidden = false; }
+  }
+  cBtn.addEventListener("click", function () { openChat(cBox.hidden); });
+  chat.querySelector(".pchat-x").addEventListener("click", function () { openChat(false); });
+  chat.querySelector(".pchat-f").addEventListener("submit", function (e) {
+    e.preventDefault();
+    var t = cIn.value.trim().slice(0, 300);
+    if (!t || !linked) return;
+    send({ t: "chat", x: t });
+    addMsg(t, true);
+    cIn.value = "";
+  });
   var client = null, room = "", me = -1, linked = false, chosen = "", lastSeen = 0, beat = 0, gen = 0;
   var broker = 0, partner = "", seq = 0, lastN = 0;
   var myId = Math.random().toString(36).slice(2, 10);
@@ -72,6 +115,7 @@
     });
     box.classList.remove("live");
     pill.hidden = true;
+    chat.hidden = true; openChat(false); cLog.innerHTML = ""; unread = 0; cN.hidden = true;
     wait();
   }
 
@@ -98,6 +142,7 @@
     if (m.n <= lastN) return;
     lastN = m.n;
     var d = m.d;
+    if (d.t === "chat") { if (typeof d.x === "string") addMsg(d.x.slice(0, 300), false); return; }
     if (d.t === "game") { chosen = d.slug; if (doc.ds4Choose) doc.ds4Choose(d.slug); return; }
     var sec = d.g && doc.getElementById(d.g), g = sec && sec.querySelector("[data-demo], [data-race]");
     if (g && g._ds4) g._ds4.apply(d.a);
@@ -106,6 +151,7 @@
     pill.textContent = fill(T.pill, { name: fill(T.player, { n: me + 1 }) });
     pill.classList.remove("off");
     pill.hidden = false;
+    chat.hidden = false;
     box.classList.add("live");
     say(fill(T.connected, { name: fill(T.player, { n: me + 1 }) }));
   }

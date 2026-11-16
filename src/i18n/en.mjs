@@ -606,6 +606,7 @@ export default {
       lockNote: "Connect first: create a room above and wait for the other person to join with the link. Until then, the game is paused.",
       pill: "Online · this screen is {name}",
       pillOff: "Offline",
+      chat: "Chat", chatPh: "Type a message…", chatSend: "Send", chatEmpty: "Chat here while you play.", chatClose: "Close chat",
       gotSecret: "{name} got their answer in secret.",
     },
     leads: {

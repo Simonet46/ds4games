@@ -606,6 +606,7 @@ export default {
       lockNote: "Primero conéctense: creá una sala arriba y esperá a que la otra persona entre con el link. Mientras tanto, el juego queda en pausa.",
       pill: "En línea · esta pantalla es {name}",
       pillOff: "Sin conexión",
+      chat: "Chat", chatPh: "Escribí un mensaje…", chatSend: "Enviar", chatEmpty: "Escríbanse acá mientras juegan.", chatClose: "Cerrar el chat",
       gotSecret: "{name} recibió su respuesta en secreto.",
     },
     leads: {
