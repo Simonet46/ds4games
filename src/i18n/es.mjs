@@ -581,6 +581,7 @@ export default {
     totals: "{a}: {p} puntos · {b}: {q} puntos.",
     raceWin: "¡Gana {name}!",
     raceTie: "¡Empate!",
+    cw: {"congrats": "¡Felicitaciones, {name}!", "youWon": "¡Ganaste! ¡Felicitaciones!", "together": "¡Felicitaciones! Lo descifraron juntos.", "tie": "¡Empate! Felicitaciones a los dos.", "solo": "¡Felicitaciones!", "close": "Seguir"},
     net: {
       option: "En línea",
       lead: "Cada uno en su casa: creá una sala y mandale el link a quien quieras. Los dos ven la misma partida en tiempo real.",
@@ -599,6 +600,12 @@ export default {
       you: "vos",
       secretOnline: "Solo vos ves esta respuesta. A {name} le llega solo que la recibiste.",
       ok: "Entendido",
+      yourCode: "elegí tu código",
+      waitCode: "esperando el código de {name}",
+      youGot: "Vos: {hits}.",
+      lockNote: "Primero conéctense: creá una sala arriba y esperá a que la otra persona entre con el link. Mientras tanto, el juego queda en pausa.",
+      pill: "En línea · esta pantalla es {name}",
+      pillOff: "Sin conexión",
       gotSecret: "{name} recibió su respuesta en secreto.",
     },
     leads: {

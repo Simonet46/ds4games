@@ -581,6 +581,7 @@ export default {
     totals: "{a} : {p} points · {b} : {q} points.",
     raceWin: "{name} gagne !",
     raceTie: "Égalité !",
+    cw: {"congrats": "Bravo, {name} !", "youWon": "Tu as gagné ! Bravo !", "together": "Bravo ! Vous l’avez trouvé ensemble.", "tie": "Égalité ! Bravo à tous les deux.", "solo": "Bravo !", "close": "Continuer"},
     net: {
       option: "En ligne",
       lead: "Chacun chez soi : créez une salle et envoyez le lien à qui vous voulez. Vous voyez tous les deux la même partie en temps réel.",
@@ -599,6 +600,12 @@ export default {
       you: "toi",
       secretOnline: "Toi seul vois cette réponse. {name} sait seulement que tu l’as reçue.",
       ok: "Compris",
+      yourCode: "choisis ton code",
+      waitCode: "en attente du code de {name}",
+      youGot: "Toi : {hits}.",
+      lockNote: "Connectez-vous d’abord : créez une salle ci-dessus et attendez que l’autre personne entre avec le lien. En attendant, le jeu est en pause.",
+      pill: "En ligne · cet écran est {name}",
+      pillOff: "Hors ligne",
       gotSecret: "{name} a reçu sa réponse en secret.",
     },
     leads: {

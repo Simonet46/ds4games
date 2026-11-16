@@ -361,13 +361,16 @@ function demoSection(ctx, slug, opts = {}) {
   const sobre = `${g.art}-sobre-0`;
   const cfg = {
     answer: g.demo.rows.map((r) => r.answer), turns: g.demo.turns, last: !!g.demo.lastChance, colors: g.rows.map((r) => r.color),
+    cw: ctx.L.play.cw,
     t: { pick: d.pick, ready: d.ready, turn: d.turn, hits: d.hits, win: d.win, lose: d.lose, last: d.last, lastMsg: d.lastMsg, winLast: d.winLast },
   };
   // 2080: los rivales dicen su código en voz alta y el Autor contesta en privado.
   if (g.demo.rivals) Object.assign(cfg, { rivals: g.demo.rivals, names: d.rivalNames }, { t: { ...cfg.t, you: d.you, secret: d.secret, theirs: d.theirs } });
   // Cada partida nueva arma otra mesa: por fila, una carta correcta con sus cartas de Autor y cinco cartas al azar del mazo.
   const url = (name) => { const m = MANIFEST[name]; if (!m) throw new Error(`Imagen sin optimizar: ${name}`); return rel(ctx.path, `assets/img/${name}-${m.widths[Math.min(1, m.widths.length - 1)]}.webp`); };
-  cfg.deck = g.demo.rows.map((_, i) => g.rows[i].cards.map((k) => [k, c.cardNames[k], url(`${g.art}-card-${k}`)]));
+  // Cuarta posición: versión grande para ver la carta con el mouse encima.
+  const big = (name) => { const m = MANIFEST[name], w = m.widths.filter((x) => x <= 960).at(-1) || m.widths[0]; return rel(ctx.path, `assets/img/${name}-${w}.webp`); };
+  cfg.deck = g.demo.rows.map((_, i) => g.rows[i].cards.map((k) => [k, c.cardNames[k], url(`${g.art}-card-${k}`), big(`${g.art}-card-${k}`)]));
   // Mazo de cartas de Autor: el Autor saca 7 al azar y en cada ronda juega, por fila, la que más evoca la carta correcta.
   const dreamNums = Object.keys(MANIFEST).map((k) => k.match(new RegExp(`^${g.art}-dream-(\\d+)$`))?.[1]).filter(Boolean).map(Number).sort((a, b) => a - b);
   cfg.dd = dreamNums.map((n) => [n, url(`${g.art}-dream-${n}`)]);
@@ -384,7 +387,7 @@ function demoSection(ctx, slug, opts = {}) {
   if (opts.play) {
     const P = ctx.L.play;
     cfg.mode = slug === "1812" ? "coop" : g.demo.rivals ? "private" : "public";
-    cfg.p = { reader: P.reader, turnOf: P.turnOf, decides: P.decides, win: P.win, winLast: P.winLast, tie: P.tie, secretH: P.secretH, secretNote: P.secretNote, pass: P.pass, secretEnd: P.secretEnd, you: P.net.you, gotSecret: P.net.gotSecret, secretOnline: P.net.secretOnline, ok: P.net.ok };
+    cfg.p = { reader: P.reader, turnOf: P.turnOf, decides: P.decides, win: P.win, winLast: P.winLast, tie: P.tie, secretH: P.secretH, secretNote: P.secretNote, pass: P.pass, secretEnd: P.secretEnd, you: P.net.you, gotSecret: P.net.gotSecret, secretOnline: P.net.secretOnline, ok: P.net.ok, yourCode: P.net.yourCode, waitCode: P.net.waitCode, youGot: P.net.youGot };
   }
   if (MANIFEST[sobre]) {
     cfg.sobres = [0, 1, 2, 3, 4].map((n) => rel(ctx.path, `assets/img/${g.art}-sobre-${n}-${MANIFEST[sobre].widths.at(-1)}.webp`));
@@ -392,7 +395,7 @@ function demoSection(ctx, slug, opts = {}) {
   }
   return `<section class="section tight" id="${opts.id || "probar"}" style="scroll-margin-top:90px"><div class="wrap">
   <div class="head reveal"><p class="eyebrow">${esc(opts.eyebrow || d.eyebrow)}</p><h2 class="h2 grad">${esc(d.h2)}</h2><p class="lead">${esc(opts.lead || d.lead)}</p></div>
-  <form class="demo glass" data-demo="${esc(JSON.stringify(cfg))}"${opts.play ? ' data-players="2"' : ""}>
+  <form class="demo glass" data-close="${esc(ctx.L.play.cw.close)}" data-demo="${esc(JSON.stringify(cfg))}"${opts.play ? ' data-players="2"' : ""}>
     ${rows}
     <div class="dbar">
       <p class="dstatus" aria-live="polite"><strong class="dturn">${esc(d.turn.replace("{n}", 1).replace("{total}", g.demo.turns))}</strong><span class="dmsg muted">${esc(d.noJs)}</span></p>
@@ -431,7 +434,7 @@ function raceSection(ctx, slug, opts = {}) {
     return `<div class="oround"${ri ? " hidden" : ""}><ol class="osports">${sports}</ol><ol class="omedals">${medals}</ol></div>`;
   }).join("");
   const cfg = {
-    every: R.every, rings: R.rings,
+    every: R.every, rings: R.rings, cw: ctx.L.play.cw,
     rounds: R.rounds.map((r) => ({ answers: r.medals.map((m) => m[1]), sports: r.sports.map((s) => c.sportNames[s]) })),
     flags: Object.fromEntries(R.nations.map((n) => [n, rel(ctx.path, `assets/img/${flagImg(n)}-${MANIFEST[flagImg(n)].widths[0]}.webp`)])),
     flagH: Math.round(MANIFEST[flagImg(R.nations[0])].widths[0] * MANIFEST[flagImg(R.nations[0])].ratio),
@@ -441,7 +444,7 @@ function raceSection(ctx, slug, opts = {}) {
   if (opts.play) cfg.p = { athlete: P.athlete, medal: P.medal, totals: P.totals, win: P.raceWin, tie: P.raceTie, you: P.net.you };
   return `<section class="section tight" id="${opts.id || "probar"}" style="scroll-margin-top:90px"><div class="wrap">
   <div class="head reveal"><p class="eyebrow">${esc(opts.eyebrow || d.eyebrow)}</p><h2 class="h2 grad">${esc(d.h2)}</h2><p class="lead">${esc(opts.lead || d.lead)}</p></div>
-  <div class="race glass" data-race="${esc(JSON.stringify(cfg))}"${opts.play ? ' data-players="2"' : ""}>
+  <div class="race glass" data-close="${esc(ctx.L.play.cw.close)}" data-race="${esc(JSON.stringify(cfg))}"${opts.play ? ' data-players="2"' : ""}>
     <div class="onats"><fieldset class="onations"><legend>${esc(opts.play ? P.nation2.replace("{n}", 1) : d.nation)}</legend>${nations}</fieldset>${nations2}</div>
     ${rounds}
     <div class="dbar">
@@ -591,7 +594,7 @@ function playPage(ctx) {
     <p class="pnet-state" aria-live="polite"></p>
   </div>
 </div></section>
-<div class="pgames">${games2}</div>`;
+<div class="pgames"><div class="wrap"><p class="pwait glass">${esc(P.net.lockNote)}</p></div>${games2}</div>`;
   return layout(ctx, { page: "play", title: P.title, description: P.description, body: body + `<script src="${rel(ctx.path, "assets/js/online.js")}" defer></script>`, bodyClass: "play", ogImage: "home" });
 }
 

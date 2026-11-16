@@ -594,3 +594,45 @@ body.lock { overflow: hidden; }
 .pnet-state { margin: 0; font-weight: 600; }
 .pnet-state:empty { display: none; }
 .pnet.live .pnet-state { color: var(--c-green); }
+
+/* Carta en grande al pasar el mouse */
+.dzoom { position: fixed; z-index: 400; pointer-events: none; opacity: 0; transform: scale(.94); transition: opacity .15s, transform .15s var(--ease); }
+.dzoom.on { opacity: 1; transform: none; }
+.dzoom img { display: block; width: 100%; height: auto; border-radius: 14px; border: 1px solid var(--stroke-2); box-shadow: 0 30px 70px -20px rgba(0, 0, 0, .95), 0 0 0 6px rgba(5, 6, 11, .6); }
+.dopts .opt, .dcard img { -webkit-touch-callout: none; user-select: none; }
+
+/* Cartel del ganador */
+.dwin { position: fixed; inset: 0; z-index: 320; display: grid; place-items: center; padding: 20px; background: rgba(5, 6, 11, .78); -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px); }
+.dwin[hidden] { display: none !important; }
+.dwin-in { position: relative; overflow: hidden; max-width: 460px; width: 100%; padding: 34px 28px 28px; text-align: center; display: grid; gap: 12px; justify-items: center; animation: dwin-pop .5s var(--ease) both; }
+.dwin-cup { margin: 0; font-size: 64px; line-height: 1; filter: drop-shadow(0 10px 24px rgba(255, 209, 102, .45)); animation: dwin-cup 1.6s ease-in-out infinite alternate; }
+.dwin h3 { margin: 0; }
+.dwin-sub { margin: 0; color: var(--ink-2); }
+.dwin-conf { position: absolute; inset: 0; pointer-events: none; }
+.dwin-conf i { position: absolute; top: -12px; width: 8px; height: 14px; border-radius: 2px; opacity: .9; animation: dwin-fall linear forwards; }
+@keyframes dwin-pop { from { opacity: 0; transform: scale(.85) translateY(20px); } to { opacity: 1; transform: none; } }
+@keyframes dwin-cup { to { transform: translateY(-6px) rotate(-4deg) scale(1.05); } }
+@keyframes dwin-fall { to { transform: translateY(520px) rotate(540deg); opacity: 0; } }
+@media (prefers-reduced-motion: reduce) { .dwin-in, .dwin-cup { animation: none; } }
+
+/* En línea: la jugada del otro y el juego en pausa hasta conectarse */
+.dlog li.dother { border-color: color-mix(in srgb, #22d3ee 45%, transparent); background: rgba(34, 211, 238, .07); }
+.pwait { display: none; margin: 0 0 18px; padding: 14px 18px; font-weight: 600; }
+body.net-wait .pwait { display: block; }
+body:not(.chosen) .pwait { display: none; }
+body.net-wait .pgame [data-demo], body.net-wait .pgame [data-race] { pointer-events: none; opacity: .35; filter: grayscale(.6); }
+.pnet-pill { position: fixed; left: 50%; bottom: calc(env(safe-area-inset-bottom, 0px) + 14px); transform: translateX(-50%); z-index: 250; padding: 8px 16px; border-radius: 999px; font-size: 14px; font-weight: 700; background: rgba(5, 6, 11, .85); border: 1px solid var(--stroke-2); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); white-space: nowrap; }
+.pnet-pill::before { content: ""; display: inline-block; width: 9px; height: 9px; margin-right: 8px; border-radius: 50%; background: var(--c-green); box-shadow: 0 0 10px var(--c-green); }
+.pnet-pill.off::before { background: #ff6a6a; box-shadow: 0 0 10px #ff6a6a; }
+.pnet-pill[hidden] { display: none; }
+
+/* Cartel de ronda nueva */
+.dround { position: fixed; inset: 0; z-index: 310; display: grid; place-items: center; padding: 20px; pointer-events: none; }
+.dround[hidden] { display: none !important; }
+.dround-in { pointer-events: auto; cursor: pointer; text-align: center; padding: 26px 40px; min-width: min(360px, 100%); max-width: 520px; box-shadow: 0 30px 80px rgba(0, 0, 0, .55); }
+.dround-t { margin: 0; font-family: var(--font-display, inherit); font-size: clamp(2rem, 6vw, 3.2rem); font-weight: 800; line-height: 1.05; }
+.dround-s { margin: 10px 0 0; color: var(--muted, #b9bdd0); }
+.dround-s:empty { display: none; }
+.dround.go .dround-in { animation: dround 2.6s var(--ease, ease) both; }
+@keyframes dround { 0% { opacity: 0; transform: scale(.7); } 12% { opacity: 1; transform: scale(1.06); } 20% { transform: scale(1); } 82% { opacity: 1; transform: scale(1); } 100% { opacity: 0; transform: scale(.96); } }
+@media (prefers-reduced-motion: reduce) { .dround.go .dround-in { animation: none; } }

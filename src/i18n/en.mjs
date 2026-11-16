@@ -581,6 +581,7 @@ export default {
     totals: "{a}: {p} points · {b}: {q} points.",
     raceWin: "{name} wins!",
     raceTie: "It’s a tie!",
+    cw: {"congrats": "Congratulations, {name}!", "youWon": "You won! Congratulations!", "together": "Congratulations! You cracked it together.", "tie": "It’s a tie! Well done, both of you.", "solo": "Congratulations!", "close": "Continue"},
     net: {
       option: "Online",
       lead: "Each at home: create a room and send the link to anyone. You both see the same game in real time.",
@@ -599,6 +600,12 @@ export default {
       you: "you",
       secretOnline: "Only you can see this answer. {name} just knows you got it.",
       ok: "Got it",
+      yourCode: "pick your code",
+      waitCode: "waiting for {name}’s code",
+      youGot: "You: {hits}.",
+      lockNote: "Connect first: create a room above and wait for the other person to join with the link. Until then, the game is paused.",
+      pill: "Online · this screen is {name}",
+      pillOff: "Offline",
       gotSecret: "{name} got their answer in secret.",
     },
     leads: {

@@ -150,6 +150,99 @@
     });
   });
 
+  /* Cartas de Lector y de Autor: con el mouse encima (o manteniendo el dedo apretado) se ven en grande al costado. */
+  (function () {
+    var cards = ".dopts .opt, .dcard, .dwhy li img";
+    if (!doc.querySelector(cards)) return;
+    var z = doc.createElement("div"), zi = doc.createElement("img"), shown = null, hold = 0, held = false;
+    z.className = "dzoom";
+    z.setAttribute("aria-hidden", "true");
+    z.appendChild(zi);
+    doc.body.appendChild(z);
+    function show(el) {
+      var im = el.tagName === "IMG" ? el : el.querySelector("img");
+      if (!im) return;
+      shown = el;
+      var lab = el.closest("label");
+      zi.src = (lab && lab.getAttribute("data-z")) || im.currentSrc || im.src;
+      var tall = im.naturalHeight > im.naturalWidth;
+      var vw = innerWidth, vh = innerHeight;
+      var w = tall ? Math.min(vh * 0.62 * 2 / 3, 380, vw - 32) : Math.min(560, vw * 0.48, vw - 32);
+      if (vw < 700) w = Math.min(vw - 32, tall ? 300 : 520);
+      var h = tall ? w * 3 / 2 : w * 2 / 3, r = el.getBoundingClientRect();
+      var x = r.right + 16 + w < vw ? r.right + 16 : r.left - 16 - w >= 0 ? r.left - 16 - w : (vw - w) / 2;
+      var y = Math.max(12, Math.min(vh - h - 12, r.top + r.height / 2 - h / 2));
+      z.style.cssText = "width:" + w + "px;left:" + x + "px;top:" + y + "px";
+      z.classList.add("on");
+    }
+    function hide() { shown = null; z.classList.remove("on"); }
+    doc.addEventListener("pointerover", function (e) {
+      if (e.pointerType !== "mouse") return;
+      var el = e.target.closest && e.target.closest(cards);
+      if (el && el !== shown) show(el); else if (!el && shown) hide();
+    });
+    doc.addEventListener("pointerdown", function (e) {
+      if (e.pointerType === "mouse") return;
+      var el = e.target.closest && e.target.closest(cards);
+      if (!el) return;
+      clearTimeout(hold);
+      held = false;
+      hold = setTimeout(function () { held = true; show(el); }, 380);
+    });
+    ["pointerup", "pointercancel", "scroll"].forEach(function (ev) {
+      window.addEventListener(ev, function () { clearTimeout(hold); if (shown && !(ev === "scroll" && held === false)) hide(); }, true);
+    });
+    // Mantener apretado para ver la carta no la elige.
+    doc.addEventListener("click", function (e) { if (held && e.target.closest && e.target.closest(".dopts label")) { e.preventDefault(); held = false; } }, true);
+    doc.addEventListener("contextmenu", function (e) { if (e.target.closest && e.target.closest(cards)) e.preventDefault(); });
+  })();
+
+  // Cartel para felicitar al ganador (con papelitos).
+  function celebrate(host, title, sub, el) {
+    if (!el) {
+      el = doc.createElement("div");
+      el.className = "dwin";
+      el.setAttribute("role", "dialog");
+      el.setAttribute("aria-modal", "true");
+      el.innerHTML = '<div class="dwin-in glass"><p class="dwin-cup" aria-hidden="true">🏆</p><h3 class="h2 grad"></h3><p class="dwin-sub"></p><button type="button" class="btn btn-primary"></button><div class="dwin-conf" aria-hidden="true"></div></div>';
+      // Va en <body>: dentro del recuadro de vidrio, position: fixed quedaría atada al recuadro.
+      doc.body.appendChild(el);
+      el.querySelector("button").addEventListener("click", function () { el.hidden = true; });
+      el.addEventListener("click", function (e) { if (e.target === el) el.hidden = true; });
+    }
+    var cols = ["#ffd166", "#ef476f", "#06d6a0", "#118ab2", "#a78bfa", "#fff"], conf = el.querySelector(".dwin-conf");
+    conf.innerHTML = reduce ? "" : Array.apply(null, Array(36)).map(function (_, i) {
+      return '<i style="left:' + (Math.random() * 100).toFixed(1) + "%;background:" + cols[i % cols.length] + ";animation-delay:" + (Math.random() * 0.6).toFixed(2) + "s;animation-duration:" + (1.6 + Math.random() * 1.4).toFixed(2) + 's"></i>';
+    }).join("");
+    el.querySelector("h3").textContent = title;
+    el.querySelector(".dwin-sub").innerHTML = sub;
+    el.querySelector("button").textContent = host.getAttribute("data-close") || "OK";
+    el.hidden = false;
+    el.querySelector("button").focus();
+    return el;
+  }
+
+  // Cartel de ronda nueva: aparece en grande un momento y se va solo (no tapa el juego).
+  var roundEl = null, roundT = 0;
+  function roundBanner(title, sub) {
+    if (!roundEl) {
+      roundEl = doc.createElement("div");
+      roundEl.className = "dround";
+      roundEl.setAttribute("role", "status");
+      roundEl.innerHTML = '<div class="dround-in glass"><p class="dround-t grad"></p><p class="dround-s"></p></div>';
+      doc.body.appendChild(roundEl);
+      roundEl.addEventListener("click", function () { roundEl.hidden = true; });
+    }
+    roundEl.querySelector(".dround-t").textContent = title;
+    roundEl.querySelector(".dround-s").textContent = sub || "";
+    roundEl.hidden = false;
+    roundEl.classList.remove("go");
+    void roundEl.offsetWidth;
+    roundEl.classList.add("go");
+    clearTimeout(roundT);
+    roundT = setTimeout(function () { roundEl.hidden = true; }, 2600);
+  }
+
   // Azar con semilla: en línea, las dos pantallas arman la misma mesa y los mismos rivales.
   function seeded(a) {
     return function () {
@@ -167,14 +260,17 @@
     var say = form.querySelector(".dsay"), again = form.querySelector(".dagain");
     var turnEl = form.querySelector(".dturn"), msg = form.querySelector(".dmsg"), log = form.querySelector(".dlog");
     var inputs = [].slice.call(form.querySelectorAll("input[type=radio]"));
-    var turn = 1, over = false, last = [];
+    var turn = 1, over = false, last = [], win = null;
     // Página Jugar ahora: con data-players="2" juegan dos Lectores en la misma pantalla.
-    var P = D.p || {}, cur = 0, winners = [], secret = null;
+    var P = D.p || {}, cur = 0, winners = [], secret = null, mine = null, theirs = null;
     function duo() { return !!D.p && form.getAttribute("data-players") === "2"; }
     // En línea (Jugar ahora): data-me dice qué Lector es esta pantalla; cada acción se manda a la otra pantalla
     // y las dos arman la misma mesa con la misma semilla.
     function net() { return duo() && form.hasAttribute("data-me"); }
     function meIdx() { return +form.getAttribute("data-me"); }
+    // En línea los dos eligen su código a la vez (también en 1812); la ronda se resuelve cuando los dos lo dijeron.
+    function simul() { return net(); }
+    function roundName() { return turn > D.turns ? D.t.last : D.t.turn.replace("{n}", turn).replace("{total}", D.turns); }
     function emit(a) { if (net()) form.dispatchEvent(new CustomEvent("ds4:act", { detail: a })); }
     function who(i) { return (P.reader || "").replace("{n}", i + 1) + (net() && i === meIdx() ? " (" + P.you + ")" : ""); }
     function fill(s, o) { return s.replace(/\{(\w+)\}/g, function (_, k) { return o[k]; }); }
@@ -200,6 +296,7 @@
         row.querySelectorAll(".dopts label").forEach(function (lab, j) {
           var c = cards[j], im = lab.querySelector("img");
           lab.title = c[1];
+          lab.setAttribute("data-z", c[3]);
           im.removeAttribute("srcset");
           im.src = c[2];
           lab.querySelector(".sr-only").textContent = (j + 1) + ". " + c[1];
@@ -278,13 +375,18 @@
     function status(keepMsg) {
       turnEl.textContent = turn > D.turns ? D.t.last : D.t.turn.replace("{n}", turn).replace("{total}", D.turns);
       if (duo()) turnEl.textContent += " · " + fill(D.mode === "coop" ? P.decides : P.turnOf, { name: who(cur) });
-      var ready = picks().every(Boolean), mine = !net() || cur === meIdx();
-      if (net()) inputs.forEach(function (inp) { inp.disabled = over || !mine; });
-      say.disabled = !ready || !mine;
+      if (simul()) {
+        turnEl.textContent = (turn > D.turns ? D.t.last : D.t.turn.replace("{n}", turn).replace("{total}", D.turns)) + " · " + (mine ? fill(P.waitCode, { name: who(1 - meIdx()) }) : P.yourCode);
+        inputs.forEach(function (inp) { inp.disabled = over || !!mine; });
+      }
+      var ready = picks().every(Boolean), myTurn = simul() ? !mine : !net() || cur === meIdx();
+      if (net() && !simul()) inputs.forEach(function (inp) { inp.disabled = over || !myTurn; });
+      say.disabled = !ready || !myTurn;
       if (!keepMsg) msg.textContent = ready ? D.t.ready : D.t.pick;
     }
     function end(won) {
       over = true;
+      turnEl.textContent = roundName();
       form.classList.add("done");
       inputs.forEach(function (inp) {
         var lab = inp.closest("label");
@@ -304,18 +406,60 @@
       say.hidden = true;
       again.hidden = false;
       again.focus();
+      if (won) {
+        var W = D.cw, title, sub = msg.textContent;
+        if (duo() && D.mode === "coop") title = W.together;
+        else if (duo()) title = winners.length > 1 ? W.tie : net() && winners[0] === meIdx() ? W.youWon : fill(W.congrats, { name: who(winners[0]).replace(/ \(.*\)$/, "") });
+        else title = W.solo;
+        win = celebrate(form, title, sub, win);
+      }
     }
     form.addEventListener("change", function (e) {
       if (over) return;
-      if (e.target.type === "radio" && e.isTrusted) emit({ k: "pick", n: e.target.name, v: e.target.value });
+      if (e.target.type === "radio" && e.isTrusted && !simul()) emit({ k: "pick", n: e.target.name, v: e.target.value });
       status();
     });
     form.addEventListener("submit", function (e) {
       e.preventDefault();
+      if (simul()) {
+        if (mine || over || !picks().every(Boolean)) return;
+        mine = picks();
+        emit({ k: "code", p: mine });
+        return both();
+      }
       if (net() && cur !== meIdx()) return;
       emit({ k: "say", p: picks() });
       play();
     });
+    // Respuesta del Autor: sobre (1812) o cuatro marcas como las del anotador.
+    function entry(p, hits, i) {
+      var li = doc.createElement("li");
+      var answer = D.sobres ? '<img src="' + D.sobres[hits] + '" width="160" height="' + D.sobreH + '" alt="">'
+        : '<span class="dhits" aria-hidden="true">' + [0, 1, 2, 3].map(function (k) { return k < hits ? '<i class="on"></i>' : "<i></i>"; }).join("") + "</span>";
+      var hidden = D.mode === "private" && i !== meIdx();
+      li.innerHTML = '<span class="dwho">' + who(i) + "</span>" + code(p) + (hidden ? '<span class="dlock" data-h="' + hits + '">🔒</span>' : answer + "<span>" + D.t.hits[hits] + "</span>");
+      if (i !== meIdx()) li.className = "dother";
+      return li;
+    }
+    // Los dos dijeron su código: se ven los dos y, si nadie ganó, pasan a la ronda siguiente.
+    function both() {
+      if (!mine || !theirs) { status(true); if (mine) { var w = fill(P.waitCode, { name: who(1 - meIdx()) }); msg.textContent = w.charAt(0).toUpperCase() + w.slice(1) + "…"; } return; }
+      var codes = meIdx() === 0 ? [mine, theirs] : [theirs, mine], hs = [];
+      codes.forEach(function (p, i) {
+        var h = p.filter(function (n, k) { return n === D.answer[k]; }).length;
+        hs.push(h);
+        log.appendChild(entry(p, h, i));
+        if (h === 4) winners.push(i);
+      });
+      mine = theirs = null;
+      if (winners.length) return end(true);
+      if (turn >= maxTurns) return end(false);
+      clearPicks();
+      nextRound(null);
+      var me = meIdx(), other = 1 - me;
+      msg.textContent = fill(P.youGot, { hits: D.t.hits[hs[me]].toLowerCase() }) + " " + (D.mode === "private" ? fill(P.gotSecret, { name: who(other) }) : who(other) + ": " + D.t.hits[hs[other]].toLowerCase() + ".") + " " + (turn > D.turns ? D.t.lastMsg : "");
+      roundBanner(roundName(), msg.textContent);
+    }
     function play() {
       var p = picks();
       if (over || !p.every(Boolean)) return;
@@ -350,6 +494,7 @@
       });
       status(true);
       msg.textContent = D.t.hits[hits] + ". " + (turn > D.turns ? D.t.lastMsg : D.t.pick.replace(/\.$/, "") + ".");
+      roundBanner(roundName(), msg.textContent);
     }
     // Dos Lectores: en 1812 deciden juntos (se turnan para decidir); en Tour Eiffel y 2080 cada uno dice su código.
     function nextRound(hits) {
@@ -360,6 +505,7 @@
       });
       status(true);
       msg.textContent = (hits === null ? "" : D.t.hits[hits] + ". ") + (turn > D.turns ? D.t.lastMsg : D.t.pick);
+      if (!simul()) roundBanner(roundName(), msg.textContent);
     }
     function clearPicks() { inputs.forEach(function (inp) { inp.checked = false; }); }
     function duoTurn(li, p, hits) {
@@ -402,7 +548,7 @@
         secret.setAttribute("role", "dialog");
         secret.setAttribute("aria-modal", "true");
         secret.innerHTML = '<div class="dsecret-in glass"><p class="eyebrow"></p><p class="dsecret-n"></p><p class="muted"></p><button type="button" class="btn btn-primary"></button></div>';
-        form.appendChild(secret);
+        doc.body.appendChild(secret);
         secret.querySelector("button").addEventListener("click", function () { secret.hidden = true; doc.body.classList.remove("lock"); say.focus(); });
       }
       var other = who(1 - me);
@@ -416,6 +562,8 @@
     }
     function restart(seed) {
       rng = seed == null ? Math.random : seeded(seed);
+      mine = theirs = null;
+      if (win) win.hidden = true;
       over = false;
       turn = 1; cur = 0; winners = [];
       if (secret) { secret.hidden = true; doc.body.classList.remove("lock"); }
@@ -439,9 +587,11 @@
     // Lo que llega de la otra pantalla.
     form._ds4 = {
       restart: restart,
+      answer: function () { return D.answer.slice(); },
       apply: function (a) {
         if (a.k === "again") restart(a.s);
         else if (a.k === "pick") { var r = form.querySelector('input[name="' + a.n + '"][value="' + a.v + '"]'); if (r) { r.checked = true; status(); } }
+        else if (a.k === "code") { theirs = a.p; both(); }
         else if (a.k === "say") { clearPicks(); a.p.forEach(function (v, i) { var r = form.querySelector('input[name="r' + i + '"][value="' + v + '"]'); if (r) r.checked = true; }); play(); }
       },
     };
@@ -457,7 +607,7 @@
     var label = box.querySelector(".olabel"), timeEl = box.querySelector(".otime"), msg = box.querySelector(".omsg");
     var rounds = [].slice.call(box.querySelectorAll(".oround"));
     var picks = [].slice.call(box.querySelectorAll('input[name="nation"]'));
-    var ri = 0, timer = null, t0 = 0, ticks = 0, stacks = [], placed = 0, me = [], pools = [];
+    var ri = 0, timer = null, t0 = 0, ticks = 0, stacks = [], placed = 0, me = [], pools = [], win = null;
     // Página Jugar ahora: con data-players="2" juegan dos Atletas, cada uno con sus aros.
     var P = D.p || {};
     function duo() { return !!D.p && box.getAttribute("data-players") === "2"; }
@@ -481,6 +631,7 @@
       medals()[m].querySelector(".ostack").appendChild(li);
     }
     function reset() {
+      if (win) win.hidden = true;
       clearInterval(timer);
       timer = null;
       rounds.forEach(function (r, i) { r.hidden = i !== ri; r.classList.remove("live", "done"); });
@@ -539,6 +690,11 @@
         : fmt(D.t.total, { p: total });
       next.hidden = false;
       next.focus();
+      // Cartel para el ganador: de a dos, el que sumó más; solo, si sumó puntos.
+      var W = D.cw, title = null;
+      if (duo()) title = sums[0] === sums[1] ? (sums[0] ? W.tie : null) : net() && (sums[0] > sums[1] ? 0 : 1) === meIdx() ? W.youWon : fmt(W.congrats, { name: who(sums[0] > sums[1] ? 0 : 1).replace(/ \(.*\)$/, "") });
+      else if (total) title = W.solo;
+      if (title) win = celebrate(box, title, msg.textContent, win);
       emit({ k: "fin" });
     }
     function go(seed) {
@@ -610,7 +766,7 @@
           if (a.p === 0) { var b0 = medals()[a.m].querySelector('.obtn[data-p="0"][data-ring="' + a.r + '"]'); if (b0) b0.classList.add("on"); }
         } else if (a.k === "msg" && !host()) msg.textContent = a.t;
         else if (a.k === "fin" && !host()) { timer = clearInterval(timer); finish(); }
-        else if (a.k === "next") { ri = a.ri; reset(); }
+        else if (a.k === "next") { ri = a.ri; reset(); roundBanner(label.textContent, ""); }
       },
     };
     box.addEventListener("ds4:players", reset);
@@ -618,6 +774,7 @@
       ri = (ri + 1) % rounds.length;
       emit({ k: "next", ri: ri });
       reset();
+      roundBanner(label.textContent, "");
       box.scrollIntoView({ behavior: reduce ? "auto" : "smooth", block: "start" });
     });
     reset();
@@ -660,6 +817,7 @@
       if (i < 0) return;
       // En línea: el juego elegido se elige también en la otra pantalla.
       if (chosen !== slug && !fromNet) doc.dispatchEvent(new CustomEvent("ds4:chose", { detail: slug }));
+      if (chosen !== slug) doc.querySelectorAll(".dwin").forEach(function (w) { w.hidden = true; });
       chosen = slug;
       spin = false;
       target = i * 360 / n;
@@ -669,7 +827,8 @@
       boards.forEach(function (el) { el.classList.toggle("on", el.getAttribute("data-game") === slug); });
       doc.body.classList.add("chosen");
       if (hint) hint.textContent = (its[i].querySelector(".c3d-name") || {}).textContent || "";
-      try { history.replaceState(null, "", "#" + slug); } catch (e) {}
+      // En una sala en línea el link (#sala-…) se mantiene, por si recargan la página.
+      if (!/^#sala-/.test(location.hash)) { try { history.replaceState(null, "", "#" + slug); } catch (e) {} }
       if (scroll) doc.getElementById("elegido").scrollIntoView({ behavior: reduce ? "auto" : "smooth", block: "start" });
     }
     its.forEach(function (it) { it.addEventListener("click", function () { choose(it.getAttribute("data-game"), true); }); });
