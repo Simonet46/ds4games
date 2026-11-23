@@ -7,8 +7,16 @@
   var doc = document, box = doc.querySelector(".pnet");
   if (!box) return;
   var T = JSON.parse(box.getAttribute("data-net"));
-  var LIB = "https://unpkg.com/mqtt@5.10.1/dist/mqtt.min.js";
-  var BROKERS = ["wss://broker.hivemq.com:8884/mqtt", "wss://broker.emqx.io:8084/mqtt", "wss://test.mosquitto.org:8081/mqtt"];
+  // La librería va con la web (no depende de otro sitio que alguna red pueda bloquear).
+  var LIB = (doc.currentScript && doc.currentScript.src.replace(/online\.js.*$/, "mqtt.min.js")) || "https://unpkg.com/mqtt@5.10.1/dist/mqtt.min.js";
+  // Primero un servidor por el puerto 443 (el de cualquier web): casi ninguna red lo bloquea. Los otros usan puertos
+  // propios, que algunas redes (de empresas, escuelas o celulares) cortan.
+  var BROKERS = [
+    { u: "wss://public.cloud.shiftr.io", o: { username: "public", password: "public" } },
+    { u: "wss://broker.hivemq.com:8884/mqtt" },
+    { u: "wss://broker.emqx.io:8084/mqtt" },
+    { u: "wss://test.mosquitto.org:8081/mqtt" },
+  ];
   var createBtn = box.querySelector(".pnet-create"), share = box.querySelector(".pnet-share");
   var linkEl = box.querySelector(".pnet-link"), copyBtn = box.querySelector(".pnet-copy"), wa = box.querySelector(".pnet-wa");
   var state = box.querySelector(".pnet-state");
@@ -107,7 +115,9 @@
     broker = i;
     if (i >= BROKERS.length) { say(T.fail); createBtn.disabled = false; createBtn.hidden = false; return; }
     var my = ++gen, done = false;
-    var c = window.mqtt.connect(BROKERS[i], { connectTimeout: 7000, reconnectPeriod: 2000, clean: true, clientId: "ds4-" + myId + "-" + my });
+    var opt = { connectTimeout: 7000, reconnectPeriod: 2000, clean: true, clientId: "ds4-" + myId + "-" + my };
+    for (var k in BROKERS[i].o || {}) opt[k] = BROKERS[i].o[k];
+    var c = window.mqtt.connect(BROKERS[i].u, opt);
     var fallback = setTimeout(function () { if (!done) { done = true; c.end(true); if (me === 0) connect(i + 1, ok); else say(T.fail); } }, 8000);
     c.on("connect", function () {
       if (my !== gen) return;
