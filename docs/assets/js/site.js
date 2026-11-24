@@ -261,14 +261,18 @@
     var turnEl = form.querySelector(".dturn"), msg = form.querySelector(".dmsg"), log = form.querySelector(".dlog");
     var inputs = [].slice.call(form.querySelectorAll("input[type=radio]"));
     var turn = 1, over = false, last = [], win = null;
-    // Página Jugar ahora: con data-players="2" juegan dos Lectores en la misma pantalla.
-    var P = D.p || {}, cur = 0, winners = [], secret = null, mine = null, theirs = null;
-    function duo() { return !!D.p && form.getAttribute("data-players") === "2"; }
+    // Página Jugar ahora: con data-players="2" o "3" juegan dos o tres Lectores en la misma pantalla.
+    var P = D.p || {}, cur = 0, winners = [], secret = null, codes = [];
+    function cnt() { return D.p ? Math.min(3, Math.max(1, +form.getAttribute("data-players") || 1)) : 1; }
+    function duo() { return cnt() >= 2; }
+    function others() { var o = []; for (var i = 0; i < cnt(); i++) if (i !== meIdx()) o.push(i); return o; }
+    // "Ana y Juan": nombres de varios Lectores.
+    function list(ix) { var n = ix.map(function (i) { return who(i); }); return n.length > 1 ? n.slice(0, -1).join(", ") + " " + (P.and || "y") + " " + n[n.length - 1] : n[0] || ""; }
     // En línea (Jugar ahora): data-me dice qué Lector es esta pantalla; cada acción se manda a la otra pantalla
     // y las dos arman la misma mesa con la misma semilla.
     function net() { return duo() && form.hasAttribute("data-me"); }
     function meIdx() { return +form.getAttribute("data-me"); }
-    // En línea los dos eligen su código a la vez (también en 1812); la ronda se resuelve cuando los dos lo dijeron.
+    // En línea todos eligen su código a la vez (también en 1812); la ronda se resuelve cuando todos lo dijeron.
     function simul() { return net(); }
     function roundName() { return turn > D.turns ? D.t.last : D.t.turn.replace("{n}", turn).replace("{total}", D.turns); }
     function emit(a) { if (net()) form.dispatchEvent(new CustomEvent("ds4:act", { detail: a })); }
@@ -363,23 +367,45 @@
     }
     // Con última oportunidad (Tour Eiffel) hay un intento más después de los turnos con cartas.
     var maxTurns = D.turns + (D.last ? 1 : 0);
+    function mine() { return codes[meIdx()]; }
+    function missing() { var m = []; for (var i = 0; i < cnt(); i++) if (!codes[i]) m.push(i); return m; }
     function picks() {
       return D.answer.map(function (_, i) {
         var c = form.querySelector('input[name="r' + i + '"]:checked');
         return c ? +c.value : 0;
       });
     }
+    // Debajo de las filas: un dado por fila, del color de la fila, que muestra la carta elegida (el número es la columna).
+    var PIPS = { 1: [[20, 20]], 2: [[12, 12], [28, 28]], 3: [[11, 11], [20, 20], [29, 29]], 4: [[12, 12], [28, 12], [12, 28], [28, 28]], 5: [[11, 11], [29, 11], [20, 20], [11, 29], [29, 29]], 6: [[12, 10], [28, 10], [12, 20], [28, 20], [12, 30], [28, 30]] };
+    function die(n) { return '<svg viewBox="0 0 40 40" aria-hidden="true"><rect x="1.5" y="1.5" width="37" height="37" rx="9"/>' + PIPS[n].map(function (q) { return '<circle cx="' + q[0] + '" cy="' + q[1] + '" r="3.7"/>'; }).join("") + "</svg>"; }
+    var tray = doc.createElement("div");
+    tray.className = "ddice";
+    tray.setAttribute("aria-hidden", "true");
+    tray.innerHTML = D.answer.map(function (_, i) { return '<span class="ddie" style="--row:' + D.colors[i] + '"></span>'; }).join("");
+    var bar = form.querySelector(".dbar");
+    bar.parentNode.insertBefore(tray, bar);
+    var dice = [].slice.call(tray.children), shown = [];
+    function showDice() {
+      picks().forEach(function (n, i) {
+        if (shown[i] === n) return;
+        shown[i] = n;
+        dice[i].innerHTML = n ? die(n) : "";
+        dice[i].classList.toggle("on", !!n);
+        if (n && !reduce) { dice[i].classList.remove("pop"); void dice[i].offsetWidth; dice[i].classList.add("pop"); }
+      });
+    }
     function code(nums) {
       return '<span class="dcode">' + nums.map(function (n, i) { return '<b style="--row:' + D.colors[i] + '">' + n + "</b>"; }).join("") + "</span>";
     }
     function status(keepMsg) {
+      showDice();
       turnEl.textContent = turn > D.turns ? D.t.last : D.t.turn.replace("{n}", turn).replace("{total}", D.turns);
       if (duo()) turnEl.textContent += " · " + fill(D.mode === "coop" ? P.decides : P.turnOf, { name: who(cur) });
       if (simul()) {
-        turnEl.textContent = (turn > D.turns ? D.t.last : D.t.turn.replace("{n}", turn).replace("{total}", D.turns)) + " · " + (mine ? fill(P.waitCode, { name: who(1 - meIdx()) }) : P.yourCode);
-        inputs.forEach(function (inp) { inp.disabled = over || !!mine; });
+        turnEl.textContent = roundName() + " · " + (mine() ? fill(P.waitCode, { name: list(missing()) }) : P.yourCode);
+        inputs.forEach(function (inp) { inp.disabled = over || !!mine(); });
       }
-      var ready = picks().every(Boolean), myTurn = simul() ? !mine : !net() || cur === meIdx();
+      var ready = picks().every(Boolean), myTurn = simul() ? !mine() : !net() || cur === meIdx();
       if (net() && !simul()) inputs.forEach(function (inp) { inp.disabled = over || !myTurn; });
       say.disabled = !ready || !myTurn;
       if (!keepMsg) msg.textContent = ready ? D.t.ready : D.t.pick;
@@ -422,9 +448,9 @@
     form.addEventListener("submit", function (e) {
       e.preventDefault();
       if (simul()) {
-        if (mine || over || !picks().every(Boolean)) return;
-        mine = picks();
-        emit({ k: "code", p: mine });
+        if (mine() || over || !picks().every(Boolean)) return;
+        codes[meIdx()] = picks();
+        emit({ k: "code", p: mine(), f: meIdx() });
         return both();
       }
       if (net() && cur !== meIdx()) return;
@@ -441,23 +467,24 @@
       if (i !== meIdx()) li.className = "dother";
       return li;
     }
-    // Los dos dijeron su código: se ven los dos y, si nadie ganó, pasan a la ronda siguiente.
+    // Todos dijeron su código: se ven todos y, si nadie ganó, pasan a la ronda siguiente.
     function both() {
-      if (!mine || !theirs) { status(true); if (mine) { var w = fill(P.waitCode, { name: who(1 - meIdx()) }); msg.textContent = w.charAt(0).toUpperCase() + w.slice(1) + "…"; } return; }
-      var codes = meIdx() === 0 ? [mine, theirs] : [theirs, mine], hs = [];
-      codes.forEach(function (p, i) {
+      if (missing().length) { status(true); if (mine()) { var w = fill(P.waitCode, { name: list(missing()) }); msg.textContent = w.charAt(0).toUpperCase() + w.slice(1) + "…"; } return; }
+      var hs = [];
+      codes.slice(0, cnt()).forEach(function (p, i) {
         var h = p.filter(function (n, k) { return n === D.answer[k]; }).length;
         hs.push(h);
         log.appendChild(entry(p, h, i));
         if (h === 4) winners.push(i);
       });
-      mine = theirs = null;
+      codes = [];
       if (winners.length) return end(true);
       if (turn >= maxTurns) return end(false);
       clearPicks();
       nextRound(null);
-      var me = meIdx(), other = 1 - me;
-      msg.textContent = fill(P.youGot, { hits: D.t.hits[hs[me]].toLowerCase() }) + " " + (D.mode === "private" ? fill(P.gotSecret, { name: who(other) }) : who(other) + ": " + D.t.hits[hs[other]].toLowerCase() + ".") + " " + (turn > D.turns ? D.t.lastMsg : "");
+      var me = meIdx();
+      msg.textContent = fill(P.youGot, { hits: D.t.hits[hs[me]].toLowerCase() }) + " " + (D.mode === "private" ? fill(P.gotSecret, { name: list(others()) })
+        : others().map(function (o) { return who(o) + ": " + D.t.hits[hs[o]].toLowerCase() + "."; }).join(" ")) + " " + (turn > D.turns ? D.t.lastMsg : "");
       roundBanner(roundName(), msg.textContent);
     }
     function play() {
@@ -517,17 +544,17 @@
       if (D.mode === "coop") {
         if (hits === 4) return end(true);
         if (turn >= maxTurns) return end(false);
-        cur = 1 - cur;
+        cur = (cur + 1) % cnt();
         clearPicks();
         return nextRound(hits);
       }
       if (hits === 4) winners.push(cur);
       var me = cur;
-      if (cur === 0) {
-        cur = 1;
+      if (cur < cnt() - 1) {
+        cur++;
         clearPicks();
         status(true);
-        var next = fill(P.turnOf, { name: who(1) });
+        var next = fill(P.turnOf, { name: who(cur) });
         msg.textContent = D.mode === "private" ? D.t.pick : D.t.hits[hits] + ". " + next.charAt(0).toUpperCase() + next.slice(1) + ".";
         if (D.mode === "private") showSecret(me, hits);
         return;
@@ -551,7 +578,7 @@
         doc.body.appendChild(secret);
         secret.querySelector("button").addEventListener("click", function () { secret.hidden = true; doc.body.classList.remove("lock"); say.focus(); });
       }
-      var other = who(1 - me);
+      var other = who((me + 1) % cnt());
       secret.querySelector(".eyebrow").textContent = fill(P.secretH, { name: who(me) });
       secret.querySelector(".dsecret-n").textContent = D.t.hits[hits];
       secret.querySelector(".muted").textContent = fill(net() ? P.secretOnline : P.secretNote, { name: other });
@@ -562,7 +589,7 @@
     }
     function restart(seed) {
       rng = seed == null ? Math.random : seeded(seed);
-      mine = theirs = null;
+      codes = [];
       if (win) win.hidden = true;
       over = false;
       turn = 1; cur = 0; winners = [];
@@ -592,7 +619,7 @@
       apply: function (a) {
         if (a.k === "again") restart(a.s);
         else if (a.k === "pick") { var r = form.querySelector('input[name="' + a.n + '"][value="' + a.v + '"]'); if (r) { r.checked = true; status(); } }
-        else if (a.k === "code") { theirs = a.p; both(); }
+        else if (a.k === "code") { var f = a.f == null ? 1 - meIdx() : +a.f; if (f !== meIdx() && f >= 0 && f < 3) { codes[f] = a.p; both(); } }
         else if (a.k === "say") { clearPicks(); a.p.forEach(function (v, i) { var r = form.querySelector('input[name="r' + i + '"][value="' + v + '"]'); if (r) r.checked = true; }); play(); }
       },
     };
@@ -870,10 +897,12 @@
     if (start) choose(start, false);
     // Cantidad de jugadores: reinicia la partida de cada juego (también al cargar, por si el navegador recordó otra opción).
     function setPlayers(v) {
-      if (v === "online") v = "2";
+      doc.body.classList.toggle("p3", v === "3");
+      if (v === "online") return;
       doc.querySelectorAll(".pgame [data-demo], .pgame [data-race]").forEach(function (g) {
-        if (g.getAttribute("data-players") === v) return;
-        g.setAttribute("data-players", v);
+        var n = g.hasAttribute("data-race") && v === "3" ? "2" : v;
+        if (g.getAttribute("data-players") === n) return;
+        g.setAttribute("data-players", n);
         g.dispatchEvent(new CustomEvent("ds4:players"));
       });
     }

@@ -387,7 +387,7 @@ function demoSection(ctx, slug, opts = {}) {
   if (opts.play) {
     const P = ctx.L.play;
     cfg.mode = slug === "1812" ? "coop" : g.demo.rivals ? "private" : "public";
-    cfg.p = { reader: P.reader, turnOf: P.turnOf, decides: P.decides, win: P.win, winLast: P.winLast, tie: P.tie, secretH: P.secretH, secretNote: P.secretNote, pass: P.pass, secretEnd: P.secretEnd, you: P.net.you, gotSecret: P.net.gotSecret, secretOnline: P.net.secretOnline, ok: P.net.ok, yourCode: P.net.yourCode, waitCode: P.net.waitCode, youGot: P.net.youGot };
+    cfg.p = { reader: P.reader, turnOf: P.turnOf, decides: P.decides, win: P.win, winLast: P.winLast, tie: P.tie, secretH: P.secretH, secretNote: P.secretNote, pass: P.pass, secretEnd: P.secretEnd, you: P.net.you, gotSecret: P.net.gotSecret, secretOnline: P.net.secretOnline, ok: P.net.ok, yourCode: P.net.yourCode, waitCode: P.net.waitCode, youGot: P.net.youGot, and: P.net.and };
   }
   if (MANIFEST[sobre]) {
     cfg.sobres = [0, 1, 2, 3, 4].map((n) => rel(ctx.path, `assets/img/${g.art}-sobre-${n}-${MANIFEST[sobre].widths.at(-1)}.webp`));
@@ -571,7 +571,7 @@ function playPage(ctx) {
   }).join("");
   const games2 = GAME_ORDER.map((slug) => {
     const g = GAMES[slug], o = { play: true, id: `jugar-${slug}`, eyebrow: games[slug].name, lead: P.leads[slug] };
-    return `<div class="pgame" data-game="${slug}">${g.race ? raceSection(ctx, slug, o) : demoSection(ctx, slug, o)}</div>`;
+    return `<div class="pgame" data-game="${slug}">${g.race ? `<div class="wrap"><p class="p3note glass">${esc(P.p3Note)}</p></div>` + raceSection(ctx, slug, o) : demoSection(ctx, slug, o)}</div>`;
   }).join("");
   const body = `
 <section class="hero play-hero"><div class="wrap center stack">
@@ -586,7 +586,7 @@ function playPage(ctx) {
 
 <section class="section tight" id="elegido" style="scroll-margin-top:90px"><div class="wrap">
   ${infos}
-  <fieldset class="pcount glass"><legend>${esc(P.count)}</legend><label><input type="radio" name="players" value="1"><span>${esc(P.one)}</span></label><label><input type="radio" name="players" value="2" checked><span>${esc(P.two)}</span></label><label><input type="radio" name="players" value="online"><span>${esc(P.net.option)}</span></label></fieldset>
+  <fieldset class="pcount glass"><legend>${esc(P.count)}</legend><label><input type="radio" name="players" value="1"><span>${esc(P.one)}</span></label><label><input type="radio" name="players" value="2" checked><span>${esc(P.two)}</span></label><label><input type="radio" name="players" value="3"><span>${esc(P.three)}</span></label><label><input type="radio" name="players" value="online"><span>${esc(P.net.option)}</span></label></fieldset>
   <div class="pnet glass" hidden data-net="${esc(JSON.stringify(P.net))}">
     <p class="pnet-lead">${esc(P.net.lead)}</p>
     <label class="pnet-name"><span>${esc(P.net.nameLabel)}</span><input type="text" maxlength="20" autocomplete="given-name" placeholder="${esc(P.net.namePh)}"></label>

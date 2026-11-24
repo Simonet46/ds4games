@@ -1,7 +1,8 @@
-/* Jugar ahora · en línea: dos pantallas conectadas por un servidor público de mensajes (MQTT sobre WebSocket,
+/* Jugar ahora · en línea: hasta tres pantallas conectadas por un servidor público de mensajes (MQTT sobre WebSocket,
    sin cuenta). Pasa por cualquier red, también las de los celulares. La sala es un código de 6 letras.
-   El que crea la sala es Jugador 1 y manda la semilla de cada mesa; el que entra con el link es Jugador 2.
-   Cada acción de un juego (ds4:act) viaja a la otra pantalla, que la aplica con el._ds4.apply(). */
+   El que crea la sala es Jugador 1: anota quién entra (Jugador 2 y Jugador 3) y manda la semilla de cada mesa.
+   Todo viaja por un canal de la sala que escuchan todos; cada acción de un juego (ds4:act) se aplica en las
+   otras pantallas con el._ds4.apply(). */
 (function () {
   "use strict";
   var doc = document, box = doc.querySelector(".pnet");
@@ -48,11 +49,11 @@
     cBtn.setAttribute("aria-expanded", String(on));
     if (on) { unread = 0; cN.hidden = true; cLog.scrollTop = cLog.scrollHeight; cIn.focus(); }
   }
-  function addMsg(text, mine) {
+  function addMsg(text, mine, from) {
     var li = doc.createElement("li");
     li.className = mine ? "me" : "";
     var who = doc.createElement("span");
-    who.textContent = mine ? T.you.charAt(0).toUpperCase() + T.you.slice(1) : nameOf(mine ? me : 1 - me);
+    who.textContent = mine ? T.you.charAt(0).toUpperCase() + T.you.slice(1) : nameOf(from);
     var p = doc.createElement("p");
     p.textContent = text;
     li.appendChild(who); li.appendChild(p);
@@ -71,10 +72,13 @@
     cIn.value = "";
   });
   var client = null, room = "", me = -1, linked = false, chosen = "", lastSeen = 0, beat = 0, gen = 0;
-  var broker = 0, partner = "", seq = 0, lastN = 0;
+  // ids: quién está en la sala, en orden (Jugador 1, 2 y 3). seen: cuándo se supo de cada uno. lastN: último mensaje de cada uno.
+  var broker = 0, ids = [], seen = {}, seq = Date.now(), lastN = {}, MAX = 3;
+  // seq arranca en la hora: si alguien recarga la página, sus mensajes nuevos siguen teniendo números más altos.
   var myId = Math.random().toString(36).slice(2, 10);
+  function count() { return ids.length; }
   // Nombres: cada uno escribe el suyo y se lo manda a la otra pantalla. Los juegos los leen de doc.ds4Names.
-  var nameIn = box.querySelector(".pnet-name input"), names = ["", ""];
+  var nameIn = box.querySelector(".pnet-name input"), names = ["", "", ""];
   function clean(v) { return String(v || "").replace(/[<>&"'\u0000-\u001f]/g, "").trim().slice(0, 20); }
   try { nameIn.value = clean(localStorage.getItem("ds4-name")); } catch (e) {}
   function nameOf(i) { return names[i] || fill(T.player, { n: i + 1 }); }
@@ -97,10 +101,10 @@
   function online() { var r = doc.querySelector('input[name="players"]:checked'); return r && r.value === "online"; }
   function idOf(el) { return el.closest("section[id]").id; }
   function wait() { doc.body.classList.toggle("net-wait", online() && !linked); }
-  function topic(to) { return "ds4games/v1/" + room + "/" + to; }
-  function raw(to, m) { if (client && client.connected) client.publish(topic(to), JSON.stringify(m), { qos: 1 }); }
+  function topic() { return "ds4games/v2/" + room + "/all"; }
+  function raw(m) { m.id = myId; if (client && client.connected) client.publish(topic(), JSON.stringify(m), { qos: 1 }); }
   // Cada mensaje lleva un número: si el servidor lo entrega dos veces, la segunda se ignora.
-  function send(m) { if (linked) raw(1 - me, { t: "m", n: ++seq, d: m }); }
+  function send(m) { if (linked) raw({ t: "m", f: me, n: ++seq, d: m }); }
 
   function loadLib(cb) {
     if (window.mqtt) return cb();
@@ -114,7 +118,7 @@
   function connect(i, ok) {
     broker = i;
     if (i >= BROKERS.length) { say(T.fail); createBtn.disabled = false; createBtn.hidden = false; return; }
-    var my = ++gen, done = false;
+    var my = ++gen, done = false, fresh = true;
     var opt = { connectTimeout: 7000, reconnectPeriod: 2000, clean: true, clientId: "ds4-" + myId + "-" + my };
     for (var k in BROKERS[i].o || {}) opt[k] = BROKERS[i].o[k];
     var c = window.mqtt.connect(BROKERS[i].u, opt);
@@ -122,8 +126,9 @@
     c.on("connect", function () {
       if (my !== gen) return;
       if (!done) { done = true; clearTimeout(fallback); client = c; ok(); }
-      c.subscribe(topic(me), { qos: 1 });
-      if (me === 1) raw(0, { t: "hello", id: myId });
+      c.subscribe(topic(), { qos: 1 });
+      // fresh: la página recién se abrió (o se recargó); si no, es la misma pantalla que se reconectó.
+      if (me !== 0) { raw({ t: "hello", fresh: fresh }); fresh = false; }
     });
     c.on("message", function (_, buf) {
       if (my !== gen) return;
@@ -134,8 +139,9 @@
   function leave() {
     gen++;
     if (client) { try { client.end(true); } catch (e) {} }
-    client = null; linked = false; me = -1; room = ""; partner = ""; seq = 0; lastN = 0;
-    names = ["", ""]; doc.ds4Names = null;
+    client = null; linked = false; me = -1; room = ""; ids = []; seen = {}; seq = Date.now(); lastN = {};
+    names = ["", "", ""]; doc.ds4Names = null;
+    doc.body.classList.remove("p3");
     clearInterval(beat);
     games.forEach(function (g) {
       if (!g.hasAttribute("data-me")) return;
@@ -156,23 +162,44 @@
   var h0 = (location.hash || "").slice(1);
   if (/^(olympikos|tour-eiffel|1812|2080)$/.test(h0)) chosen = h0;
 
+  // Jugador 1 manda la lista de la sala; cada pantalla ve ahí qué jugador es y cuántos juegan.
+  function roster() { raw({ t: "roster", ids: ids.slice() }); }
   function receive(m) {
+    if (!m || m.id === myId || typeof m.id !== "string") return;
     lastSeen = Date.now();
+    seen[m.id] = lastSeen;
     if (!pill.hidden && pill.classList.contains("off") && linked) live();
     if (m.t === "hello" && me === 0) {
-      raw(1, { t: "welcome" });
-      // El mismo Jugador 2 que se reconectó sigue la partida; uno nuevo (recargó la página) recibe una mesa nueva.
-      if (linked && m.id === partner) return;
-      partner = m.id; seq = 0; lastN = 0;
+      var slot = ids.indexOf(m.id);
+      // La misma pantalla que se reconectó sigue la partida; si recargó la página, se arma una mesa nueva para todos.
+      if (slot > 0 && !m.fresh) return roster();
+      if (slot < 0) {
+        if (ids.length >= MAX) {
+          // Sala llena: se libera el lugar de alguien que hace rato que no contesta.
+          var gone = ids.slice(1).filter(function (x) { return Date.now() - (seen[x] || 0) > 20000; })[0];
+          if (!gone) return raw({ t: "full", to: m.id });
+          ids[ids.indexOf(gone)] = m.id;
+        } else ids.push(m.id);
+      }
+      roster();
       return link();
     }
-    if (m.t === "welcome" && me === 1) { if (!linked) link(); return; }
-    if (m.t !== "m" || !linked) return;
-    if (m.n <= lastN) return;
-    lastN = m.n;
-    var d = m.d;
-    if (d.t === "name") { names[1 - me] = clean(d.v); return setNames(); }
-    if (d.t === "chat") { if (typeof d.x === "string") addMsg(d.x.slice(0, 300), false); return; }
+    if (m.t === "full" && m.to === myId && !linked) { say(T.full); return; }
+    if (m.t === "roster" && me !== 0 && Array.isArray(m.ids)) {
+      var i = m.ids.indexOf(myId);
+      if (i < 1) { if (linked) { leaveGames(); say(T.lost); } return; }
+      var next = m.ids.slice(0, MAX), same = linked && me === i && next.join() === ids.join();
+      ids = next; me = i;
+      // La misma lista de antes (alguien se reconectó): la partida sigue como estaba.
+      if (same) return;
+      return link();
+    }
+    if (m.t !== "m" || !linked || ids.indexOf(m.id) < 0) return;
+    if (m.n <= (lastN[m.id] || 0)) return;
+    lastN[m.id] = m.n;
+    var d = m.d, from = ids.indexOf(m.id);
+    if (d.t === "name") { names[from] = clean(d.v); return setNames(); }
+    if (d.t === "chat") { if (typeof d.x === "string") addMsg(d.x.slice(0, 300), false, from); return; }
     if (d.t === "game") { chosen = d.slug; if (doc.ds4Choose) doc.ds4Choose(d.slug); return; }
     var sec = d.g && doc.getElementById(d.g), g = sec && sec.querySelector("[data-demo], [data-race]");
     if (g && g._ds4) g._ds4.apply(d.a);
@@ -183,13 +210,25 @@
     pill.hidden = false;
     chat.hidden = false;
     box.classList.add("live");
-    say(fill(T.connected, { name: nameOf(me) }));
+    say(fill(T.connected, { name: nameOf(me), n: count() }) + (me === 0 && count() < MAX ? " " + T.more : ""));
   }
-  // Quedaron conectados: las dos pantallas juegan; Jugador 1 reparte la misma mesa para las dos.
+  function leaveGames() {
+    linked = false;
+    games.forEach(function (g) { g.removeAttribute("data-me"); });
+    pill.hidden = true;
+    box.classList.remove("live");
+    wait();
+  }
+  // Quedaron conectados (o cambió quién está): todas las pantallas juegan; Jugador 1 reparte la misma mesa para todas.
   function link() {
     linked = true;
-    games.forEach(function (g) { g.setAttribute("data-me", String(me)); g.setAttribute("data-players", "2"); });
+    var n = count();
+    // Olympikos en la web es de a dos: con tres, el tercero mira la partida.
+    games.forEach(function (g) { g.setAttribute("data-me", String(me)); g.setAttribute("data-players", String(g.hasAttribute("data-race") ? Math.min(n, 2) : n)); });
+    doc.body.classList.toggle("p3", n > 2);
     share.hidden = me !== 0;
+    names = names.slice(0, n);
+    while (names.length < MAX) names.push("");
     names[me] = clean(nameIn.value);
     send({ t: "name", v: names[me] });
     setNames();
@@ -202,11 +241,21 @@
       });
       if (chosen) send({ t: "game", slug: chosen });
     } else games.forEach(function (g) { if (g._ds4) g._ds4.restart(); });
-    // Latido: si no llega nada de la otra pantalla en 15 s, se avisa (y se recupera solo si vuelve).
+    // Latido: si no llega nada de las otras pantallas en 15 s, se avisa (y se recupera solo si vuelven).
+    // Jugador 1 saca de la sala a quien no contesta hace 30 s, para que la partida no quede esperando su código.
     clearInterval(beat);
     lastSeen = Date.now();
+    ids.forEach(function (x) { if (!seen[x]) seen[x] = lastSeen; });
     beat = setInterval(function () {
-      raw(1 - me, { t: "ping" });
+      raw({ t: "ping" });
+      if (me === 0) {
+        var keep = ids.filter(function (x, k) { return !k || Date.now() - (seen[x] || 0) < 30000; });
+        if (keep.length < ids.length) {
+          ids = keep;
+          if (ids.length > 1) { roster(); link(); } else { roster(); leaveGames(); say(T.waiting); }
+          return;
+        }
+      }
       if (Date.now() - lastSeen > 15000 && !pill.classList.contains("off")) {
         pill.textContent = T.pillOff;
         pill.classList.add("off");
@@ -223,7 +272,7 @@
   }
   function create() {
     leave();
-    me = 0; room = code();
+    me = 0; room = code(); ids = [myId];
     createBtn.disabled = true;
     say(T.joining);
     wait();
@@ -244,6 +293,8 @@
     radios.forEach(function (r) { r.checked = r.value === "online"; });
     radios.forEach(function (r) { if (r.checked) r.dispatchEvent(new Event("change", { bubbles: true })); });
     me = 1; room = c;
+    // Si recarga la página, sigue siendo el mismo jugador de la sala.
+    try { var keep = sessionStorage.getItem("ds4-id-" + c); if (keep) myId = keep; else sessionStorage.setItem("ds4-id-" + c, myId); } catch (e) {}
     box.hidden = false;
     createBtn.hidden = true;
     say(T.joining);
@@ -253,9 +304,9 @@
       connect(b, function () {
         // Si la sala no contesta, se vuelve a saludar unas veces.
         var tries = 0, t = setInterval(function () {
-          if (linked || me !== 1) return clearInterval(t);
+          if (linked || me < 1) return clearInterval(t);
           if (++tries > 6) { clearInterval(t); say(T.fail); return; }
-          raw(0, { t: "hello", id: myId });
+          raw({ t: "hello", fresh: true });
         }, 3000);
       });
     });
